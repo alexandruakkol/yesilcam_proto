@@ -12,16 +12,19 @@ import {
   Button,
   KeyboardAvoidingView,
   Icon,
+  Center,
 } from "native-base";
-import { useFonts, Jost_400Regular } from "@expo-google-fonts/jost";
+import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { MaterialIcons } from "@expo/vector-icons";
+
+const textColor = "beige";
 
 const LoginScreen = () => {
   //hooks
   const [show, setShow] = React.useState(false);
 
   let [fontsLoaded] = useFonts({
-    Jost_400Regular,
+    Jost_600SemiBold,
   });
 
   if (!fontsLoaded) {
@@ -32,6 +35,7 @@ const LoginScreen = () => {
         <KeyboardAvoidingView behaviour="padding" style={styles.loginpage}>
           <Text style={styles.title}>Green Pine Connects</Text>
           <View style={styles.inputContainer}>
+            <Text style={styles.loginText}>Log in</Text>
             <Input
               style={styles.input}
               variant="underlined"
@@ -45,6 +49,7 @@ const LoginScreen = () => {
               style={styles.input}
               mx="4"
               marginTop="5"
+              marginBottom="4"
               size="2xl"
               type={show ? "text" : "password"}
               InputRightElement={
@@ -62,9 +67,14 @@ const LoginScreen = () => {
               }
               placeholder="Password"
             ></Input>
+            <Text style={styles.forgotPass}>Forgot password?</Text>
           </View>
 
-          <Button>Login</Button>
+          <Center flex={0.1}>
+            <Button w="190" borderRadius="20">
+              Login
+            </Button>
+          </Center>
         </KeyboardAvoidingView>
       </NativeBaseProvider>
     );
@@ -82,18 +92,35 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   title: {
-    fontFamily: "Jost_400Regular",
+    fontFamily: " Jost_600SemiBold",
     justifyContent: "center",
     textAlign: "center",
     alignContent: "center",
     fontSize: 35,
     marginBottom: 200,
-    color: "beige",
+    color: textColor,
   },
 
   inputContainer: {},
 
+  loginText: {
+    fontFamily: " Jost_600SemiBold",
+    color: textColor,
+    fontSize: 28,
+    textAlign: "left",
+    marginBottom: 25,
+    paddingLeft: 15,
+  },
+
   input: {
     fontSize: 17,
+  },
+
+  forgotPass: {
+    color: textColor,
+    textDecorationLine: "underline",
+    textAlign: "right",
+    marginRight: 15,
+    marginBottom: 30,
   },
 });
