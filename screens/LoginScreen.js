@@ -34,7 +34,7 @@ const LoginScreen = () => {
       <NativeBaseProvider>
         <KeyboardAvoidingView behaviour="padding" style={styles.loginpage}>
           <Text style={styles.title}>Green Pine Connects</Text>
-          <View style={styles.inputContainer}>
+          <View>
             <Text style={styles.loginText}>Log in</Text>
             <Input
               style={styles.input}
@@ -71,7 +71,7 @@ const LoginScreen = () => {
           </View>
 
           <Center flex={0.1}>
-            <Button colorScheme="rose" w="190" borderRadius="20">
+            <Button colorScheme="rose" w="190" h="10" borderRadius="20">
               <Text style={styles.loginButton}>Log in</Text>
             </Button>
           </Center>
@@ -80,12 +80,37 @@ const LoginScreen = () => {
             <View style={styles.line}>
               <hr width="100%" color={textColor}></hr>
             </View>
-
             <Text style={styles.lineText}>or</Text>
-
             <View style={styles.line}>
               <hr width="100%" color={textColor}></hr>
             </View>
+          </View>
+
+          <Center>
+            <Button colorScheme="muted" w="250" h="9" borderRadius="20">
+              <Text style={styles.loginWithApple}>Log in with Apple</Text>
+            </Button>
+          </Center>
+
+          <Center>
+            <Button
+              colorScheme="white"
+              w="250"
+              h="9"
+              marginTop="3"
+              borderRadius="20"
+            >
+              <Text style={styles.loginWithGoogle}>Log in with Google</Text>
+            </Button>
+          </Center>
+
+          <View>
+            <Text style={styles.newHere}>
+              New here?{" "}
+              <Text>
+                <u>Create an account</u>
+              </Text>
+            </Text>
           </View>
         </KeyboardAvoidingView>
       </NativeBaseProvider>
@@ -103,17 +128,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignContent: "center",
   },
+
   title: {
     fontFamily: " Jost_600SemiBold",
     justifyContent: "center",
     textAlign: "center",
     alignContent: "center",
     fontSize: 35,
-    marginBottom: 130,
+    marginBottom: 150,
+    marginTop: 60,
     color: textColor,
   },
-
-  inputContainer: {},
 
   loginText: {
     fontFamily: " Jost_600SemiBold",
@@ -145,6 +170,7 @@ const styles = StyleSheet.create({
   lineContainer: {
     marginTop: 45,
     flexDirection: "row",
+    marginBottom: 30,
   },
 
   line: {
@@ -159,5 +185,24 @@ const styles = StyleSheet.create({
     fontSize: 13,
     justifyContent: "center",
     flex: 0.12,
+  },
+
+  loginWithApple: {
+    color: textColor,
+    fontSize: 16,
+  },
+
+  loginWithGoogle: {
+    color: textColor,
+    fontSize: 16,
+  },
+
+  newHere: {
+    marginTop: 15,
+    marginBottom: -100,
+    color: textColor,
+    fontSize: 13,
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });
