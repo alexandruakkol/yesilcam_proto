@@ -70,20 +70,16 @@ const LoginScreen = () => {
             <Text style={styles.forgotPass}>Forgot password?</Text>
           </View>
 
-          <Center flex={0.1}>
+          <Center flex={0.25}>
             <Button colorScheme="rose" w="190" h="10" borderRadius="20">
               <Text style={styles.loginButton}>Log in</Text>
             </Button>
           </Center>
 
           <View style={styles.lineContainer}>
-            <View style={styles.line}>
-              <hr width="100%" color={textColor}></hr>
-            </View>
+            <View style={styles.line} />
             <Text style={styles.lineText}>or</Text>
-            <View style={styles.line}>
-              <hr width="100%" color={textColor}></hr>
-            </View>
+            <View style={styles.line} />
           </View>
 
           <Center>
@@ -107,9 +103,7 @@ const LoginScreen = () => {
           <View>
             <Text style={styles.newHere}>
               New here?{" "}
-              <Text>
-                <u>Create an account</u>
-              </Text>
+              <Text style={styles.createAccountText}>Create an account</Text>
             </Text>
           </View>
         </KeyboardAvoidingView>
@@ -168,23 +162,22 @@ const styles = StyleSheet.create({
   },
 
   lineContainer: {
-    marginTop: 45,
+    marginVertical: 15,
     flexDirection: "row",
-    marginBottom: 30,
   },
 
   line: {
-    marginLeft: 12,
-    marginRight: 12,
-    flex: 0.44,
-    justifyContent: "center",
+    backgroundColor: textColor,
+    height: 1,
+    flex: 1,
+    alignSelf: "center",
   },
 
   lineText: {
     color: textColor,
-    fontSize: 13,
-    justifyContent: "center",
-    flex: 0.12,
+    alignSelf: "center",
+    paddingHorizontal: 5,
+    fontSize: 14,
   },
 
   loginWithApple: {
@@ -204,5 +197,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+
+  createAccountText: {
+    textDecorationLine: "underline",
   },
 });
