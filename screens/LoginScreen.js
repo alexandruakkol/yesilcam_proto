@@ -71,10 +71,22 @@ const LoginScreen = () => {
           </View>
 
           <Center flex={0.1}>
-            <Button w="190" borderRadius="20">
-              Login
+            <Button colorScheme="rose" w="190" borderRadius="20">
+              <Text style={styles.loginButton}>Log in</Text>
             </Button>
           </Center>
+
+          <View style={styles.lineContainer}>
+            <View style={styles.line}>
+              <hr width="100%" color={textColor}></hr>
+            </View>
+
+            <Text style={styles.lineText}>or</Text>
+
+            <View style={styles.line}>
+              <hr width="100%" color={textColor}></hr>
+            </View>
+          </View>
         </KeyboardAvoidingView>
       </NativeBaseProvider>
     );
@@ -97,7 +109,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignContent: "center",
     fontSize: 35,
-    marginBottom: 200,
+    marginBottom: 130,
     color: textColor,
   },
 
@@ -114,6 +126,7 @@ const styles = StyleSheet.create({
 
   input: {
     fontSize: 17,
+    color: textColor,
   },
 
   forgotPass: {
@@ -122,5 +135,29 @@ const styles = StyleSheet.create({
     textAlign: "right",
     marginRight: 15,
     marginBottom: 30,
+  },
+
+  loginButton: {
+    color: textColor,
+    fontSize: 16,
+  },
+
+  lineContainer: {
+    marginTop: 45,
+    flexDirection: "row",
+  },
+
+  line: {
+    marginLeft: 12,
+    marginRight: 12,
+    flex: 0.44,
+    justifyContent: "center",
+  },
+
+  lineText: {
+    color: textColor,
+    fontSize: 13,
+    justifyContent: "center",
+    flex: 0.12,
   },
 });
