@@ -18,7 +18,7 @@ import {
   LobsterTwo_700Bold_Italic,
   useFonts,
 } from "@expo-google-fonts/lobster-two";
-import { Card } from "./Card";
+import Card from "./Card";
 
 const headerColor = "beige";
 const bkgColor = "white";
@@ -47,6 +47,8 @@ const Cards = ({ navigation }) => {
             </Center>
             <Center h="10" w="15%" rounded="md" />
           </HStack>
+
+          <Card></Card>
         </View>
       </NativeBaseProvider>
     );
