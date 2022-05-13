@@ -1,23 +1,11 @@
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import {
-  NativeBaseProvider,
-  Input,
-  Button,
-  KeyboardAvoidingView,
-  Icon,
-  Center,
-  Text,
-  Box,
-} from "native-base";
+import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const textColor = "beige";
 
@@ -31,13 +19,23 @@ const LoginScreen = () => {
   });
 
   if (!fontsLoaded) {
-    return <View>Loading</View>;
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
   } else {
     return (
       <NativeBaseProvider>
-        <KeyboardAvoidingView behaviour="padding" style={styles.loginpage}>
+        <LinearGradient
+        // Background Linear Gradient
+        colors={["#c4791c","#0c5407"]}
+        start={{x:1.75,y:0.75}}
+        end={{x:0.5,y:0.98}}
+        style={styles.loginpage}
+      >
           <Text style={styles.title}>Green Pine Connects</Text>
-          <Box>
+          <View>
             <Text style={styles.loginText}>Log in</Text>
             <Input
               style={styles.input}
@@ -71,9 +69,9 @@ const LoginScreen = () => {
               placeholder="Password"
             ></Input>
             <Text style={styles.forgotPass}>Forgot password?</Text>
-          </Box>
+          </View>
 
-          <Center flex={0.25}>
+          <Center>
             <Button bg="red.800" w="190" h="10" borderRadius="20">
               <Text
                 style={styles.loginButton}
@@ -104,8 +102,8 @@ const LoginScreen = () => {
               }
               style={styles.loginWithAppleButton}
               bg="black"
-              w="250"
-              h="9"
+              w="240"
+              h="10"
               borderRadius="20"
             >
               <Text style={styles.loginWithAppleText}>Log in with Apple</Text>
@@ -123,8 +121,8 @@ const LoginScreen = () => {
               }
               style={styles.loginWithGoogleButton}
               bg="white"
-              w="250"
-              h="9"
+              w="240"
+              h="10"
               marginTop="3"
               borderRadius="20"
             >
@@ -133,12 +131,14 @@ const LoginScreen = () => {
           </Center>
 
           <View>
-            <Text style={styles.newHere}>
-              New here?{" "}
-              <Text style={styles.createAccountText}>Create an account</Text>
-            </Text>
+            <Center>
+              <Text style={styles.newHere}>
+                New here?{" "}
+                <Text style={styles.createAccountText}>Create an account</Text>
+              </Text>
+            </Center>
           </View>
-        </KeyboardAvoidingView>
+          </LinearGradient>
       </NativeBaseProvider>
     );
   }
@@ -148,7 +148,6 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   loginpage: {
-    backgroundColor: "#446a4b",
     flex: 1,
     justifyContent: "center",
     textAlign: "center",
@@ -156,20 +155,20 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: "  LobsterTwo_700Bold_Italic",
+    fontFamily: "LobsterTwo_700Bold_Italic",
     justifyContent: "center",
     textAlign: "center",
     alignContent: "center",
-    fontSize: 35,
+    fontSize: 39,
     marginBottom: 150,
-    marginTop: 60,
+    marginTop: 100,
     color: textColor,
   },
 
   loginText: {
-    fontFamily: " Jost_600SemiBold",
+    fontFamily: "Jost_600SemiBold",
     color: textColor,
-    fontSize: 26,
+    fontSize: 27,
     textAlign: "left",
     marginBottom: 25,
     paddingLeft: 15,
@@ -215,7 +214,6 @@ const styles = StyleSheet.create({
   loginWithAppleButton: {},
 
   loginWithAppleText: {
-    flex: 0.5,
     color: textColor,
     fontSize: 16,
   },
@@ -227,8 +225,8 @@ const styles = StyleSheet.create({
   },
 
   newHere: {
-    marginTop: 15,
-    marginBottom: -100,
+    marginTop: 3,
+    marginBottom: -50,
     color: textColor,
     fontSize: 13,
     flexDirection: "row",
