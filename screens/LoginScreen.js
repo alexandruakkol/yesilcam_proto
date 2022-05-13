@@ -2,7 +2,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import React from "react";
@@ -13,9 +12,12 @@ import {
   KeyboardAvoidingView,
   Icon,
   Center,
+  Text,
+  Box,
 } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
-import { MaterialIcons } from "@expo/vector-icons";
+import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
+import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 
 const textColor = "beige";
 
@@ -25,16 +27,17 @@ const LoginScreen = () => {
 
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
+    LobsterTwo_700Bold_Italic,
   });
 
   if (!fontsLoaded) {
-    return <View />;
+    return <View>Loading</View>;
   } else {
     return (
       <NativeBaseProvider>
         <KeyboardAvoidingView behaviour="padding" style={styles.loginpage}>
           <Text style={styles.title}>Green Pine Connects</Text>
-          <View>
+          <Box>
             <Text style={styles.loginText}>Log in</Text>
             <Input
               style={styles.input}
@@ -68,11 +71,18 @@ const LoginScreen = () => {
               placeholder="Password"
             ></Input>
             <Text style={styles.forgotPass}>Forgot password?</Text>
-          </View>
+          </Box>
 
           <Center flex={0.25}>
-            <Button colorScheme="rose" w="190" h="10" borderRadius="20">
-              <Text style={styles.loginButton}>Log in</Text>
+            <Button bg="red.800" w="190" h="10" borderRadius="20">
+              <Text
+                style={styles.loginButton}
+                onClick={() => {
+                  window.location.href = "details.html";
+                }}
+              >
+                Log in
+              </Text>
             </Button>
           </Center>
 
@@ -83,20 +93,42 @@ const LoginScreen = () => {
           </View>
 
           <Center>
-            <Button colorScheme="muted" w="250" h="9" borderRadius="20">
-              <Text style={styles.loginWithApple}>Log in with Apple</Text>
+            <Button
+              startIcon={
+                <FontAwesome
+                  style={styles.loginWithGoogleIcon}
+                  name="apple"
+                  size={18}
+                  color="white"
+                />
+              }
+              style={styles.loginWithAppleButton}
+              bg="black"
+              w="250"
+              h="9"
+              borderRadius="20"
+            >
+              <Text style={styles.loginWithAppleText}>Log in with Apple</Text>
             </Button>
           </Center>
 
           <Center>
             <Button
-              colorScheme="white"
+              startIcon={
+                <FontAwesome
+                  style={styles.loginWithGoogleIcon}
+                  name="google"
+                  size={18}
+                />
+              }
+              style={styles.loginWithGoogleButton}
+              bg="white"
               w="250"
               h="9"
               marginTop="3"
               borderRadius="20"
             >
-              <Text style={styles.loginWithGoogle}>Log in with Google</Text>
+              <Text style={styles.loginWithGoogleText}>Log in with Google</Text>
             </Button>
           </Center>
 
@@ -116,7 +148,7 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   loginpage: {
-    backgroundColor: "#32522f",
+    backgroundColor: "#1f703e",
     flex: 1,
     justifyContent: "center",
     textAlign: "center",
@@ -124,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: " Jost_600SemiBold",
+    fontFamily: "  LobsterTwo_700Bold_Italic",
     justifyContent: "center",
     textAlign: "center",
     alignContent: "center",
@@ -137,7 +169,7 @@ const styles = StyleSheet.create({
   loginText: {
     fontFamily: " Jost_600SemiBold",
     color: textColor,
-    fontSize: 28,
+    fontSize: 26,
     textAlign: "left",
     marginBottom: 25,
     paddingLeft: 15,
@@ -180,13 +212,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  loginWithApple: {
+  loginWithAppleButton: {},
+
+  loginWithAppleText: {
+    flex: 0.5,
     color: textColor,
     fontSize: 16,
   },
 
-  loginWithGoogle: {
-    color: textColor,
+  loginWithGoogleIcon: { marginTop: 2 },
+  loginWithGoogleText: {
+    color: "black",
     fontSize: 16,
   },
 
