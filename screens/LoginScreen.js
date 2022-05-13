@@ -1,3 +1,5 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
@@ -5,11 +7,11 @@ import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 
 const textColor = "beige";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   //hooks
   const [show, setShow] = React.useState(false);
 
@@ -28,12 +30,12 @@ const LoginScreen = () => {
     return (
       <NativeBaseProvider>
         <LinearGradient
-        // Background Linear Gradient
-        colors={["#c4791c","#0c5407"]}
-        start={{x:1.75,y:0.75}}
-        end={{x:0.5,y:0.98}}
-        style={styles.loginpage}
-      >
+          // Background Linear Gradient
+          colors={["#c4791c", "#0c5407"]}
+          start={{ x: 1.75, y: 0.75 }}
+          end={{ x: 0.5, y: 0.98 }}
+          style={styles.loginpage}
+        >
           <Text style={styles.title}>Green Pine Connects</Text>
           <View>
             <Text style={styles.loginText}>Log in</Text>
@@ -76,7 +78,7 @@ const LoginScreen = () => {
               <Text
                 style={styles.loginButton}
                 onClick={() => {
-                  window.location.href = "details.html";
+                  navigation.navigate("EditProfile");
                 }}
               >
                 Log in
@@ -138,7 +140,7 @@ const LoginScreen = () => {
               </Text>
             </Center>
           </View>
-          </LinearGradient>
+        </LinearGradient>
       </NativeBaseProvider>
     );
   }
