@@ -9,7 +9,7 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 
-const textColor = "beige";
+const textColor = "#dae8d4c9";
 
 const LoginScreen = ({ navigation }) => {
   //hooks
@@ -74,12 +74,11 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <Center>
-            <Button bg="red.800" w="190" h="10" borderRadius="20">
+            <Button bg="red.800" w="190" h="10" borderRadius="20" onPress={() => {
+                  navigation.navigate("EditProfile");
+                }}>
               <Text
                 style={styles.loginButton}
-                onClick={() => {
-                  navigation.navigate("EditProfile");
-                }}
               >
                 Log in
               </Text>
@@ -141,7 +140,9 @@ const LoginScreen = ({ navigation }) => {
             </Center>
           </View>
         </LinearGradient>
+
       </NativeBaseProvider>
+
     );
   }
 };

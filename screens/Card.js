@@ -1,7 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React from "react";
 import Swiper from "react-native-deck-swiper";
-import { NativeBaseProvider, Image, View, Text, VStack } from "native-base";
+import { NativeBaseProvider, Image, View, VStack } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const profilePicSize = 250;
@@ -24,15 +24,15 @@ const Card = () => {
                   alt="Profile picture"
                 ></Image>
 
-                <Text bold style={styles.nameLabel}>
+                <Text style={styles.nameLabel}>
                   {card.firstName} {card.lastName}
                 </Text>
 
                 <Text style={styles.location}>
-                  <MaterialIcons name="location-pin" size={24} color="black" />
+                  <MaterialIcons name="location-pin" size={18} color="black" />
                   {card.location}
                 </Text>
-                <VStack space={2}>
+                <VStack marginLeft="2" space={2}>
                   <Text style={styles.label}>About</Text>
                   <Text style={styles.profileText}>{card.about}</Text>
                   <Text style={styles.label}>Offering</Text>
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F5FCFF",
   },
+
   card: {
     flex: 1,
     borderRadius: 10,
@@ -91,9 +92,12 @@ const styles = StyleSheet.create({
     borderRadius: profilePicSize / 3.5,
     borderColor: "gray",
     borderWidth: 1,
+    marginBottom:12,
   },
+
   location: {
     fontSize: 17,
+    marginTop:5
   },
 
   text: {
@@ -101,9 +105,13 @@ const styles = StyleSheet.create({
     fontSize: 50,
     backgroundColor: "transparent",
   },
+
   nameLabel: {
-    fontSize: 20,
+    fontSize: 25,
+    fontWeight: "bold"
   },
-  label: { fontWeight: "bold" },
-  profileText: {},
+
+  label: { fontSize:18, fontWeight: "bold", width:90},
+
+  profileText: {fontSize:17},
 });

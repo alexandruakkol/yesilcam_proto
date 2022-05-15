@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import {
   NativeBaseProvider,
@@ -13,91 +13,126 @@ import {
   Button,
   Text,
   View,
+  ScrollView,
+  StatusBar
 } from "native-base";
 
 const profilePicSize = 200;
-const headerColor = "white";
-const bkgColor = "white";
+const headerColor = "#ffffff";
+const bkgColor = "#ebecf0";
+const inputColor = "white";
 
 const ProfileSetup = ({ navigation }) => {
   return (
     <NativeBaseProvider>
+      <StatusBar></StatusBar>
       <View style={styles.pageContainer}>
-        <SafeAreaView>
-          <HStack style={styles.header} space={12} justifyContent="center">
-            <Center h="10" w="15%" rounded="md" />
-            <Center h="10" w="40%" rounded="md">
-              <Text style={[styles.headerTitle, styles.headerElements]}>
-                Edit profile
-              </Text>
-            </Center>
-            <Button variant="link" bg={headerColor} h="10" w="15%" rounded="md">
-              <Text
-                style={[styles.doneText, styles.headerElements]}
-                onClick={() => {
-                  navigation.navigate("Cards");
-                }}
-              >
-                Done
-              </Text>
-            </Button>
-          </HStack>
-        </SafeAreaView>
-
-        <View style={styles.profilePicView}>
-          <Text bold>My Photo</Text>
-          <Image
-            source={{
-              uri: "https://img.icons8.com/ios-filled/344/test-account.png",
+        <HStack style={styles.header} space={6} justifyContent="center">
+          <Center h="10" w="25%" />
+          <Center h="10" w="40%">
+            <Text style={[styles.headerElements, styles.headerTitle]}>
+              Edit profile
+            </Text>
+          </Center>
+          <Button
+            variant="link"
+            bg={headerColor}
+            h="10"
+            w="25%"
+            onPress={() => {
+              navigation.navigate("Cards");
             }}
-            style={styles.profilePic}
-            alt="Profile picture"
-          ></Image>
-          <Text italic style={styles.profilePicLabel}>
-            Tap to edit
-          </Text>
-          <VStack style={styles.vstack} space={3}>
-            <HStack space={1}>
-              <Input w="172" placeholder="First name"></Input>
-              <Input w="172" placeholder="Last name"></Input>
-            </HStack>
+          >
+            <Text style={[styles.doneText, styles.headerElements]}>Done</Text>
+          </Button>
+        </HStack>
 
-            <Text style={styles.label}>About Me</Text>
-            <TextArea
-              w="350"
-              h="95"
-              placeholder="Tell us a few words about yourself:
+        <ScrollView>
+          <View style={styles.scrollView}>
+            <Text style={styles.profilePicLabel}>My Photo</Text>
+            <Image
+              source={{
+                uri: "https://img.icons8.com/ios-filled/344/test-account.png",
+              }}
+              style={styles.profilePic}
+              alt="Profile picture"
+            ></Image>
+            <Text italic style={styles.tapToEdit}>
+              Tap to edit
+            </Text>
+            <VStack style={styles.vstack} space={5}>
+              <HStack>
+                <Input
+                  style={styles.input}
+                  bg={inputColor}
+                  w="50%"
+                  h="12"
+                  placeholder="First name"
+                ></Input>
+                <Input
+                  style={styles.input}
+                  bg={inputColor}
+                  w="50%"
+                  placeholder="Last name"
+                ></Input>
+              </HStack>
+
+              <Text style={styles.label}>About Me</Text>
+              <TextArea
+                style={styles.input}
+                bg={inputColor}
+                h="95"
+                placeholder="Tell us a few words about yourself:
                             • What are your passions and aspirations?
                             • How do you go about achieveing your goals?"
-            ></TextArea>
+              ></TextArea>
 
-            <Text style={styles.label}>What I offer</Text>
-            <TextArea
-              w="350"
-              h="95"
-              placeholder=" • What skills/experience do you want to share with others?
+              <Text style={styles.label}>What I offer</Text>
+              <TextArea
+                style={styles.input}
+                bg={inputColor}
+                h="95"
+                placeholder=" • What skills/experience do you want to share with others?
               • What resources, services, or materials are you able to offer?
                "
-            ></TextArea>
+              ></TextArea>
 
-            <Text style={styles.label}>What I seek</Text>
-            <TextArea
-              w="350"
-              h="95"
-              placeholder=" • What do you seek by using this app?
+              <Text style={styles.label}>What I seek</Text>
+              <TextArea
+                style={styles.input}
+                bg={inputColor}
+                h="95"
+                placeholder=" • What do you seek by using this app?
               • What sort of project are you looking for help for?"
-            ></TextArea>
+              ></TextArea>
 
-            <Text>Profession</Text>
-            <Input w="350" placeholder="Add profession"></Input>
+              <Text style={styles.label}>Profession</Text>
+              <Input
+                style={styles.input}
+                bg={inputColor}
+                h="12"
+                placeholder="Add profession"
+              ></Input>
 
-            <Text>Located in</Text>
-            <Input w="350" placeholder="Add location"></Input>
+              <Text style={styles.label}>Located in</Text>
+              <Input
+                style={styles.input}
+                bg={inputColor}
+                h="12"
+                placeholder="ex. San Diego, CA"
+              ></Input>
 
-            <Text>Languages I speak</Text>
-            <Input w="350" placeholder="Add language"></Input>
-          </VStack>
-        </View>
+              <Text style={styles.label}>Languages I speak</Text>
+              <Input
+                style={styles.input}
+                bg={inputColor}
+                h="12"
+                placeholder="Add language"
+              ></Input>
+              <View h="10"></View>
+            </VStack>
+          </View>
+        </ScrollView>
       </View>
     </NativeBaseProvider>
   );
@@ -112,19 +147,19 @@ const styles = StyleSheet.create({
   },
 
   header: {
+    paddingTop: 50,
     backgroundColor: headerColor,
-    height: 45,
-    borderBottomColor: "grey",
+    height: 100,
+    borderBottomColor: "lightgrey",
     borderBottomWidth: 1,
   },
 
-  headerElements: { fontWeight: "bold", fontSize: 15 },
+  headerElements: { fontWeight: "bold", fontSize: 17 },
+  headerTitle: { fontSize: 18 },
 
-  headerTitle: {},
+  doneText: { color: "red" },
 
-  doneText: {},
-
-  profilePicView: {
+  scrollView: {
     marginTop: 15,
     alignItems: "center",
   },
@@ -139,14 +174,27 @@ const styles = StyleSheet.create({
   },
 
   profilePicLabel: {
-    fontSize: 12,
+    fontSize: 17,
+    fontWeight:"bold"
+  },
+
+  tapToEdit:{
+    fontSize:12
   },
 
   vstack: {
     marginTop: 30,
-    alignItems: "center",
   },
+
   label: {
-    marginBottom: -5,
+    marginLeft:20,
+    fontSize: 17,
+    marginBottom: -13,
+    fontWeight:"bold"
+  },
+
+  input: {
+    fontSize: 17,
+    width:"100%"
   },
 });
