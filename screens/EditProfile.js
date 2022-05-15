@@ -16,7 +16,7 @@ import {
 } from "native-base";
 
 const profilePicSize = 200;
-const headerColor = "beige";
+const headerColor = "white";
 const bkgColor = "white";
 
 const ProfileSetup = ({ navigation }) => {
@@ -45,16 +45,23 @@ const ProfileSetup = ({ navigation }) => {
         </SafeAreaView>
 
         <View style={styles.profilePicView}>
+          <Text bold>My Photo</Text>
           <Image
             source={{
-              uri: "https://images.unsplash.com/photo-1535786536200-3dd2062ff878?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+              uri: "https://img.icons8.com/ios-filled/344/test-account.png",
             }}
             style={styles.profilePic}
             alt="Profile picture"
           ></Image>
-          <Text style={styles.profilePicLabel}>Tap on the picture to edit</Text>
-
+          <Text italic style={styles.profilePicLabel}>
+            Tap to edit
+          </Text>
           <VStack style={styles.vstack} space={3}>
+            <HStack space={1}>
+              <Input w="172" placeholder="First name"></Input>
+              <Input w="172" placeholder="Last name"></Input>
+            </HStack>
+
             <Text style={styles.label}>About Me</Text>
             <TextArea
               w="350"
@@ -81,8 +88,14 @@ const ProfileSetup = ({ navigation }) => {
               • What sort of project are you looking for help for?"
             ></TextArea>
 
+            <Text>Profession</Text>
+            <Input w="350" placeholder="Add profession"></Input>
+
             <Text>Located in</Text>
-            <Input w="350"></Input>
+            <Input w="350" placeholder="Add location"></Input>
+
+            <Text>Languages I speak</Text>
+            <Input w="350" placeholder="Add language"></Input>
           </VStack>
         </View>
       </View>
@@ -97,8 +110,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: bkgColor,
   },
-  header: { backgroundColor: headerColor, height: 45 },
+
+  header: {
+    backgroundColor: headerColor,
+    height: 45,
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+  },
+
   headerElements: { fontWeight: "bold", fontSize: 15 },
+
   headerTitle: {},
 
   doneText: {},
@@ -109,10 +130,18 @@ const styles = StyleSheet.create({
   },
 
   profilePic: {
+    marginTop: 10,
     width: profilePicSize,
     height: profilePicSize,
-    borderRadius: profilePicSize / 2,
+    borderRadius: profilePicSize / 3.5,
+    borderColor: "lightgray",
+    borderWidth: 1,
   },
+
+  profilePicLabel: {
+    fontSize: 12,
+  },
+
   vstack: {
     marginTop: 30,
     alignItems: "center",
