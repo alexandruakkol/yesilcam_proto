@@ -52,7 +52,7 @@ const ProfileSetup = ({ navigation }) => {
             <Text style={styles.profilePicLabel}>My Photo</Text>
             <Image
               source={{
-                uri: "https://img.icons8.com/ios-filled/344/test-account.png",
+                uri: "https://cdn-icons-png.flaticon.com/512/875/875068.png",
               }}
               style={styles.profilePic}
               alt="Profile picture"

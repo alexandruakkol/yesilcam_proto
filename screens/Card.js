@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
 
   profilePic: {
-    marginTop: 3,
+    marginTop: 5,
     width: profilePicSize,
     height: profilePicSize,
     borderRadius: profilePicSize / 3.5,
