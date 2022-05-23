@@ -8,13 +8,14 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Application from "expo-application";
 
 const textColor = "#dae8d4c9";
 
 const LoginScreen = ({ navigation }) => {
   //hooks
   const [show, setShow] = React.useState(false);
-
+  console.log("bundleID", Application.applicationId);
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
     LobsterTwo_700Bold_Italic,
@@ -74,14 +75,16 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <Center>
-            <Button bg="red.800" w="190" h="10" borderRadius="20" onPress={() => {
-                  navigation.navigate("EditProfile");
-                }}>
-              <Text
-                style={styles.loginButton}
-              >
-                Log in
-              </Text>
+            <Button
+              bg="red.800"
+              w="190"
+              h="10"
+              borderRadius="20"
+              onPress={() => {
+                navigation.navigate("EditProfile");
+              }}
+            >
+              <Text style={styles.loginButton}>Log in</Text>
             </Button>
           </Center>
 
@@ -140,9 +143,7 @@ const LoginScreen = ({ navigation }) => {
             </Center>
           </View>
         </LinearGradient>
-
       </NativeBaseProvider>
-
     );
   }
 };
