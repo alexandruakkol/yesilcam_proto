@@ -1,20 +1,44 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
+import React, {useState} from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
+import { AtmSharp } from "@mui/icons-material";
+import { auth } from "../firebase";
 
 const textColor = "#dae8d4c9";
 
+//navigation.navigate("EditProfile")
+
 const LoginScreen = ({ navigation }) => {
   //hooks
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
+  let [email, setEmail] = useState();
+  let [password, setPassword] = useState();
+
+const handleSignUp = () => {
+  auth.
+    createUserWithEmailAndPassword(email, password)
+    .then(userCredentials => {
+      const user = userCredentials.user;
+      console.log('registered with', user.email);
+    })
+    .catch(error => alert(error.message))
+  }
+
+const handleLogIn = () => {
+  auth.
+    signInWithEmailAndPassword(email, password)
+    .then(userCredentials => {
+      const user = userCredentials.user;
+      console.log('logged in with', user.email);
+    })
+    .catch(error => alert(error.message))
+  }
+
   console.log("bundleID", Application.applicationId);
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
@@ -30,14 +54,16 @@ const LoginScreen = ({ navigation }) => {
   } else {
     return (
       <NativeBaseProvider>
+       
         <LinearGradient
           // Background Linear Gradient
           colors={["#c4791c", "#0c5407"]}
           start={{ x: 1.75, y: 0.75 }}
           end={{ x: 0.5, y: 0.98 }}
           style={styles.loginpage}
-        >
+        > 
           <Text style={styles.title}>Green Pine Connects</Text>
+          <KeyboardAvoidingView behavior="padding">
           <View>
             <Text style={styles.loginText}>Log in</Text>
             <Input
@@ -46,6 +72,8 @@ const LoginScreen = ({ navigation }) => {
               size="2xl"
               mx="4"
               placeholder="Email"
+              value = {email}
+              onChangeText = {(email)=>{setEmail(email);console.log(email)}}
             ></Input>
             <Input
               secureTextEntry
@@ -56,6 +84,8 @@ const LoginScreen = ({ navigation }) => {
               marginBottom="4"
               size="2xl"
               type={show ? "text" : "password"}
+              value = {password}
+              onChangeText = {(password)=>{setPassword(password);console.log(password)}}
               InputRightElement={
                 <Icon
                   as={
@@ -81,7 +111,8 @@ const LoginScreen = ({ navigation }) => {
               h="10"
               borderRadius="20"
               onPress={() => {
-                navigation.navigate("EditProfile");
+                handleLogIn();
+                
               }}
             >
               <Text style={styles.loginButton}>Log in</Text>
@@ -142,7 +173,9 @@ const LoginScreen = ({ navigation }) => {
               </Text>
             </Center>
           </View>
+          </KeyboardAvoidingView>
         </LinearGradient>
+        
       </NativeBaseProvider>
     );
   }
