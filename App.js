@@ -6,6 +6,7 @@ import LoginScreen from "./screens/LoginScreen";
 import EditProfile from "./screens/EditProfile";
 import Cards from "./screens/Cards";
 import { NativeBaseProvider } from "native-base";
+import CreateAccount from "./screens/CreateAccount";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +18,13 @@ export default function App() {
 
         <Stack.Screen
             options={{ headerShown: false }}
-            name="Home"
+            name="LoginScreen"
             component={LoginScreen}
+          />
+          <Stack.Screen 
+           options={{ headerShown: false }}
+           name="CreateAccount"
+           component={CreateAccount}
           />
           <Stack.Screen
             options={{ headerShown: false }}
@@ -30,6 +36,7 @@ export default function App() {
             name="Cards"
             component={Cards}
           />
+
           
         </Stack.Navigator>
       </NavigationContainer>

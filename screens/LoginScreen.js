@@ -26,7 +26,11 @@ const handleSignUp = () => {
       const user = userCredentials.user;
       console.log('registered with', user.email);
     })
-    .catch(error => alert(error.message))
+    .catch(
+      error => {console.log('badSignup: ', error.message);
+      alert('Invalid signup');
+    }
+      )
   }
 
 const handleLogIn = () => {
@@ -35,11 +39,15 @@ const handleLogIn = () => {
     .then(userCredentials => {
       const user = userCredentials.user;
       console.log('logged in with', user.email);
+      navigation.navigate('EditProfile');
     })
-    .catch(error => alert(error.message))
+    .catch(
+      error => {console.log('badLogin: ', error.message);
+      alert('Invalid login');
+    }
+      )
   }
 
-  console.log("bundleID", Application.applicationId);
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
     LobsterTwo_700Bold_Italic,
@@ -73,7 +81,7 @@ const handleLogIn = () => {
               mx="4"
               placeholder="Email"
               value = {email}
-              onChangeText = {(email)=>{setEmail(email);console.log(email)}}
+              onChangeText = {(email)=>{setEmail(email);}}
             ></Input>
             <Input
               secureTextEntry
@@ -85,7 +93,7 @@ const handleLogIn = () => {
               size="2xl"
               type={show ? "text" : "password"}
               value = {password}
-              onChangeText = {(password)=>{setPassword(password);console.log(password)}}
+              onChangeText = {(password)=>{setPassword(password);}}
               InputRightElement={
                 <Icon
                   as={
@@ -111,7 +119,7 @@ const handleLogIn = () => {
               h="10"
               borderRadius="20"
               onPress={() => {
-                handleLogIn();
+                if(email && password){handleLogIn()};
                 
               }}
             >
@@ -169,7 +177,7 @@ const handleLogIn = () => {
             <Center>
               <Text style={styles.newHere}>
                 New here?{" "}
-                <Text style={styles.createAccountText}>Create an account</Text>
+                <Text style={styles.createAccountText} onPress={() => navigation.navigate("CreateAccount")}>Create an account</Text>
               </Text>
             </Center>
           </View>
