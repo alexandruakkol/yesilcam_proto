@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
-import { AtmSharp } from "@mui/icons-material";
 import { auth } from "../firebase";
 
 const textColor = "#dae8d4c9";
@@ -19,34 +18,32 @@ const LoginScreen = ({ navigation }) => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
 
-const handleSignUp = () => {
-  auth.
-    createUserWithEmailAndPassword(email, password)
-    .then(userCredentials => {
-      const user = userCredentials.user;
-      console.log('registered with', user.email);
-    })
-    .catch(
-      error => {console.log('badSignup: ', error.message);
-      alert('Invalid signup');
-    }
-      )
-  }
+  const handleSignUp = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("registered with", user.email);
+      })
+      .catch((error) => {
+        console.log("badSignup: ", error.message);
+        alert("Invalid signup");
+      });
+  };
 
-const handleLogIn = () => {
-  auth.
-    signInWithEmailAndPassword(email, password)
-    .then(userCredentials => {
-      const user = userCredentials.user;
-      console.log('logged in with', user.email);
-      navigation.navigate('EditProfile');
-    })
-    .catch(
-      error => {console.log('badLogin: ', error.message);
-      alert('Invalid login');
-    }
-      )
-  }
+  const handleLogIn = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("logged in with", user.email);
+        navigation.navigate("EditProfile");
+      })
+      .catch((error) => {
+        console.log("badLogin: ", error.message);
+        alert("Invalid login");
+      });
+  };
 
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
@@ -62,128 +59,138 @@ const handleLogIn = () => {
   } else {
     return (
       <NativeBaseProvider>
-       
         <LinearGradient
           // Background Linear Gradient
           colors={["#c4791c", "#0c5407"]}
           start={{ x: 1.75, y: 0.75 }}
           end={{ x: 0.5, y: 0.98 }}
           style={styles.loginpage}
-        > 
+        >
           <Text style={styles.title}>Green Pine Connects</Text>
           <KeyboardAvoidingView behavior="padding">
-          <View>
-            <Text style={styles.loginText}>Log in</Text>
-            <Input
-              style={styles.input}
-              variant="underlined"
-              size="2xl"
-              mx="4"
-              placeholder="Email"
-              value = {email}
-              onChangeText = {(email)=>{setEmail(email);}}
-            ></Input>
-            <Input
-              secureTextEntry
-              variant="underlined"
-              style={styles.input}
-              mx="4"
-              marginTop="5"
-              marginBottom="4"
-              size="2xl"
-              type={show ? "text" : "password"}
-              value = {password}
-              onChangeText = {(password)=>{setPassword(password);}}
-              InputRightElement={
-                <Icon
-                  as={
-                    <MaterialIcons
-                      name={show ? "visibility" : "visibility-off"}
-                    />
-                  }
-                  size={5}
-                  mr="2"
-                  color="muted.400"
-                  onPress={() => setShow(!show)}
-                />
-              }
-              placeholder="Password"
-            ></Input>
-            <Text style={styles.forgotPass}>Forgot password?</Text>
-          </View>
+            <View>
+              <Text style={styles.loginText}>Log in</Text>
+              <Input
+                style={styles.input}
+                variant="underlined"
+                size="2xl"
+                mx="4"
+                placeholder="Email"
+                value={email}
+                onChangeText={(email) => {
+                  setEmail(email);
+                }}
+              ></Input>
+              <Input
+                secureTextEntry
+                variant="underlined"
+                style={styles.input}
+                mx="4"
+                marginTop="5"
+                marginBottom="4"
+                size="2xl"
+                type={show ? "text" : "password"}
+                value={password}
+                onChangeText={(password) => {
+                  setPassword(password);
+                }}
+                InputRightElement={
+                  <Icon
+                    as={
+                      <MaterialIcons
+                        name={show ? "visibility" : "visibility-off"}
+                      />
+                    }
+                    size={5}
+                    mr="2"
+                    color="muted.400"
+                    onPress={() => setShow(!show)}
+                  />
+                }
+                placeholder="Password"
+              ></Input>
+              <Text style={styles.forgotPass}>Forgot password?</Text>
+            </View>
 
-          <Center>
-            <Button
-              bg="red.800"
-              w="190"
-              h="10"
-              borderRadius="20"
-              onPress={() => {
-                if(email && password){handleLogIn()};
-                
-              }}
-            >
-              <Text style={styles.loginButton}>Log in</Text>
-            </Button>
-          </Center>
-
-          <View style={styles.lineContainer}>
-            <View style={styles.line} />
-            <Text style={styles.lineText}>or</Text>
-            <View style={styles.line} />
-          </View>
-
-          <Center>
-            <Button
-              startIcon={
-                <FontAwesome
-                  style={styles.loginWithGoogleIcon}
-                  name="apple"
-                  size={18}
-                  color="white"
-                />
-              }
-              style={styles.loginWithAppleButton}
-              bg="black"
-              w="240"
-              h="10"
-              borderRadius="20"
-            >
-              <Text style={styles.loginWithAppleText}>Log in with Apple</Text>
-            </Button>
-          </Center>
-
-          <Center>
-            <Button
-              startIcon={
-                <FontAwesome
-                  style={styles.loginWithGoogleIcon}
-                  name="google"
-                  size={18}
-                />
-              }
-              style={styles.loginWithGoogleButton}
-              bg="white"
-              w="240"
-              h="10"
-              marginTop="3"
-              borderRadius="20"
-            >
-              <Text style={styles.loginWithGoogleText}>Log in with Google</Text>
-            </Button>
-          </Center>
-
-          <View>
             <Center>
-              <Text style={styles.newHere}>
-                New here?{" "}
-                <Text style={styles.createAccountText} onPress={() => navigation.navigate("CreateAccount")}>Create an account</Text>
-              </Text>
+              <Button
+                bg="red.800"
+                w="190"
+                h="10"
+                borderRadius="20"
+                onPress={() => {
+                  if (email && password) {
+                    handleLogIn();
+                  }
+                }}
+              >
+                <Text style={styles.loginButton}>Log in</Text>
+              </Button>
             </Center>
-          </View>
+
+            <View style={styles.lineContainer}>
+              <View style={styles.line} />
+              <Text style={styles.lineText}>or</Text>
+              <View style={styles.line} />
+            </View>
+
+            <Center>
+              <Button
+                startIcon={
+                  <FontAwesome
+                    style={styles.loginWithGoogleIcon}
+                    name="apple"
+                    size={18}
+                    color="white"
+                  />
+                }
+                style={styles.loginWithAppleButton}
+                bg="black"
+                w="240"
+                h="10"
+                borderRadius="20"
+              >
+                <Text style={styles.loginWithAppleText}>Log in with Apple</Text>
+              </Button>
+            </Center>
+
+            <Center>
+              <Button
+                startIcon={
+                  <FontAwesome
+                    style={styles.loginWithGoogleIcon}
+                    name="google"
+                    size={18}
+                  />
+                }
+                style={styles.loginWithGoogleButton}
+                bg="white"
+                w="240"
+                h="10"
+                marginTop="3"
+                borderRadius="20"
+              >
+                <Text style={styles.loginWithGoogleText}>
+                  Log in with Google
+                </Text>
+              </Button>
+            </Center>
+
+            <View>
+              <Center>
+                <Text style={styles.newHere}>
+                  New here?{" "}
+                  <Text
+                    style={styles.createAccountText}
+                    onPress={() => navigation.navigate("CreateAccount")}
+                  >
+                    Create an account
+                  </Text>
+                </Text>
+              </Center>
+            </View>
           </KeyboardAvoidingView>
         </LinearGradient>
-        
       </NativeBaseProvider>
     );
   }
