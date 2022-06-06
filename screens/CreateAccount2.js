@@ -1,19 +1,20 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, Text, View, KeyboardAvoidingView,TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
+import { NativeBaseProvider, Input, Button, Icon, Center, Box } from "native-base";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import DatePicker from "react-native-date-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const textColor = "#dae8d4c9";
-const CreateAccount2 = ({ navigation }) => {
+const CreateAccount2 = ({ navigation }) => { 
   let [show, setShow] = useState(true);
   let [show2, setShow2] = useState(true);
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [password2, setPassword2] = useState();
-  const [date, setDate] = useState(new Date());
+  const [birthday, setBirthday] = useState();
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   return (
     <NativeBaseProvider>
@@ -29,7 +30,25 @@ const CreateAccount2 = ({ navigation }) => {
 
           <KeyboardAvoidingView behavior="padding">
             <Text style={styles.loginText}>What is your birthday?</Text>
-            <DatePicker date={date} onDateChange={setDate} />
+            <TouchableOpacity onPress={() => {setDatePickerVisibility(true)}}>
+            <Box alignSelf="center" bg="primary.500">
+            <Text>{birthday ? birthday.toString() : "Choose your birthday"}</Text>
+            </Box>
+            </TouchableOpacity>
+            
+           
+            <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={(date) => {
+          setBirthday(date);
+          console.warn("A date has been picked: ", date);
+          setDatePickerVisibility(false);
+        }}
+        onCancel={() => {
+          setDatePickerVisibility(false);
+        }}
+      />
             <Center>
               <Button
                 bg="red.800"

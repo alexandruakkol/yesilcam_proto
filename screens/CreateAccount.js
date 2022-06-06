@@ -107,9 +107,9 @@ const CreateAccount = ({ navigation }) => {
                 h="10"
                 borderRadius="20"
                 onPress={() => {
-                  if (email && password) {
+                  
                     navigation.navigate("CreateAccount2");
-                  }
+                  
                 }}
               >
                 <Text style={styles.loginButton}>Sign Up</Text>
