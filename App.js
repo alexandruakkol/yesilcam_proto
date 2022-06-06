@@ -7,6 +7,7 @@ import EditProfile from "./screens/EditProfile";
 import Cards from "./screens/Cards";
 import { NativeBaseProvider } from "native-base";
 import CreateAccount from "./screens/CreateAccount";
+import CreateAccount2 from "./screens/CreateAccount2";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,16 +16,20 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
-
-        <Stack.Screen
+          <Stack.Screen
             options={{ headerShown: false }}
             name="LoginScreen"
             component={LoginScreen}
           />
-          <Stack.Screen 
-           options={{ headerShown: false }}
-           name="CreateAccount"
-           component={CreateAccount}
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CreateAccount"
+            component={CreateAccount}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CreateAccount2"
+            component={CreateAccount2}
           />
           <Stack.Screen
             options={{ headerShown: false }}
@@ -36,8 +41,6 @@ export default function App() {
             name="Cards"
             component={Cards}
           />
-
-          
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
