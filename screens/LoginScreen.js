@@ -14,7 +14,7 @@ const textColor = "#dae8d4c9";
 
 const LoginScreen = ({ navigation }) => {
   //hooks
-  const [show, setShow] = useState(false);
+  let [show, setShow] = useState(true);
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
 
@@ -82,14 +82,13 @@ const LoginScreen = ({ navigation }) => {
                 }}
               ></Input>
               <Input
-                secureTextEntry
+                secureTextEntry={show}
                 variant="underlined"
                 style={styles.input}
                 mx="4"
                 marginTop="5"
                 marginBottom="4"
                 size="2xl"
-                type={show ? "text" : "password"}
                 value={password}
                 onChangeText={(password) => {
                   setPassword(password);
@@ -98,13 +97,15 @@ const LoginScreen = ({ navigation }) => {
                   <Icon
                     as={
                       <MaterialIcons
-                        name={show ? "visibility" : "visibility-off"}
+                        name={show ? "visibility-off" : "visibility"}
                       />
                     }
                     size={5}
                     mr="2"
                     color="muted.400"
-                    onPress={() => setShow(!show)}
+                    onPress={() => {
+                      setShow(!show);
+                    }}
                   />
                 }
                 placeholder="Password"
