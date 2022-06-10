@@ -8,6 +8,7 @@ import Cards from "./screens/Cards";
 import { NativeBaseProvider } from "native-base";
 import CreateAccount from "./screens/CreateAccount";
 import CreateAccount2 from "./screens/CreateAccount2";
+import CreateAccount3 from "./screens/CreateAccount3";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ export default function App() {
             options={{ headerShown: false }}
             name="CreateAccount2"
             component={CreateAccount2}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CreateAccount3"
+            component={CreateAccount3}
           />
           <Stack.Screen
             options={{ headerShown: false }}
