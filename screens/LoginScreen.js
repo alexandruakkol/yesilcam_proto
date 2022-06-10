@@ -6,7 +6,7 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
-import { auth } from "../firebase";
+import { auth, onGoogleButtonPress } from "../firebase";
 
 const textColor = "#dae8d4c9";
 
@@ -157,6 +157,7 @@ const LoginScreen = ({ navigation }) => {
 
             <Center>
               <Button
+                title="Google Sign-In"
                 startIcon={
                   <FontAwesome
                     style={styles.loginWithGoogleIcon}
@@ -170,6 +171,7 @@ const LoginScreen = ({ navigation }) => {
                 h="10"
                 marginTop="3"
                 borderRadius="20"
+                onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
               >
                 <Text style={styles.loginWithGoogleText}>
                   Log in with Google

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView,TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, KeyboardAvoidingView,TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center, Box } from "native-base";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
@@ -7,12 +7,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const textColor = "#dae8d4c9";
-const CreateAccount2 = ({ navigation }) => { 
+const CreateAccount2 = ({ route, navigation }) => { 
   let [show, setShow] = useState(true);
   let [show2, setShow2] = useState(true);
-  let [email, setEmail] = useState();
-  let [password, setPassword] = useState();
-  let [password2, setPassword2] = useState();
   const [birthday, setBirthday] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -29,12 +26,12 @@ const CreateAccount2 = ({ navigation }) => {
           <Text style={styles.title}>Green Pine Connects</Text>
 
           <KeyboardAvoidingView behavior="padding">
-            <Text style={styles.loginText}>What is your birthday?</Text>
-            <TouchableOpacity onPress={() => {setDatePickerVisibility(true)}}>
-            <Box alignSelf="center" bg="primary.500">
-            <Text>{birthday ? birthday.toString() : "Choose your birthday"}</Text>
-            </Box>
-            </TouchableOpacity>
+            <Center><Text style={styles.question}>What is your birthday?</Text></Center>
+            <TouchableWithoutFeedback onPress={() => {setDatePickerVisibility(true)}}>
+            <View alignSelf="center" bg="primary.500" style={styles.bdayBox}>
+            <Center><Text style={styles.bdayText}>{birthday ? birthday.toISOString('MMM dd yyyy').split('T')[0] : "Choose your birthday"}</Text></Center>
+            </View>
+            </TouchableWithoutFeedback>
             
            
             <DateTimePickerModal
@@ -42,7 +39,6 @@ const CreateAccount2 = ({ navigation }) => {
         mode="date"
         onConfirm={(date) => {
           setBirthday(date);
-          console.warn("A date has been picked: ", date);
           setDatePickerVisibility(false);
         }}
         onCancel={() => {
@@ -52,16 +48,21 @@ const CreateAccount2 = ({ navigation }) => {
             <Center>
               <Button
                 bg="red.800"
-                w="190"
+                w="230"
                 h="10"
                 borderRadius="20"
                 onPress={() => {
-                  if (email && password) {
-                    handleLogIn();
-                  }
+                  
+                   navigation.navigate('CreateAccount3',
+                   {email:(route.params.email),
+                    password:(route.params.password),
+                    birthday:birthday
+                  });
                 }}
               >
-                <Text style={styles.loginButton}>Sign Up</Text>
+                <Text style={styles.confirmTxt}
+            
+                >Confirm</Text>
               </Button>
             </Center>
           </KeyboardAvoidingView>
@@ -84,7 +85,8 @@ const styles = StyleSheet.create({
     marginTop: 100,
     color: textColor,
   },
-  loginText: {
+  question: {
+    paddingTop:40,
     fontFamily: "Jost_600SemiBold",
     color: textColor,
     fontSize: 27,
@@ -92,8 +94,22 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     paddingLeft: 15,
   },
-  loginButton: {
+  bdayBox:{
+    marginTop:30,
+    height:45,
+    width:400,
+    backgroundColor:'lightgrey',
+    borderRadius:12,
+    marginBottom:80
+  },
+  bdayText:{
+    fontSize:35
+  },
+  confirmTxt: {
     color: textColor,
     fontSize: 16,
   },
+  appView:{
+    height:'100%'
+  }
 });

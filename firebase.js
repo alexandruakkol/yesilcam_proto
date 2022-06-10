@@ -1,13 +1,13 @@
-// Import the functions you need from the SDKs you need
+//expo bundleID: 'host.exp.Exponent'
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
-import "firebase/compat/firestore"
+import "firebase/compat/firestore";
+import { GoogleSignin } from "@react-native-community/google-signin";
+import * as Application from 'expo-application';
+import { HotelSharp } from "@mui/icons-material";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {getFirestore, collection, getDocs} from 'firebase/firestore'
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAevCuPuEq2FB73plVhfxniRHeYyUnA-as",
   authDomain: "greenpineconnects.firebaseapp.com",
@@ -19,7 +19,6 @@ const firebaseConfig = {
   measurementId: "G-1S927LZVJL"
 };
 
-// Initialize Firebase
 let app;
 if(firebase.apps.length === 0 ){
   app = firebase.initializeApp(firebaseConfig);
@@ -29,6 +28,19 @@ if(firebase.apps.length === 0 ){
 }
 
 const auth = firebase.auth();
+
+//db init
+const db = getFirestore()
+
+//collection reference
+const colRef = collection(db, 'users');
+
+//get collection data
+getDocs(colRef)
+  .then((snapshot) => {
+    console.log(snapshot.docs.forEach((doc)=>console.log(doc.data)))
+  })
+
 
 export {auth}
 

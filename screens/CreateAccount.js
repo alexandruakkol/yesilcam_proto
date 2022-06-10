@@ -13,6 +13,7 @@ const CreateAccount = ({ navigation }) => {
   let [password, setPassword] = useState();
   let [password2, setPassword2] = useState();
 
+
   return (
     <NativeBaseProvider>
       <LinearGradient
@@ -108,11 +109,13 @@ const CreateAccount = ({ navigation }) => {
                 borderRadius="20"
                 onPress={() => {
                   
-                    navigation.navigate("CreateAccount2");
+                    navigation.navigate("CreateAccount2", {
+                      email:email, password:password
+                    });
                   
                 }}
               >
-                <Text style={styles.loginButton}>Sign Up</Text>
+                <Text style={styles.loginButton}>Confirm</Text>
               </Button>
             </Center>
           </KeyboardAvoidingView>
@@ -147,4 +150,7 @@ const styles = StyleSheet.create({
     color: textColor,
     fontSize: 16,
   },
+  appView:{
+    height:'100%'
+  }
 });
