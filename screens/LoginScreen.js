@@ -110,7 +110,10 @@ const LoginScreen = ({ navigation }) => {
                 }
                 placeholder="Password"
               ></Input>
-              <Text style={styles.forgotPass}>Forgot password?</Text>
+              <Text style={styles.forgotPass} 
+                onPress={()=>
+                  navigation.navigate('forgotPassword')
+                }>Forgot password?</Text>
             </View>
 
             <Center>

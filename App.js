@@ -9,6 +9,7 @@ import { NativeBaseProvider } from "native-base";
 import CreateAccount from "./screens/CreateAccount";
 import CreateAccount2 from "./screens/CreateAccount2";
 import CreateAccount3 from "./screens/CreateAccount3";
+import ForgotPassword from "./screens/ForgotPassword";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,10 +18,22 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
+        <Stack.Screen
+            options={{ headerShown: false }}
+            name="EditProfile"
+            component={EditProfile}
+          />
           <Stack.Screen
             options={{ headerShown: false }}
             name="LoginScreen"
             component={LoginScreen}
+          />
+          
+
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="ForgotPassword"
+            component={ForgotPassword}
           />
           <Stack.Screen
             options={{ headerShown: false }}
@@ -37,11 +50,7 @@ export default function App() {
             name="CreateAccount3"
             component={CreateAccount3}
           />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="EditProfile"
-            component={EditProfile}
-          />
+
           <Stack.Screen
             options={{ headerShown: false }}
             name="Cards"

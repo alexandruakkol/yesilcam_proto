@@ -2,9 +2,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import React from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   NativeBaseProvider,
-  Input,
   Center,
   TextArea,
   VStack,
@@ -14,17 +14,35 @@ import {
   Text,
   View,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Input
 } from "native-base";
+import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
+
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
 const bkgColor = "#ebecf0";
 const inputColor = "white";
 
+
 const ProfileSetup = ({ navigation }) => {
+
+  let [fontsLoaded] = useFonts({
+    Jost_600SemiBold,
+  });
+  
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  } else {
+    
   return (
     <NativeBaseProvider>
+      
       <StatusBar></StatusBar>
       <View style={styles.pageContainer}>
         <HStack style={styles.header} space={6} justifyContent="center">
@@ -87,16 +105,6 @@ const ProfileSetup = ({ navigation }) => {
                             • How do you go about achieveing your goals?"
               ></TextArea>
 
-              <Text style={styles.label}>What I offer</Text>
-              <TextArea
-                style={styles.input}
-                bg={inputColor}
-                h="95"
-                placeholder=" • What skills/experience do you want to share with others?
-              • What resources, services, or materials are you able to offer?
-               "
-              ></TextArea>
-
               <Text style={styles.label}>What I seek</Text>
               <TextArea
                 style={styles.input}
@@ -104,6 +112,16 @@ const ProfileSetup = ({ navigation }) => {
                 h="95"
                 placeholder=" • What do you seek by using this app?
               • What sort of project are you looking for help for?"
+              ></TextArea>
+
+              <Text style={styles.label}>What I offer (optional)</Text>
+              <TextArea
+                style={styles.input}
+                bg={inputColor}
+                h="95"
+                placeholder=" • What skills/experience do you want to share with others?
+              • What resources, services, or materials are you able to offer?
+               "
               ></TextArea>
 
               <Text style={styles.label}>Profession</Text>
@@ -136,14 +154,13 @@ const ProfileSetup = ({ navigation }) => {
       </View>
     </NativeBaseProvider>
   );
-};
+};}
 
 export default ProfileSetup;
 
 const styles = StyleSheet.create({
   pageContainer: {
-    flex: 1,
-    backgroundColor: bkgColor,
+    height:'100%',
   },
 
   header: {
@@ -175,11 +192,11 @@ const styles = StyleSheet.create({
 
   profilePicLabel: {
     fontSize: 17,
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
 
-  tapToEdit:{
-    fontSize:12
+  tapToEdit: {
+    fontSize: 12,
   },
 
   vstack: {
@@ -187,14 +204,15 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    marginLeft:20,
+    marginLeft: 20,
     fontSize: 17,
     marginBottom: -13,
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
 
   input: {
+    fontFamily: "Jost_600SemiBold",
     fontSize: 17,
-    width:"100%"
+    width: "100%",
   },
 });

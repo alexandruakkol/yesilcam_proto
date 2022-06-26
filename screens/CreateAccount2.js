@@ -1,3 +1,4 @@
+//Birthday input screen
 import { StyleSheet, Text, View, KeyboardAvoidingView,TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center, Box } from "native-base";
@@ -12,7 +13,7 @@ const CreateAccount2 = ({ route, navigation }) => {
   let [show2, setShow2] = useState(true);
   const [birthday, setBirthday] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
+  var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
   return (
     <NativeBaseProvider>
       <LinearGradient
@@ -29,7 +30,10 @@ const CreateAccount2 = ({ route, navigation }) => {
             <Center><Text style={styles.question}>What is your birthday?</Text></Center>
             <TouchableWithoutFeedback onPress={() => {setDatePickerVisibility(true)}}>
             <View alignSelf="center" bg="primary.500" style={styles.bdayBox}>
-            <Center><Text style={styles.bdayText}>{birthday ? birthday.toISOString('MMM dd yyyy').split('T')[0] : "Choose your birthday"}</Text></Center>
+            <Center>
+              <Text style={styles.bdayText}>
+              {birthday ? birthday.toLocaleDateString("en-US", dateOptions) : "Choose your birthday"}
+              </Text></Center>
             </View>
             </TouchableWithoutFeedback>
             
