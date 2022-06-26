@@ -3,11 +3,25 @@ import React from "react";
 import Swiper from "react-native-deck-swiper";
 import { NativeBaseProvider, Image, View, VStack } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useFonts, Jost_600SemiBold, LobsterTwo_700Bold_Italic } from "@expo-google-fonts/jost";
 
 const profilePicSize = 250;
 const jsonData = require("../data/profiles.json");
 
 const Card = () => {
+
+  let [fontsLoaded] = useFonts({
+    LobsterTwo_700Bold_Italic,
+    Jost_600SemiBold
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  } else {
   return (
     <View>
       <Swiper
@@ -66,7 +80,7 @@ const Card = () => {
       ></Swiper>
     </View>
   );
-};
+};}
 
 export default Card;
 
@@ -104,11 +118,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 50,
     backgroundColor: "transparent",
+    fontFamily: "Jost_600SemiBold",
   },
 
   nameLabel: {
     fontSize: 25,
-    fontWeight: "bold"
+    fontWeight: "bold",    
+    fontFamily: "Jost_600SemiBold",
   },
 
   label: { fontSize:18, fontWeight: "bold", width:90},

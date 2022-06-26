@@ -7,9 +7,8 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 const textColor = "#dae8d4c9";
-const CreateAccount3 = ({ navigation }) => {
-  let [name, setName] = useState();
-  let [surname, setSurname] = useState();
+const ForgotPassword = ({ navigation }) => {
+  let [recoveryEmail, setRecoveryEmail] = useState();
 
   return (
     <NativeBaseProvider>
@@ -24,29 +23,17 @@ const CreateAccount3 = ({ navigation }) => {
           <Text style={styles.title}>Green Pine Connects</Text>
 
           <KeyboardAvoidingView behavior="padding">
-            <Text style={styles.loginText}>Let us know more about you</Text>
+            <Text style={styles.loginText}>What is your account's email?</Text>
 
             <Input
               style={styles.input}
               variant="underlined"
               size="2xl"
               mx="4"
-              placeholder="Name"
-              value={name}
-              onChangeText={(name) => {
-                setName(name);
-              }}
-            ></Input>
-
-            <Input
-              style={styles.input}
-              variant="underlined"
-              size="2xl"
-              mx="4"
-              placeholder="Surname"
-              value={surname}
-              onChangeText={(surname) => {
-                setSurname(surname);
+              placeholder="Email"
+              value={recoveryEmail}
+              onChangeText={(recoveryEmail) => {
+                setRecoveryEmail(recoveryEmail);
               }}
             ></Input>
 
@@ -59,10 +46,10 @@ const CreateAccount3 = ({ navigation }) => {
                 borderRadius="20"
                 onPress={() => {
                     
-                  navigation.navigate("CreateAccount2");
+                  
                 }}
               >
-                <Text style={styles.btnText}>Sign Up</Text>
+                <Text style={styles.btnText}>Confirm</Text>
               </Button>
             </Center>
           </KeyboardAvoidingView>
@@ -72,7 +59,7 @@ const CreateAccount3 = ({ navigation }) => {
   );
 };
 
-export default CreateAccount3;
+export default ForgotPassword;
 
 const styles = StyleSheet.create({
   title: {

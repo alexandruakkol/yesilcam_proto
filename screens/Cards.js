@@ -5,22 +5,20 @@ import {
   NativeBaseProvider,
   Center,
   HStack,
-
   View,
 } from "native-base";
 import React from "react";
-import {
-  LobsterTwo_700Bold_Italic,
-  useFonts,
-} from "@expo-google-fonts/lobster-two";
 import Card from "./Card";
-
+import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
+import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 const headerColor = "white";
 const bkgColor = "#ebecf0";
 
-const Cards = ({ navigation }) => {
+const Cards = ({ }) => {
+
   let [fontsLoaded] = useFonts({
-    LobsterTwo_700Bold_Italic,
+    Jost_600SemiBold,
+    LobsterTwo_700Bold_Italic
   });
 
   if (!fontsLoaded) {
