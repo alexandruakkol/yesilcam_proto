@@ -11,10 +11,11 @@ import React from "react";
 import Card from "./Card";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
+
 const headerColor = "white";
 const bkgColor = "#ebecf0";
 
-const Cards = ({ }) => {
+const Cards = ({ navigation }) => {
 
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
@@ -24,7 +25,7 @@ const Cards = ({ }) => {
   if (!fontsLoaded) {
     return (
       <View>
-        <Text>Loading...</Text>
+        <Text>Loadiddng...</Text>
       </View>
     );
   } else {
@@ -53,8 +54,8 @@ export default Cards;
 const styles = StyleSheet.create({
 
   pageContainer: {
-    flex: 1,
     backgroundColor: bkgColor,
+    height:'100%'
   },
   
   header: {

@@ -3,7 +3,8 @@ import React from "react";
 import Swiper from "react-native-deck-swiper";
 import { NativeBaseProvider, Image, View, VStack } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useFonts, Jost_600SemiBold, LobsterTwo_700Bold_Italic } from "@expo-google-fonts/jost";
+import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
+import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 
 const profilePicSize = 250;
 const jsonData = require("../data/profiles.json");
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     fontFamily: "Jost_600SemiBold",
   },
 
-  label: { fontSize:18, fontWeight: "bold", width:90},
+  label: { fontSize:18, fontWeight: "bold", width:150},
 
   profileText: {fontSize:17},
 });
