@@ -2,9 +2,7 @@
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import "firebase/compat/firestore";
-import { GoogleSignin } from "@react-native-community/google-signin";
 import * as Application from 'expo-application';
-import { HotelSharp } from "@mui/icons-material";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {getFirestore, collection, getDocs} from 'firebase/firestore'
 

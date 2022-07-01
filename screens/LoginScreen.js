@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
@@ -6,11 +6,10 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
-import { auth, onGoogleButtonPress } from "../firebase";
+import {auth, onGoogleButtonPress } from "../firebase";
+import {store, retrieve} from '../storage';
 
 const textColor = "#dae8d4c9";
-
-//navigation.navigate("EditProfile")
 
 const LoginScreen = ({ navigation }) => {
   //hooks
@@ -52,8 +51,9 @@ const LoginScreen = ({ navigation }) => {
 
   if (!fontsLoaded) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={styles.LoadingContainer}>
+        <ActivityIndicator color="#0c5407" />
+
       </View>
     );
   } else {
@@ -205,6 +205,15 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+
+  LoadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  },
+
   loginpage: {
     flex: 1,
     justifyContent: "center",

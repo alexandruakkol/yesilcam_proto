@@ -15,23 +15,20 @@ import {
   View,
   ScrollView,
   StatusBar,
-  Input
+  Input,
 } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
-
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
 const bkgColor = "#ebecf0";
 const inputColor = "white";
 
-
 const ProfileSetup = ({ navigation }) => {
-
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
   });
-  
+
   if (!fontsLoaded) {
     return (
       <View>
@@ -39,128 +36,126 @@ const ProfileSetup = ({ navigation }) => {
       </View>
     );
   } else {
-    
-  return (
-    <NativeBaseProvider>
-      
-      <StatusBar></StatusBar>
-      <View style={styles.pageContainer}>
-        <HStack style={styles.header} space={6} justifyContent="center">
-          <Center h="10" w="25%" />
-          <Center h="10" w="40%">
-            <Text style={[styles.headerElements, styles.headerTitle]}>
-              Edit profile
-            </Text>
-          </Center>
-          <Button
-            variant="link"
-            bg={headerColor}
-            h="10"
-            w="25%"
-            onPress={() => {
-              navigation.navigate("Cards");
-            }}
-          >
-            <Text style={[styles.doneText, styles.headerElements]}>Done</Text>
-          </Button>
-        </HStack>
-
-        <ScrollView>
-          <View style={styles.scrollView}>
-            <Text style={styles.profilePicLabel}>My Photo</Text>
-            <Image
-              source={{
-                uri: "https://cdn-icons-png.flaticon.com/512/875/875068.png",
+    return (
+      <NativeBaseProvider>
+        <StatusBar></StatusBar>
+        <View style={styles.pageContainer}>
+          <HStack style={styles.header} space={6} justifyContent="center">
+            <Center h="10" w="25%" />
+            <Center h="10" w="40%">
+              <Text style={[styles.headerElements, styles.headerTitle]}>
+                Edit profile
+              </Text>
+            </Center>
+            <Button
+              variant="link"
+              bg={headerColor}
+              h="10"
+              w="25%"
+              onPress={() => {
+                navigation.navigate("Cards");
               }}
-              style={styles.profilePic}
-              alt="Profile picture"
-            ></Image>
-            <Text italic style={styles.tapToEdit}>
-              Tap to edit
-            </Text>
-            <VStack style={styles.vstack} space={5}>
-              <HStack>
-                <Input
-                  style={styles.input}
-                  bg={inputColor}
-                  w="50%"
-                  h="12"
-                  placeholder="First name"
-                ></Input>
-                <Input
-                  style={styles.input}
-                  bg={inputColor}
-                  w="50%"
-                  placeholder="Last name"
-                ></Input>
-              </HStack>
+            >
+              <Text style={[styles.doneText, styles.headerElements]}>Done</Text>
+            </Button>
+          </HStack>
 
-              <Text style={styles.label}>About Me</Text>
-              <TextArea
-                style={styles.input}
-                bg={inputColor}
-                h="95"
-                placeholder="Tell us a few words about yourself:
+          <ScrollView>
+            <View style={styles.scrollView}>
+              <Text style={styles.profilePicLabel}>My Photo</Text>
+              <Image
+                source={{
+                  uri: "https://cdn-icons-png.flaticon.com/512/875/875068.png",
+                }}
+                style={styles.profilePic}
+                alt="Profile picture"
+              ></Image>
+              <Text italic style={styles.tapToEdit}>
+                Tap to edit
+              </Text>
+              <VStack style={styles.vstack} space={5}>
+                <HStack>
+                  <Input
+                    style={styles.input}
+                    bg={inputColor}
+                    w="50%"
+                    h="12"
+                    placeholder="First name"
+                  ></Input>
+                  <Input
+                    style={styles.input}
+                    bg={inputColor}
+                    w="50%"
+                    placeholder="Last name"
+                  ></Input>
+                </HStack>
+
+                <Text style={styles.label}>About Me</Text>
+                <TextArea
+                  style={styles.input}
+                  bg={inputColor}
+                  h="95"
+                  placeholder="Tell us a few words about yourself:
                             • What are your passions and aspirations?
                             • How do you go about achieveing your goals?"
-              ></TextArea>
+                ></TextArea>
 
-              <Text style={styles.label}>What I seek</Text>
-              <TextArea
-                style={styles.input}
-                bg={inputColor}
-                h="95"
-                placeholder=" • What do you seek by using this app?
-              • What sort of project are you looking for help for?"
-              ></TextArea>
-
-              <Text style={styles.label}>What I offer (optional)</Text>
-              <TextArea
-                style={styles.input}
-                bg={inputColor}
-                h="95"
-                placeholder=" • What skills/experience do you want to share with others?
+                <Text style={styles.label}>What I offer</Text>
+                <TextArea
+                  style={styles.input}
+                  bg={inputColor}
+                  h="95"
+                  placeholder=" • What skills/experience do you want to share with others?
               • What resources, services, or materials are you able to offer?
                "
-              ></TextArea>
+                ></TextArea>
+                <Text style={styles.label}>What I seek (optional)</Text>
+                <TextArea
+                  style={styles.input}
+                  bg={inputColor}
+                  h="95"
+                  placeholder=" • What do you seek by using this app?
+              • What sort of project are you looking for help for?"
+                ></TextArea>
 
-              <Text style={styles.label}>Profession</Text>
-              <Input
-                style={styles.input}
-                bg={inputColor}
-                h="12"
-                placeholder="Add profession"
-              ></Input>
+                <Text style={styles.label}>Profession</Text>
+                <Input
+                  style={styles.input}
+                  bg={inputColor}
+                  h="12"
+                  placeholder="Add profession"
+                ></Input>
 
-              <Text style={styles.label}>Located in</Text>
-              <Input
-                style={styles.input}
-                bg={inputColor}
-                h="12"
-                placeholder="ex. San Diego, CA"
-              ></Input>
+                <Text style={styles.label}>Located in</Text>
+                <Input
+                  style={styles.input}
+                  bg={inputColor}
+                  h="12"
+                  placeholder="ex. San Diego, CA"
+                ></Input>
 
-              <Text style={styles.label}>Languages I speak</Text>
-              <Input
-                style={styles.input}
-                bg={inputColor}
-                h="12"
-                placeholder="Add language"
-              ></Input>
-              <View h="10"></View>
-            </VStack>
-          </View>
-        </ScrollView>
-      </View>
-    </NativeBaseProvider>
-  );
-};}
+                <Text style={styles.label}>Languages I speak</Text>
+                <Input
+                  style={styles.input}
+                  bg={inputColor}
+                  h="12"
+                  placeholder="Add language"
+                ></Input>
+                <View h="10"></View>
+              </VStack>
+            </View>
+          </ScrollView>
+        </View>
+      </NativeBaseProvider>
+    );
+  }
+};
 
 export default ProfileSetup;
 
 const styles = StyleSheet.create({
   pageContainer: {
-    height:'100%',
+    height: "100%",
   },
 
   header: {

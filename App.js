@@ -18,17 +18,21 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
-            options={{ headerShown: false }}
-            name="EditProfile"
-            component={EditProfile}
-          />
           <Stack.Screen
             options={{ headerShown: false }}
             name="LoginScreen"
             component={LoginScreen}
           />
-          
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Cards"
+            component={Cards}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="EditProfile"
+            component={EditProfile}
+          />
 
           <Stack.Screen
             options={{ headerShown: false }}
@@ -49,12 +53,6 @@ export default function App() {
             options={{ headerShown: false }}
             name="CreateAccount3"
             component={CreateAccount3}
-          />
-
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Cards"
-            component={Cards}
           />
         </Stack.Navigator>
       </NavigationContainer>
