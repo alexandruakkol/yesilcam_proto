@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   NativeBaseProvider,
@@ -28,6 +28,15 @@ const ProfileSetup = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
   });
+
+  let [firstName, setFirstName] = useState();
+  let [lastName, setLastName] = useState();
+  let [aboutme, setAboutme] = useState();
+  let [offer, setOffer] = useState();
+  let [seek, setSeek] = useState();
+  let [profession, setProfession] = useState();
+  let [location, setLocation] = useState();
+  let [languages, setLanguages] = useState();
 
   if (!fontsLoaded) {
     return (
@@ -73,6 +82,7 @@ const ProfileSetup = ({ navigation }) => {
               <Text italic style={styles.tapToEdit}>
                 Tap to edit
               </Text>
+
               <VStack style={styles.vstack} space={5}>
                 <HStack>
                   <Input
@@ -81,6 +91,7 @@ const ProfileSetup = ({ navigation }) => {
                     w="50%"
                     h="12"
                     placeholder="First name"
+                    required
                   ></Input>
                   <Input
                     style={styles.input}
@@ -98,6 +109,7 @@ const ProfileSetup = ({ navigation }) => {
                   placeholder="Tell us a few words about yourself:
                             • What are your passions and aspirations?
                             • How do you go about achieveing your goals?"
+                  required
                 ></TextArea>
 
                 <Text style={styles.label}>What I offer</Text>

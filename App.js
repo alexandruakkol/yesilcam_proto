@@ -20,6 +20,11 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             options={{ headerShown: false }}
+            name="EditProfile"
+            component={EditProfile}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
             name="LoginScreen"
             component={LoginScreen}
           />
@@ -27,11 +32,6 @@ export default function App() {
             options={{ headerShown: false }}
             name="Cards"
             component={Cards}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="EditProfile"
-            component={EditProfile}
           />
 
           <Stack.Screen
