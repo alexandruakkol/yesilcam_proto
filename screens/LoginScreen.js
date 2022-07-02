@@ -37,6 +37,7 @@ const LoginScreen = ({ navigation }) => {
         const user = userCredentials.user;
         console.log("logged in with", user.email);
         navigation.navigate("EditProfile");
+        store({'useremail':user.email});
       })
       .catch((error) => {
         console.log("badLogin: ", error.message);
