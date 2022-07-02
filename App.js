@@ -18,16 +18,17 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
+        <Stack.Screen
+            options={{ headerShown: false }}
+            name="LoginScreen"
+            component={LoginScreen}
+          />
           <Stack.Screen
             options={{ headerShown: false }}
             name="EditProfile"
             component={EditProfile}
           />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="LoginScreen"
-            component={LoginScreen}
-          />
+          
           <Stack.Screen
             options={{ headerShown: false }}
             name="Cards"

@@ -68,6 +68,8 @@ const LoginScreen = ({ navigation }) => {
           style={styles.loginpage}
         >
           <Text style={styles.title}>Green Pine Connects</Text>
+          <Text style={styles.subtitle1}>A global application to increase resources for Film and TV professionals </Text>
+          <Text style={styles.subtitle2}>By the Green Pine Foundation</Text>        
           <KeyboardAvoidingView behavior="padding">
             <View>
               <Text style={styles.loginText}>Log in</Text>
@@ -228,9 +230,29 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignContent: "center",
     fontSize: 39,
-    marginBottom: 150,
     marginTop: 100,
     color: textColor,
+  },
+  subtitle1: {
+    fontFamily: "Jost_600SemiBold",
+    justifyContent: "center",
+    textAlign: "center",
+    alignContent: "center",
+    fontSize: 16,
+    color: textColor,
+    marginHorizontal:5,
+    marginTop:35,
+    marginBottom:20
+  },
+  subtitle2: {
+    fontFamily: "Jost_600SemiBold",
+    justifyContent: "center",
+    textAlign: "center",
+    alignContent: "center",
+    fontSize: 14,
+    color: textColor,
+    marginHorizontal:5,
+    marginBottom:140
   },
 
   loginText: {
