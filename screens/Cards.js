@@ -11,6 +11,7 @@ import React from "react";
 import Card from "./Card";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
+import {store, retrieve} from '../storage';
 
 const headerColor = "white";
 const bkgColor = "#ebecf0";
@@ -25,7 +26,7 @@ const Cards = ({ navigation }) => {
   if (!fontsLoaded) {
     return (
       <View>
-        <Text>Loadiddng...</Text>
+        <Text>Loading...</Text>
       </View>
     );
   } else {
