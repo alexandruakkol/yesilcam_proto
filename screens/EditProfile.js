@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome } from "@expo/vector-icons";
 import {
   NativeBaseProvider,
   Center,
@@ -18,6 +19,8 @@ import {
   Input,
 } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
+import Tooltip from "react-native-walkthrough-tooltip";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -37,6 +40,8 @@ const ProfileSetup = ({ navigation }) => {
   let [profession, setProfession] = useState();
   let [location, setLocation] = useState();
   let [languages, setLanguages] = useState();
+
+  let [tooltipVisib, setTooltipVisib] = useState(false);
 
   if (!fontsLoaded) {
     return (
@@ -101,7 +106,10 @@ const ProfileSetup = ({ navigation }) => {
                   ></Input>
                 </HStack>
 
-                <Text style={styles.label}>About Me</Text>
+                <View>
+                  <Text style={styles.label}>About Me</Text>
+                </View>
+
                 <TextArea
                   style={styles.input}
                   bg={inputColor}
@@ -121,7 +129,36 @@ const ProfileSetup = ({ navigation }) => {
               • What resources, services, or materials are you able to offer?
                "
                 ></TextArea>
-                <Text style={styles.label}>What I seek (optional)</Text>
+
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.label}>What I seek (optional) </Text>
+                  <View style={styles.tooltip}>
+                    <Tooltip
+                      isVisible={tooltipVisib}
+                      content={
+                        <Text>
+                          At GPF, we know how difficult it is to make an
+                          independent film and we strive to connect Film and TV
+                          professionals who can offer assistance without
+                          necessarily expecting a return. Hence this field is
+                          entirely optional
+                        </Text>
+                      }
+                      placement="top"
+                      onClose={() => setTooltipVisib(false)}
+                    >
+                      <TouchableWithoutFeedback
+                        style={styles.touchable}
+                        onPress={() => setTooltipVisib(true)}
+                      >
+                        <FontAwesome
+                          name="question-circle"
+                          size={20}
+                        ></FontAwesome>
+                      </TouchableWithoutFeedback>
+                    </Tooltip>
+                  </View>
+                </View>
                 <TextArea
                   style={styles.input}
                   bg={inputColor}
@@ -200,6 +237,8 @@ const styles = StyleSheet.create({
   profilePicLabel: {
     fontSize: 17,
     fontWeight: "bold",
+  },
+  tooltip: {
   },
 
   tapToEdit: {
