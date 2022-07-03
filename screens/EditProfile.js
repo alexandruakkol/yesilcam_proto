@@ -21,6 +21,7 @@ import {
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import * as ImagePicker from 'expo-image-picker';
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -40,8 +41,28 @@ const ProfileSetup = ({ navigation }) => {
   let [profession, setProfession] = useState();
   let [location, setLocation] = useState();
   let [languages, setLanguages] = useState();
-
+  let [image, setImage] = useState(null);
   let [tooltipVisib, setTooltipVisib] = useState(false);
+
+  const showImagePicker = async () => {
+    // Ask the user for the permission to access the media library 
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your photos!");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync();
+
+    // Explore the result
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      console.log(result.uri);
+    }
+  }
 
   if (!fontsLoaded) {
     return (
@@ -77,6 +98,7 @@ const ProfileSetup = ({ navigation }) => {
           <ScrollView>
             <View style={styles.scrollView}>
               <Text style={styles.profilePicLabel}>My Photo</Text>
+              <TouchableWithoutFeedback onPress={()=>showImagePicker()}>
               <Image
                 source={{
                   uri: "https://cdn-icons-png.flaticon.com/512/875/875068.png",
@@ -84,6 +106,7 @@ const ProfileSetup = ({ navigation }) => {
                 style={styles.profilePic}
                 alt="Profile picture"
               ></Image>
+              </TouchableWithoutFeedback>
               <Text italic style={styles.tapToEdit}>
                 Tap to edit
               </Text>
