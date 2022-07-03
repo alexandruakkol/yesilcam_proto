@@ -18,7 +18,12 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CreateAccount"
+            component={CreateAccount}
+          />
+          <Stack.Screen
             options={{ headerShown: false }}
             name="LoginScreen"
             component={LoginScreen}
@@ -28,7 +33,6 @@ export default function App() {
             name="EditProfile"
             component={EditProfile}
           />
-          
           <Stack.Screen
             options={{ headerShown: false }}
             name="Cards"
@@ -40,11 +44,7 @@ export default function App() {
             name="ForgotPassword"
             component={ForgotPassword}
           />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="CreateAccount"
-            component={CreateAccount}
-          />
+
           <Stack.Screen
             options={{ headerShown: false }}
             name="CreateAccount2"

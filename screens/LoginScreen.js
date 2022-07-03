@@ -12,6 +12,7 @@ import {store, retrieve} from '../storage';
 const textColor = "#dae8d4c9";
 
 const LoginScreen = ({ navigation }) => {
+  
   //hooks
   let [show, setShow] = useState(true);
   let [email, setEmail] = useState();
