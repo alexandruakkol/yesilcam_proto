@@ -20,10 +20,8 @@ const CreateAccount = ({ navigation }) => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [password2, setPassword2] = useState();
-  let [isValidated, setIsValidated] = useState(false);
   const toast=useToast();
  
-
   function validate() {
     let passwordsMatch = false,
       emailValid = false,
@@ -51,7 +49,7 @@ const CreateAccount = ({ navigation }) => {
         "input password is invalid"
       );
     }
-    if (passwordsMatch && emailValid && passwordValid) setIsValidated(true);
+    if (passwordsMatch && emailValid && passwordValid) return true;
   }
 
   let [fontsLoaded] = useFonts({
@@ -160,8 +158,7 @@ const CreateAccount = ({ navigation }) => {
                   h="10"
                   borderRadius="20"
                   onPress={() => {
-                    validate();
-                    if (isValidated) {
+                    if (validate()) {
                       navigation.navigate("CreateAccount2", {
                         email: email,
                         password: password,
