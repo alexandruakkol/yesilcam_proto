@@ -22,14 +22,15 @@ export default function App() {
         <Stack.Navigator>
         <Stack.Screen
             options={{ headerShown: false }}
-            name="Cards"
-            component={Cards}
-          />
-        <Stack.Screen
-            options={{ headerShown: false }}
             name="LoginScreen"
             component={LoginScreen}
           />
+        <Stack.Screen
+            options={{ headerShown: false }}
+            name="Cards"
+            component={Cards}
+          />
+        
         <Stack.Screen
             options={{ headerShown: false }}
             name="EditProfile"

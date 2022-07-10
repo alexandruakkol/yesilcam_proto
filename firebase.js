@@ -1,11 +1,13 @@
 
 //expo bundleID: 'host.exp.Exponent'
+import React from 'react';
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import * as Application from "expo-application";
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { TransformOutlined } from '@mui/icons-material';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAevCuPuEq2FB73plVhfxniRHeYyUnA-as",
@@ -49,15 +51,19 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-function createUser(email, password) {
- const error = createUserWithEmailAndPassword(auth, email, password)
+
+async function createUser(email, password) {
+ const response = await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log('User creation successful', userCredential)
+      return userCredential
     })
     .catch((error) => {
       console.log("User creation error", error.code);
+      return error;
     });
+    return response;
 }
 
 export { auth, createUser };

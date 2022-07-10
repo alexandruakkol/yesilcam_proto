@@ -12,7 +12,7 @@ const textColor = "#dae8d4c9";
 const CreateAccount3 = ({ route, navigation }) => {
   let [name, setName] = useState();
   let [surname, setSurname] = useState();
-  let [accountCreationError, setAccountCreationError] = useState();
+  let [submitAccountStatus, setSubmitAccountStatus] = useState();
   
   return (
     <NativeBaseProvider>
@@ -61,14 +61,19 @@ const CreateAccount3 = ({ route, navigation }) => {
                 h="10"
                 borderRadius="20"
                 onPress={() => {
-                  createUser(route.params.email, route.params.password);  
+                  console.log(route.params.email, route.params.password)
+                  createUser(route.params.email, route.params.password)
+                    .then((r)=> {
+                      if(!r)setSubmitAccountStatus('Your account has been created.')
+                      if(r === 'auth/email-already-in-use')setSubmitAccountStatus('The email address is already in use by another account') 
+                    })
                   //navigation.navigate("CreateAccount2");
                 }}
               >
                 <Text style={styles.btnText}>Sign Up</Text>
               </Button>
             </Center>
-            <Text>{}</Text>
+            <Text>{submitAccountStatus}</Text>
           </KeyboardAvoidingView>
         </View>
       </LinearGradient>
@@ -77,7 +82,6 @@ const CreateAccount3 = ({ route, navigation }) => {
 };
 
 export default CreateAccount3;
-export const PageContext= React.createContext();
 
 const styles = StyleSheet.create({
   title: {

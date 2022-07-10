@@ -24,7 +24,7 @@ import {
   import { store, retrieve } from "../storage";
   
   const textColor = "#dae8d4c9";
-  const CreateAccount2 = ({ route, navigation }) => {
+  const Chat = ({ route, navigation }) => {
     let [show, setShow] = useState(true);
     let [show2, setShow2] = useState(true);
     const [birthday, setBirthday] = useState();
@@ -85,7 +85,7 @@ import {
       );
   };
   
-  export default CreateAccount2;
+  export default Chat;
   
   const styles = StyleSheet.create({
     appView: {

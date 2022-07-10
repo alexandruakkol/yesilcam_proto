@@ -41,16 +41,19 @@ const Cards = ({ navigation }) => {
         </View>
         <View style={styles.navbar}>
           <HStack space={1} justifyContent="center">
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('communityScreen')}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Community')}>
         
               <View style={styles.navButton} w="45%" rounded="md" shadow={3}>
                 <Center>Community</Center>
               </View>
             </TouchableWithoutFeedback>
 
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Chat')}>
             <View style={styles.navButton} w="45%" rounded="md" shadow={3}>
               <Center>Chat</Center>
             </View>
+            </TouchableWithoutFeedback>
+
           </HStack>
         </View>
       </NativeBaseProvider>
