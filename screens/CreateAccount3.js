@@ -6,12 +6,14 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import {store, retrieve} from '../storage';
+import {auth, createUser } from "../firebase";
 
 const textColor = "#dae8d4c9";
-const CreateAccount3 = ({ navigation }) => {
+const CreateAccount3 = ({ route, navigation }) => {
   let [name, setName] = useState();
   let [surname, setSurname] = useState();
-
+  let [accountCreationError, setAccountCreationError] = useState();
+  
   return (
     <NativeBaseProvider>
       <LinearGradient
@@ -59,13 +61,14 @@ const CreateAccount3 = ({ navigation }) => {
                 h="10"
                 borderRadius="20"
                 onPress={() => {
-                    
-                  navigation.navigate("CreateAccount2");
+                  createUser(route.params.email, route.params.password);  
+                  //navigation.navigate("CreateAccount2");
                 }}
               >
                 <Text style={styles.btnText}>Sign Up</Text>
               </Button>
             </Center>
+            <Text>{}</Text>
           </KeyboardAvoidingView>
         </View>
       </LinearGradient>
@@ -74,6 +77,7 @@ const CreateAccount3 = ({ navigation }) => {
 };
 
 export default CreateAccount3;
+export const PageContext= React.createContext();
 
 const styles = StyleSheet.create({
   title: {

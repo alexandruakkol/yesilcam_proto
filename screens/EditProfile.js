@@ -135,7 +135,7 @@ const ProfileSetup = ({ navigation }) => {
                   bg={inputColor}
                   h="95"
                   placeholder="Tell us a few words about yourself:
-                            • What are your passions and aspirations?
+                            • What are your passions, interests and aspirations?
                             • How do you go about achieveing your goals?"
                   required
                 ></TextArea>

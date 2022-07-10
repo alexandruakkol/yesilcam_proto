@@ -1,3 +1,4 @@
+
 //expo bundleID: 'host.exp.Exponent'
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -49,12 +50,13 @@ onAuthStateChanged(auth, (user) => {
 });
 
 function createUser(email, password) {
-  createUserWithEmailAndPassword(auth, email, password)
+ const error = createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      console.log('User creation successful', userCredential)
     })
     .catch((error) => {
-      console.log("User creation error", error.code, error.message);
+      console.log("User creation error", error.code);
     });
 }
 
