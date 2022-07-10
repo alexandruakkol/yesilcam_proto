@@ -1,3 +1,4 @@
+import {store, retrieve} from '../storage';
 import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
@@ -6,10 +7,12 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
-import {auth, onGoogleButtonPress } from "../firebase";
-import {store, retrieve} from '../storage';
+//TODO scoate createUser
+import {auth, createUser } from "../firebase";
+
 
 const textColor = "#dae8d4c9";
+createUser('alexxme211@gmail.com', 'alexalex');
 
 const LoginScreen = ({ navigation }) => {
   

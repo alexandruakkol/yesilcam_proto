@@ -10,7 +10,8 @@ import CreateAccount from "./screens/CreateAccount";
 import CreateAccount2 from "./screens/CreateAccount2";
 import CreateAccount3 from "./screens/CreateAccount3";
 import ForgotPassword from "./screens/ForgotPassword";
-import ChatScreen from "./screens/ChatScreen";
+import Chat from "./screens/Chat";
+import Community from "./screens/Community";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,8 +22,8 @@ export default function App() {
         <Stack.Navigator>
         <Stack.Screen
             options={{ headerShown: false }}
-            name="EditProfile"
-            component={EditProfile}
+            name="Cards"
+            component={Cards}
           />
         <Stack.Screen
             options={{ headerShown: false }}
@@ -31,8 +32,14 @@ export default function App() {
           />
         <Stack.Screen
             options={{ headerShown: false }}
-            name="ChatScreen"
-            component={ChatScreen}
+            name="EditProfile"
+            component={EditProfile}
+          />
+      
+        <Stack.Screen
+            options={{ headerShown: false }}
+            name="Chat"
+            component={Chat}
           />
         
           <Stack.Screen
@@ -46,18 +53,18 @@ export default function App() {
             component={CreateAccount2}
           />
           
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Cards"
-            component={Cards}
-          />
+       
 
           <Stack.Screen
             options={{ headerShown: false }}
             name="ForgotPassword"
             component={ForgotPassword}
           />
-
+  <Stack.Screen
+            options={{ headerShown: false }}
+            name="Community"
+            component={Community}
+          />
          
           <Stack.Screen
             options={{ headerShown: false }}
