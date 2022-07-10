@@ -21,7 +21,7 @@ import {
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -39,30 +39,27 @@ const ProfileSetup = ({ navigation }) => {
   let [offer, setOffer] = useState();
   let [seek, setSeek] = useState();
   let [profession, setProfession] = useState();
+  let [experience, setExperience] = useState();
   let [location, setLocation] = useState();
   let [languages, setLanguages] = useState();
-  let [image, setImage] = useState(null);
+  let [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/875/875068.png');
   let [tooltipVisib, setTooltipVisib] = useState(false);
 
   const showImagePicker = async () => {
-    // Ask the user for the permission to access the media library 
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
+    // Ask the user for the permission to access the media library
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
       alert("You've refused to allow this app to access your photos!");
       return;
     }
-
     const result = await ImagePicker.launchImageLibraryAsync();
-
-    // Explore the result
-    console.log(result);
-
     if (!result.cancelled) {
-      setImage(result.uri);
-      console.log(result.uri);
+      console.log(result.uri)
+      setImage(result.uri)
+      return;
     }
-  }
+  };
 
   if (!fontsLoaded) {
     return (
@@ -98,14 +95,14 @@ const ProfileSetup = ({ navigation }) => {
           <ScrollView>
             <View style={styles.scrollView}>
               <Text style={styles.profilePicLabel}>My Photo</Text>
-              <TouchableWithoutFeedback onPress={()=>showImagePicker()}>
-              <Image
-                source={{
-                  uri: "https://cdn-icons-png.flaticon.com/512/875/875068.png",
-                }}
-                style={styles.profilePic}
-                alt="Profile picture"
-              ></Image>
+              <TouchableWithoutFeedback onPress={() => showImagePicker()}>
+                <Image
+                  source={{
+                    uri: image,
+                  }}
+                  style={styles.profilePic}
+                  alt="Profile picture"
+                ></Image>
               </TouchableWithoutFeedback>
               <Text italic style={styles.tapToEdit}>
                 Tap to edit
@@ -190,13 +187,21 @@ const ProfileSetup = ({ navigation }) => {
               • What sort of project are you looking for help for?"
                 ></TextArea>
 
-                <Text style={styles.label}>Profession</Text>
-                <Input
-                  style={styles.input}
-                  bg={inputColor}
-                  h="12"
-                  placeholder="Add profession"
-                ></Input>
+                  <Text style={styles.label}>Profession</Text>
+                  <Input
+                    style={styles.input}
+                    bg={inputColor}
+                    h="12"
+                    placeholder="Add profession"
+                  ></Input>
+                  <Text style={styles.label}>Years of experience</Text>
+                  <Input
+                    style={styles.input}
+                    bg={inputColor}
+                    h="12"
+                    w="15%"
+                    placeholder="ex.2"
+                  ></Input>
 
                 <Text style={styles.label}>Located in</Text>
                 <Input
@@ -261,8 +266,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
   },
-  tooltip: {
-  },
+  tooltip: {},
 
   tapToEdit: {
     fontSize: 12,
