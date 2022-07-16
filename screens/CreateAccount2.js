@@ -126,7 +126,7 @@ const CreateAccount2 = ({ route, navigation }) => {
                     if(validateBirthday())
                     navigation.navigate(
                       "CreateAccount3"
-                      ,{email:(route.params.email),password:(route.params.password),birthday:birthday}
+                      ,{email:(route.params.email),password:(route.params.password),birthday:birthday.toLocaleDateString("en-US", dateOptions)}
                     );
                   }}
                 >
