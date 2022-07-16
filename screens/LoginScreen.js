@@ -10,9 +10,8 @@ import * as Application from "expo-application";
 //TODO scoate createUser
 import {auth, createUser } from "../firebase";
 
-
 const textColor = "#dae8d4c9";
-createUser('alexxme211@gmail.com', 'alexalex');
+
 
 const LoginScreen = ({ navigation }) => {
   
@@ -41,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
         const user = userCredentials.user;
         console.log("logged in with", user.email);
         navigation.navigate("EditProfile");
-        store({'useremail':user.email});
+        store({user_email:user.email});
       })
       .catch((error) => {
         console.log("badLogin: ", error.message);

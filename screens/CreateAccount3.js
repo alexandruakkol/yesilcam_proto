@@ -5,15 +5,22 @@ import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import {store, retrieve} from '../storage';
-import {auth, createUser } from "../firebase";
+import { store, retrieve } from "../storage";
+import { auth, createUser } from "../firebase";
 
 const textColor = "#dae8d4c9";
 const CreateAccount3 = ({ route, navigation }) => {
   let [name, setName] = useState();
   let [surname, setSurname] = useState();
   let [submitAccountStatus, setSubmitAccountStatus] = useState();
-  
+
+  let userData = {
+    email: route.params.email,
+    name,
+    surname,
+    birthday: route.params.birthday,
+  };
+
   return (
     <NativeBaseProvider>
       <LinearGradient
@@ -27,7 +34,7 @@ const CreateAccount3 = ({ route, navigation }) => {
           <Text style={styles.title}>Green Pine Connects</Text>
 
           <KeyboardAvoidingView behavior="padding">
-            <Text style={styles.loginText}>Let us know more about you</Text>
+            <Text style={styles.loginText}>Enter your name and surname</Text>
 
             <Input
               style={styles.input}
@@ -61,19 +68,30 @@ const CreateAccount3 = ({ route, navigation }) => {
                 h="10"
                 borderRadius="20"
                 onPress={() => {
-                  console.log(route.params.email, route.params.password)
-                  createUser(route.params.email, route.params.password)
-                    .then((r)=> {
-                      if(!r)setSubmitAccountStatus('Your account has been created.')
-                      if(r === 'auth/email-already-in-use')setSubmitAccountStatus('The email address is already in use by another account') 
-                    })
+                  console.log(route.params.email, route.params.password);
+                  createUser(
+                    route.params.email,
+                    route.params.password,
+                    userData
+                  ).then((r) => {
+                    if (!r){
+                      setSubmitAccountStatus("Your account has been created.");
+                      setTimeout(()=>navigation.navigate('EditProfile'),750);
+                    }
+                    if (r === "auth/email-already-in-use")
+                      {setSubmitAccountStatus(
+                        "The email address is already in use by another account"
+                      );}
+                  });
                   //navigation.navigate("CreateAccount2");
                 }}
               >
-                <Text style={styles.btnText}>Sign Up</Text>
+                <Text style={styles.btnText}>Create Account</Text>
               </Button>
             </Center>
-            <Text>{submitAccountStatus}</Text>
+            <Center>
+              <Text style={styles.submitStatus}>{submitAccountStatus}</Text>
+            </Center>
           </KeyboardAvoidingView>
         </View>
       </LinearGradient>
@@ -114,5 +132,13 @@ const styles = StyleSheet.create({
   },
   appView: {
     height: "100%",
+  },
+  submitStatus: {
+    marginTop:30,
+    fontFamily: "Jost_600SemiBold",
+    fontSize:20,
+    marginHorizontal:5,
+    textAlign:'center',
+    color:textColor
   },
 });

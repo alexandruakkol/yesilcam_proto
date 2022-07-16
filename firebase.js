@@ -1,13 +1,24 @@
-
 //expo bundleID: 'host.exp.Exponent'
-import React from 'react';
+import React from "react";
+import * as Application from "expo-application";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc
+  ,setDoc
+} from "firebase/firestore";
+import { TransformOutlined } from "@mui/icons-material";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import * as Application from "expo-application";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { TransformOutlined } from '@mui/icons-material';
+import "@firebase/auth";
+import "@firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAevCuPuEq2FB73plVhfxniRHeYyUnA-as",
@@ -30,17 +41,6 @@ if (firebase.apps.length === 0) {
 
 const auth = firebase.auth();
 
-//db init
-const db = getFirestore();
-
-//collection reference
-const colRef = collection(db, "users");
-
-//get collection data
-getDocs(colRef).then((snapshot) => {
-  console.log(snapshot.docs.forEach((doc) => console.log(doc.data)));
-});
-
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
@@ -51,19 +51,46 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+function generateNewUserID(name) {
+  const l1 = name.charAt(0);
+  const l2 = name.charAt(name.length);
+  const n1 = 0;
+  const n2 = 0;
+  const n3 = 0;
+  const n4 = 0;
 
-async function createUser(email, password) {
- const response = await createUserWithEmailAndPassword(auth, email, password)
+  //add duplicate verification
+  return l1 + l2 + n1 + n2 + n3 + n4;
+}
+
+async function createUser(email, password, userData) {
+  const response = await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log('User creation successful', userCredential)
-      return userCredential
+      console.log("User creation successful", userCredential);
+      //userData.userID = generateNewUserID(userData);
+      //writeUserData(userData);
+      userData.userID = generateNewUserID(userData.name);
+      writeUserData(userData);
+      return 0;
     })
     .catch((error) => {
       console.log("User creation error", error.code);
-      return error;
+      return error.code;
     });
-    return response;
+  return response;
+}
+
+//Firestore DB
+
+async function writeUserData(userData) {
+  const db = getFirestore();
+  const docRef = doc(db, "users", userData.userID);
+  try {
+    setDoc(docRef, userData);
+  } catch (error) {
+    console.log("DB write error", error);
+  }
 }
 
 export { auth, createUser };

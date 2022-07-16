@@ -1,3 +1,4 @@
+import React from 'react';
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,7 +15,10 @@ import Chat from "./screens/Chat";
 import Community from "./screens/Community";
 
 const Stack = createNativeStackNavigator();
+//---------//TESTING AREA//-----------\\
 
+
+//------------------------------------//
 export default function App() {
   return (
     <NativeBaseProvider>
@@ -53,9 +57,6 @@ export default function App() {
             name="CreateAccount2"
             component={CreateAccount2}
           />
-          
-       
-
           <Stack.Screen
             options={{ headerShown: false }}
             name="ForgotPassword"
