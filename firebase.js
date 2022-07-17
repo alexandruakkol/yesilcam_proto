@@ -17,7 +17,7 @@ import {
   updateDoc,
   getDoc,
 } from "firebase/firestore";
-import {} from "firebase/storage";
+import { ref, putString, uploadString, getStorage } from "firebase/storage";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -133,12 +133,16 @@ async function appendUserData(userData, userID) {
 }
 
 export async function storePicture(uri) {
-  Platform.OS === "ios" ? uri.replace("file://", "") : uri;
-  const storageRef = firebase.storage().ref("/profilepic/pic.png");
-
-  const uploadedPicture = await storageRef.putString(uri, "base64", {
-    contentType: "image/png",
-  });
+  try {
+    Platform.OS === "ios" ? uri.replace("file://", "") : uri;
+    const storage = getStorage();
+    const storageRef = ref(storage, "profilepic/pic.png");
+    uploadString(storageRef, uri, "image/png").then((snapshot) => {
+      console.log("Uploaded a data_url string!");
+    });
+  } catch (error) {
+    console.log("firebase storage image upload error: ", error);
+  }
 
   //firebase.auth().currentUser;
 }
