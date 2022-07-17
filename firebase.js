@@ -10,10 +10,13 @@ import {
   collection,
   getDocs,
   addDoc,
-  doc
-  ,setDoc
+  doc,
+  setDoc,
+  where,
+  FieldPath,
+  query,
+  getDoc
 } from "firebase/firestore";
-import { TransformOutlined } from "@mui/icons-material";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -52,14 +55,17 @@ onAuthStateChanged(auth, (user) => {
 });
 
 function generateNewUserID(name) {
-  const l1 = name.charAt(0);
-  const l2 = name.charAt(name.length);
-  const n1 = 0;
-  const n2 = 0;
-  const n3 = 0;
-  const n4 = 0;
 
-  //add duplicate verification
+  function randomInt(){
+    return Math.floor(Math.random() * 10);
+  }
+  const l1 = name[0];
+  const l2 = name[name.length-1];
+  const n1 = randomInt();
+  const n2 = randomInt();
+  const n3 = randomInt();
+  const n4 = randomInt();
+  console.log('generated userID', l1 + l2 + n1 + n2 + n3 + n4);
   return l1 + l2 + n1 + n2 + n3 + n4;
 }
 
@@ -68,8 +74,6 @@ async function createUser(email, password, userData) {
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("User creation successful", userCredential);
-      //userData.userID = generateNewUserID(userData);
-      //writeUserData(userData);
       userData.userID = generateNewUserID(userData.name);
       writeUserData(userData);
       return 0;
@@ -82,9 +86,32 @@ async function createUser(email, password, userData) {
 }
 
 //Firestore DB
+const db = getFirestore();
+const usersRef = collection(db, "users");
+
+async function getUserDataByID(id){
+  const docRef = doc(db, "users", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.log(`The document matching the requested ID of ${id} was not found.`);
+    return 0;
+  }
+} 
+
+async function getUserDataByEmail(email){
+  const q = query(collection(db, "users"), where("email", "==", email));
+  const snap = await getDocs(q);
+  let response = new Object();
+  let a=snap.forEach((doc) => {
+    response = doc.data();
+  });
+  return response;
+}
 
 async function writeUserData(userData) {
-  const db = getFirestore();
   const docRef = doc(db, "users", userData.userID);
   try {
     setDoc(docRef, userData);
@@ -93,4 +120,4 @@ async function writeUserData(userData) {
   }
 }
 
-export { auth, createUser };
+export { auth, createUser, getUserDataByEmail };

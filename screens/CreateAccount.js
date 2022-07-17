@@ -87,7 +87,7 @@ const CreateAccount = ({ navigation }) => {
                 placeholder="Email"
                 value={email}
                 onChangeText={(email) => {
-                  setEmail(email);
+                  setEmail(email.toLowerCase());
                 }}
               ></Input>
 

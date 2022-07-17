@@ -8,13 +8,18 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 //TODO scoate createUser
-import {auth, createUser } from "../firebase";
+import {auth, createUser, getUserDataByEmail } from "../firebase";
 
 const textColor = "#dae8d4c9";
 
 
 const LoginScreen = ({ navigation }) => {
   
+//---------//TESTING AREA//-----------\\
+
+
+//------------------------------------//
+
   //hooks
   let [show, setShow] = useState(true);
   let [email, setEmail] = useState();
@@ -41,6 +46,15 @@ const LoginScreen = ({ navigation }) => {
         console.log("logged in with", user.email);
         navigation.navigate("EditProfile");
         store({user_email:user.email});
+
+        //store the user data for the rest of the app
+        getUserDataByEmail(email).then((res)=>{console.log('lognnn',res);
+        let obj = {};
+        for(key of Object.keys(res)){
+          obj['usrData_'+String(key)]=res[key];
+          store(obj);
+        }
+        });
       })
       .catch((error) => {
         console.log("badLogin: ", error.message);
@@ -84,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Email"
                 value={email}
                 onChangeText={(email) => {
-                  setEmail(email);
+                  setEmail(email.toLowerCase());
                 }}
               ></Input>
               <Input

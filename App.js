@@ -15,10 +15,7 @@ import Chat from "./screens/Chat";
 import Community from "./screens/Community";
 
 const Stack = createNativeStackNavigator();
-//---------//TESTING AREA//-----------\\
 
-
-//------------------------------------//
 export default function App() {
   return (
     <NativeBaseProvider>
