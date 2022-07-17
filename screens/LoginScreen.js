@@ -12,7 +12,6 @@ import {auth, createUser, getUserDataByEmail } from "../firebase";
 
 const textColor = "#dae8d4c9";
 
-
 const LoginScreen = ({ navigation }) => {
   
 //---------//TESTING AREA//-----------\\
@@ -38,27 +37,31 @@ const LoginScreen = ({ navigation }) => {
       });
   };
 
-  const handleLogIn = () => {
-    auth
+async function handleLogIn(){
+    await auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("logged in with", user.email);
-        navigation.navigate("EditProfile");
 
         //store the user data for the rest of the app
         getUserDataByEmail(email).then((res)=>{
+        console.log('data on server for ', email, ' ', res);
         let obj = {};
-        for(key of Object.keys(res)){
-          obj['usrData_'+String(key)]=res[key];
-          store(obj);
+        async function convert(){
+          for(key of Object.keys(res)){
+            obj['usrData_'+String(key)]=res[key];
+            await store(obj);
+          }
         }
+        convert().then(navigation.navigate("EditProfile"));
         });
       })
       .catch((error) => {
         console.log("badLogin: ", error.message);
         alert("Invalid login");
       });
+      
   };
 
   let [fontsLoaded] = useFonts({

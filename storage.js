@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+AsyncStorage.clear();
+console.log('cleared localstorage');
 export const store = async (obj) => {
   try {
     for(key of Object.keys(obj)){
