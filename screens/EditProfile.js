@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from "@expo/vector-icons";
 import {
@@ -23,11 +23,13 @@ import Tooltip from "react-native-walkthrough-tooltip";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import {store, retrieve} from '../storage';
+import {appendUserData} from '../firebase';
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
 const bkgColor = "#ebecf0";
 const inputColor = "white";
+let userID = new String();
 
 const ProfileSetup = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
@@ -46,9 +48,11 @@ const ProfileSetup = ({ navigation }) => {
   let [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/875/875068.png');
   let [tooltipVisib, setTooltipVisib] = useState(false);
 
-
   useEffect(()=>{
-    retrieve('usrData_name').then((r)=>console.log('aaaaaa',r))
+    retrieve('usrData_name').then((r)=>setFirstName(r));
+    retrieve('usrData_surname').then((r)=>setLastName(r));
+    retrieve('usrData_userID').then((r)=>{userID=r});
+    retrieve('usrData_aboutme').then((r)=>setAboutme(r));
   },[]);
 
   const showImagePicker = async () => {
@@ -91,6 +95,9 @@ const ProfileSetup = ({ navigation }) => {
               h="10"
               w="25%"
               onPress={() => {
+                //write to db
+                appendUserData({aboutme}, userID);
+                //write to asyncstorage
                 navigation.navigate("Cards");
               }}
             >
@@ -123,12 +130,16 @@ const ProfileSetup = ({ navigation }) => {
                     h="12"
                     placeholder="First name"
                     required
+                    defaultValue={firstName}
+                    disabled
                   ></Input>
                   <Input
                     style={styles.input}
                     bg={inputColor}
                     w="50%"
                     placeholder="Last name"
+                    defaultValue={lastName}
+                    disabled
                   ></Input>
                 </HStack>
 
@@ -144,6 +155,8 @@ const ProfileSetup = ({ navigation }) => {
                             • What are your passions, interests and aspirations?
                             • How do you go about achieveing your goals?"
                   required
+                  defaultValue={aboutme}
+                  onChange={e => {setAboutme(e.target.value);}}
                 ></TextArea>
 
                 <Text style={styles.label}>What I offer</Text>
@@ -154,6 +167,8 @@ const ProfileSetup = ({ navigation }) => {
                   placeholder=" • What skills/experience do you want to share with others?
               • What resources, services, or materials are you able to offer?
                "
+                  defaultValue ={offer}
+                  onChange={e => setOffer(e.target.value)}
                 ></TextArea>
 
                 <View style={{ flexDirection: "row" }}>
@@ -172,6 +187,8 @@ const ProfileSetup = ({ navigation }) => {
                       }
                       placement="top"
                       onClose={() => setTooltipVisib(false)}
+                      defaultValue={seek}
+                      onChange={newtext => setSeek(newtext)}
                     >
                       <TouchableWithoutFeedback
                         style={styles.touchable}
@@ -199,6 +216,8 @@ const ProfileSetup = ({ navigation }) => {
                     bg={inputColor}
                     h="12"
                     placeholder="Add profession"
+                    defaultValue={profession}
+                    onChange={newtext => setProfession(newtext)}
                   ></Input>
                   <Text style={styles.label}>Years of experience</Text>
                   <Input
@@ -207,6 +226,8 @@ const ProfileSetup = ({ navigation }) => {
                     h="12"
                     w="15%"
                     placeholder="ex.2"
+                    defaultValue={experience}
+                    onChange={newtext => setExperience(newtext)}
                   ></Input>
 
                 <Text style={styles.label}>Located in</Text>
@@ -215,6 +236,8 @@ const ProfileSetup = ({ navigation }) => {
                   bg={inputColor}
                   h="12"
                   placeholder="ex. San Diego, CA"
+                  defaultValue={location}
+                  onChange={newtext => setLocation(newtext)}
                 ></Input>
 
                 <Text style={styles.label}>Languages I speak</Text>
@@ -223,6 +246,8 @@ const ProfileSetup = ({ navigation }) => {
                   bg={inputColor}
                   h="12"
                   placeholder="Add language"
+                  defaultValue={languages}
+                  onChange={newtext => setLanguages(newtext)}
                 ></Input>
                 <View h="10"></View>
               </VStack>
