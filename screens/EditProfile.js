@@ -22,8 +22,8 @@ import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
-import {store, retrieve} from '../storage';
-import {appendUserData} from '../firebase';
+import { store, retrieve } from "../storage";
+import { appendUserData } from "../firebase";
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -45,15 +45,23 @@ const ProfileSetup = ({ navigation }) => {
   let [experience, setExperience] = useState();
   let [location, setLocation] = useState();
   let [languages, setLanguages] = useState();
-  let [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/875/875068.png');
+  let [image, setImage] = useState(
+    "https://cdn-icons-png.flaticon.com/512/875/875068.png"
+  );
   let [tooltipVisib, setTooltipVisib] = useState(false);
 
-  useEffect(()=>{
-    retrieve('usrData_name').then((r)=>setFirstName(r));
-    retrieve('usrData_surname').then((r)=>setLastName(r));
-    retrieve('usrData_userID').then((r)=>{userID=r});
-    retrieve('usrData_aboutme').then((r)=>setAboutme(r));
-  },[]);
+  useEffect(() => {
+    retrieve("usrData_name").then((r) => {setFirstName(r)});
+    retrieve("usrData_surname").then((r) => setLastName(r));
+    retrieve("usrData_userID").then((r) => userID = r);
+    retrieve("usrData_aboutme").then((r) => setAboutme(r));
+    retrieve("usrData_offer").then((r) => setOffer(r));
+    retrieve("usrData_seek").then((r) => setSeek(r));
+    retrieve("usrData_profession").then((r) => setProfession(r));
+    retrieve("usrData_experience").then((r) => setExperience(r));
+    retrieve("usrData_location").then((r) => setLocation(r));
+    retrieve("usrData_languages").then((r) => setLanguages(r));
+  }, []);
 
   const showImagePicker = async () => {
     // Ask the user for the permission to access the media library
@@ -65,8 +73,8 @@ const ProfileSetup = ({ navigation }) => {
     }
     const result = await ImagePicker.launchImageLibraryAsync();
     if (!result.cancelled) {
-      console.log(result.uri)
-      setImage(result.uri)
+      console.log(result.uri);
+      setImage(result.uri);
       return;
     }
   };
@@ -96,7 +104,17 @@ const ProfileSetup = ({ navigation }) => {
               w="25%"
               onPress={() => {
                 //write to db
-                appendUserData({aboutme}, userID);
+                let toSend = {
+                  aboutme,
+                  offer,
+                  seek,
+                  profession,
+                  experience,
+                  location,
+                  languages,
+                };
+                console.log("to send: ", toSend);
+                appendUserData(toSend, userID);
                 //write to asyncstorage
                 navigation.navigate("Cards");
               }}
@@ -130,16 +148,17 @@ const ProfileSetup = ({ navigation }) => {
                     h="12"
                     placeholder="First name"
                     required
-                    defaultValue={firstName}
-                    disabled
+                    value={firstName}
+                    
                   ></Input>
                   <Input
                     style={styles.input}
                     bg={inputColor}
                     w="50%"
                     placeholder="Last name"
-                    defaultValue={lastName}
-                    disabled
+                    value={lastName}
+                    required
+                    
                   ></Input>
                 </HStack>
 
@@ -156,7 +175,9 @@ const ProfileSetup = ({ navigation }) => {
                             • How do you go about achieveing your goals?"
                   required
                   defaultValue={aboutme}
-                  onChange={e => {setAboutme(e.target.value);}}
+                  onChange={(e) => {
+                    setAboutme(e.target.value);
+                  }}
                 ></TextArea>
 
                 <Text style={styles.label}>What I offer</Text>
@@ -167,8 +188,8 @@ const ProfileSetup = ({ navigation }) => {
                   placeholder=" • What skills/experience do you want to share with others?
               • What resources, services, or materials are you able to offer?
                "
-                  defaultValue ={offer}
-                  onChange={e => setOffer(e.target.value)}
+                  defaultValue={offer}
+                  onChange={(e) => setOffer(e.target.value)}
                 ></TextArea>
 
                 <View style={{ flexDirection: "row" }}>
@@ -187,12 +208,12 @@ const ProfileSetup = ({ navigation }) => {
                       }
                       placement="top"
                       onClose={() => setTooltipVisib(false)}
-                      defaultValue={seek}
-                      onChange={newtext => setSeek(newtext)}
+                      
                     >
                       <TouchableWithoutFeedback
                         style={styles.touchable}
                         onPress={() => setTooltipVisib(true)}
+                        
                       >
                         <FontAwesome
                           name="question-circle"
@@ -208,27 +229,29 @@ const ProfileSetup = ({ navigation }) => {
                   h="95"
                   placeholder=" • What do you seek by using this app?
               • What sort of project are you looking for help for?"
+                  defaultValue={seek}
+                  onChange={(e) => setSeek(e.target.value)}
                 ></TextArea>
 
-                  <Text style={styles.label}>Profession</Text>
-                  <Input
-                    style={styles.input}
-                    bg={inputColor}
-                    h="12"
-                    placeholder="Add profession"
-                    defaultValue={profession}
-                    onChange={newtext => setProfession(newtext)}
-                  ></Input>
-                  <Text style={styles.label}>Years of experience</Text>
-                  <Input
-                    style={styles.input}
-                    bg={inputColor}
-                    h="12"
-                    w="15%"
-                    placeholder="ex.2"
-                    defaultValue={experience}
-                    onChange={newtext => setExperience(newtext)}
-                  ></Input>
+                <Text style={styles.label}>Profession</Text>
+                <Input
+                  style={styles.input}
+                  bg={inputColor}
+                  h="12"
+                  placeholder="Add profession"
+                  defaultValue={profession}
+                  onChange={(e) => setProfession(e.target.value)}
+                ></Input>
+                <Text style={styles.label}>Years of experience</Text>
+                <Input
+                  style={styles.input}
+                  bg={inputColor}
+                  h="12"
+                  w="15%"
+                  placeholder="ex.2"
+                  defaultValue={experience}
+                  onChange={(e) => setExperience(e.target.value)}
+                ></Input>
 
                 <Text style={styles.label}>Located in</Text>
                 <Input
@@ -237,7 +260,7 @@ const ProfileSetup = ({ navigation }) => {
                   h="12"
                   placeholder="ex. San Diego, CA"
                   defaultValue={location}
-                  onChange={newtext => setLocation(newtext)}
+                  onChange={(e) => setLocation(e.target.value)}
                 ></Input>
 
                 <Text style={styles.label}>Languages I speak</Text>
@@ -247,7 +270,7 @@ const ProfileSetup = ({ navigation }) => {
                   h="12"
                   placeholder="Add language"
                   defaultValue={languages}
-                  onChange={newtext => setLanguages(newtext)}
+                  onChange={(e) => setLanguages(e.target.value)}
                 ></Input>
                 <View h="10"></View>
               </VStack>
