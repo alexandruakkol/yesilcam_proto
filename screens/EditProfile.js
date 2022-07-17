@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from "@expo/vector-icons";
 import {
@@ -22,6 +22,7 @@ import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
+import {store, retrieve} from '../storage';
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -44,6 +45,11 @@ const ProfileSetup = ({ navigation }) => {
   let [languages, setLanguages] = useState();
   let [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/875/875068.png');
   let [tooltipVisib, setTooltipVisib] = useState(false);
+
+
+  useEffect(()=>{
+    retrieve('usrData_name').then((r)=>console.log('aaaaaa',r))
+  },[]);
 
   const showImagePicker = async () => {
     // Ask the user for the permission to access the media library
