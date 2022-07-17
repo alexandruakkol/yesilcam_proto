@@ -1,6 +1,5 @@
 //expo bundleID: 'host.exp.Exponent'
-import React from "react";
-import * as Application from "expo-application";
+import { Platform } from "react-native";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -16,9 +15,9 @@ import {
   FieldPath,
   query,
   updateDoc,
-  getDoc
+  getDoc,
 } from "firebase/firestore";
-import {ref, storage} from 'firebase/storage'
+import {} from "firebase/storage";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -57,17 +56,16 @@ onAuthStateChanged(auth, (user) => {
 });
 
 function generateNewUserID(name) {
-
-  function randomInt(){
+  function randomInt() {
     return Math.floor(Math.random() * 10);
   }
   const l1 = name[0];
-  const l2 = name[name.length-1];
+  const l2 = name[name.length - 1];
   const n1 = randomInt();
   const n2 = randomInt();
   const n3 = randomInt();
   const n4 = randomInt();
-  console.log('generated userID', l1 + l2 + n1 + n2 + n3 + n4);
+  console.log("generated userID", l1 + l2 + n1 + n2 + n3 + n4);
   return l1 + l2 + n1 + n2 + n3 + n4;
 }
 
@@ -91,19 +89,21 @@ async function createUser(email, password, userData) {
 const db = getFirestore();
 const usersRef = collection(db, "users");
 
-async function getUserDataByID(id){
+async function getUserDataByID(id) {
   const docRef = doc(db, "users", id);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
     return docSnap.data();
   } else {
-    console.log(`The document matching the requested ID of ${id} was not found.`);
+    console.log(
+      `The document matching the requested ID of ${id} was not found.`
+    );
     return 0;
   }
-} 
+}
 
-async function getUserDataByEmail(email){
+async function getUserDataByEmail(email) {
   const q = query(collection(db, "users"), where("email", "==", email));
   const snap = await getDocs(q);
   let response = new Object();
@@ -124,20 +124,23 @@ async function writeUserData(userData) {
 
 async function appendUserData(userData, userID) {
   try {
-    console.log('will try writing', userData,' to ID:', userID)
-    const ref = doc(db, 'users', userID);
+    console.log("will try writing", userData, " to ID:", userID);
+    const ref = doc(db, "users", userID);
     setDoc(ref, userData, { merge: true });
   } catch (error) {
     console.log("DB write error", error);
   }
 }
-export function storePicture(){
-  let user = auth.currentUser;
-  console.log('user:',user)
-// Create a Storage Ref w/ username
-  let storageRef = storage().ref(user + '/profilePicture');
-// Upload file
-//var task = storageRef.put(file);
+
+export async function storePicture(uri) {
+  Platform.OS === "ios" ? uri.replace("file://", "") : uri;
+  const storageRef = firebase.storage().ref("/profilepic/pic.png");
+
+  const uploadedPicture = await storageRef.putString(uri, "base64", {
+    contentType: "image/png",
+  });
+
+  //firebase.auth().currentUser;
 }
 
-export { auth, createUser, getUserDataByEmail , writeUserData, appendUserData};
+export { auth, createUser, getUserDataByEmail, writeUserData, appendUserData };
