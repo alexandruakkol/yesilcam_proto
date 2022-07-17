@@ -18,12 +18,12 @@ import {
   updateDoc,
   getDoc
 } from "firebase/firestore";
+import {ref, storage} from 'firebase/storage'
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "@firebase/auth";
 import "@firebase/firestore";
-import { set } from "react-native-reanimated";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAevCuPuEq2FB73plVhfxniRHeYyUnA-as",
@@ -130,6 +130,14 @@ async function appendUserData(userData, userID) {
   } catch (error) {
     console.log("DB write error", error);
   }
+}
+export function storePicture(){
+  let user = auth.currentUser;
+  console.log('user:',user)
+// Create a Storage Ref w/ username
+  let storageRef = storage().ref(user + '/profilePicture');
+// Upload file
+//var task = storageRef.put(file);
 }
 
 export { auth, createUser, getUserDataByEmail , writeUserData, appendUserData};

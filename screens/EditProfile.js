@@ -23,7 +23,7 @@ import Tooltip from "react-native-walkthrough-tooltip";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import { store, retrieve } from "../storage";
-import { appendUserData } from "../firebase";
+import { appendUserData, storePicture } from "../firebase";
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -61,6 +61,7 @@ const ProfileSetup = ({ navigation }) => {
     retrieve("usrData_experience").then((r) => setExperience(r));
     retrieve("usrData_location").then((r) => setLocation(r));
     retrieve("usrData_languages").then((r) => setLanguages(r));
+    storePicture();
   }, []);
 
   const showImagePicker = async () => {
@@ -148,7 +149,8 @@ const ProfileSetup = ({ navigation }) => {
                     h="12"
                     placeholder="First name"
                     required
-                    value={firstName}
+                    defaultValue={firstName}
+                    disabled
                     
                   ></Input>
                   <Input
@@ -156,9 +158,9 @@ const ProfileSetup = ({ navigation }) => {
                     bg={inputColor}
                     w="50%"
                     placeholder="Last name"
-                    value={lastName}
+                    defaultValue={lastName}
                     required
-                    
+                    disabled
                   ></Input>
                 </HStack>
 
