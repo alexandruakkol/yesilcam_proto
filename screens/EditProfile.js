@@ -51,9 +51,11 @@ const ProfileSetup = ({ navigation }) => {
   let [tooltipVisib, setTooltipVisib] = useState(false);
 
   useEffect(() => {
-    retrieve("usrData_name").then((r) => {setFirstName(r)});
+    retrieve("usrData_name").then((r) => {
+      setFirstName(r);
+    });
     retrieve("usrData_surname").then((r) => setLastName(r));
-    retrieve("usrData_userID").then((r) => userID = r);
+    retrieve("usrData_userID").then((r) => (userID = r));
     retrieve("usrData_aboutme").then((r) => setAboutme(r));
     retrieve("usrData_offer").then((r) => setOffer(r));
     retrieve("usrData_seek").then((r) => setSeek(r));
@@ -61,7 +63,6 @@ const ProfileSetup = ({ navigation }) => {
     retrieve("usrData_experience").then((r) => setExperience(r));
     retrieve("usrData_location").then((r) => setLocation(r));
     retrieve("usrData_languages").then((r) => setLanguages(r));
-    storePicture();
   }, []);
 
   const showImagePicker = async () => {
@@ -76,6 +77,7 @@ const ProfileSetup = ({ navigation }) => {
     if (!result.cancelled) {
       console.log(result.uri);
       setImage(result.uri);
+      storePicture(result.uri);
       return;
     }
   };
@@ -151,7 +153,6 @@ const ProfileSetup = ({ navigation }) => {
                     required
                     defaultValue={firstName}
                     disabled
-                    
                   ></Input>
                   <Input
                     style={styles.input}
@@ -210,12 +211,10 @@ const ProfileSetup = ({ navigation }) => {
                       }
                       placement="top"
                       onClose={() => setTooltipVisib(false)}
-                      
                     >
                       <TouchableWithoutFeedback
                         style={styles.touchable}
                         onPress={() => setTooltipVisib(true)}
-                        
                       >
                         <FontAwesome
                           name="question-circle"
