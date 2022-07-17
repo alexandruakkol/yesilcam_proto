@@ -1,6 +1,6 @@
 import {store, retrieve} from '../storage';
 import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
@@ -9,6 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 //TODO scoate createUser
 import {auth, createUser, getUserDataByEmail } from "../firebase";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const textColor = "#dae8d4c9";
 
@@ -18,8 +19,11 @@ const LoginScreen = ({ navigation }) => {
 
 
 //------------------------------------//
-
   //hooks
+  useEffect(()=>{
+    AsyncStorage.clear();
+  },[]);
+
   let [show, setShow] = useState(true);
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
