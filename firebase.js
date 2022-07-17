@@ -15,6 +15,7 @@ import {
   where,
   FieldPath,
   query,
+  updateDoc,
   getDoc
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
@@ -22,6 +23,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "@firebase/auth";
 import "@firebase/firestore";
+import { set } from "react-native-reanimated";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAevCuPuEq2FB73plVhfxniRHeYyUnA-as",
@@ -105,7 +107,7 @@ async function getUserDataByEmail(email){
   const q = query(collection(db, "users"), where("email", "==", email));
   const snap = await getDocs(q);
   let response = new Object();
-  let a=snap.forEach((doc) => {
+  snap.forEach((doc) => {
     response = doc.data();
   });
   return response;
@@ -120,4 +122,14 @@ async function writeUserData(userData) {
   }
 }
 
-export { auth, createUser, getUserDataByEmail };
+async function appendUserData(userData, userID) {
+  try {
+    console.log('will try writing', userData,' to ID:', userID)
+    const ref = doc(db, 'users', userID);
+    setDoc(ref, userData, { merge: true });
+  } catch (error) {
+    console.log("DB write error", error);
+  }
+}
+
+export { auth, createUser, getUserDataByEmail , writeUserData, appendUserData};

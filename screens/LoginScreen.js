@@ -45,10 +45,9 @@ const LoginScreen = ({ navigation }) => {
         const user = userCredentials.user;
         console.log("logged in with", user.email);
         navigation.navigate("EditProfile");
-        store({user_email:user.email});
 
         //store the user data for the rest of the app
-        getUserDataByEmail(email).then((res)=>{console.log('lognnn',res);
+        getUserDataByEmail(email).then((res)=>{
         let obj = {};
         for(key of Object.keys(res)){
           obj['usrData_'+String(key)]=res[key];
