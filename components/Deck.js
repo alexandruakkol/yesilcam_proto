@@ -9,7 +9,7 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 const profilePicSize = 250;
 const jsonData = require("../mock_data/profiles.json");
 
-const Card = () => {
+const Deck = (props) => {
   let [fontsLoaded] = useFonts({
     LobsterTwo_700Bold_Italic,
     Jost_600SemiBold,
@@ -88,7 +88,7 @@ const Card = () => {
   }
 };
 
-export default Card;
+export default Deck;
 
 const styles = StyleSheet.create({
   container: {

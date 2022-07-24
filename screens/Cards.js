@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import { NativeBaseProvider, Center, HStack, View } from "native-base";
 import React from "react";
-import Card from "../components/Card";
+import Deck from "../components/Deck";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
@@ -12,7 +12,7 @@ const Cards = ({ navigation }) => {
     <NativeBaseProvider>
       <View style={styles.pageContainer}>
         <Header></Header>
-        <Card></Card>
+        <Deck></Deck>
       </View>
       <Navbar></Navbar>
     </NativeBaseProvider>

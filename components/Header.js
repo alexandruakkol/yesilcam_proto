@@ -5,10 +5,12 @@ import {
   useFonts,
   LobsterTwo_700Bold_Italic,
 } from "@expo-google-fonts/lobster-two";
+import { useRoute } from "@react-navigation/native";
 
 const headerColor = "white";
 
 const Header = () => {
+  const route = useRoute();
   let [fontsLoaded] = useFonts({
     LobsterTwo_700Bold_Italic,
   });
@@ -25,6 +27,9 @@ const Header = () => {
         <Center h="10" w="70%">
           <Text style={[styles.headerTitle, styles.headerElements]}>
             Green Pine Connects
+          </Text>
+          <Text style={[styles.headerSubTitle, styles.headerElements]}>
+            {route.name === "Cards" ? "" : route.name}
           </Text>
         </Center>
       </HStack>
@@ -46,6 +51,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: "LobsterTwo_700Bold_Italic",
     fontSize: 25,
+    color: "darkgreen",
+  },
+  headerSubTitle: {
+    fontFamily: "LobsterTwo_700Bold_Italic",
+    fontSize: 17,
     color: "darkgreen",
   },
 });

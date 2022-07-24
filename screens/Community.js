@@ -3,7 +3,7 @@ import { NativeBaseProvider, Center, View } from "native-base";
 import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import SocialPost from "../components/SocialPost";
+import SocialCluster from "../components/SocialCluster";
 
 const bkgColor = "#ebecf0";
 
@@ -12,7 +12,8 @@ const Community = () => {
     <NativeBaseProvider>
       <View style={styles.pageContainer}>
         <Header style={styles.header}></Header>
-        <SocialPost></SocialPost>
+
+        <SocialCluster></SocialCluster>
       </View>
       <Navbar></Navbar>
     </NativeBaseProvider>
