@@ -6,7 +6,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import { NativeBaseProvider, Input, Button, Icon, Center, useToast } from "native-base";
+import {
+  NativeBaseProvider,
+  Input,
+  Button,
+  Icon,
+  Center,
+  useToast,
+} from "native-base";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
@@ -20,8 +27,8 @@ const CreateAccount = ({ navigation }) => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [password2, setPassword2] = useState();
-  const toast=useToast();
- 
+  const toast = useToast();
+
   function validate() {
     let passwordsMatch = false,
       emailValid = false,
@@ -29,25 +36,30 @@ const CreateAccount = ({ navigation }) => {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     //Minimum eight characters, at least one letter and one number
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    const id='toastID';
+    const id = "toastID";
 
     if (password === password2) passwordsMatch = true;
     else {
-      if (!toast.isActive(id)) toast.show({id, description: "Passwords do not match"})
+      if (!toast.isActive(id))
+        toast.show({ id, description: "Passwords do not match" });
       console.log("input passwords do not match");
     }
     if (emailRegex.test(email)) emailValid = true;
     else {
-      if (!toast.isActive(id)) toast.show({id, description: "Email is not valid"})
+      if (!toast.isActive(id))
+        toast.show({ id, description: "Email is not valid" });
       console.log("input email is not valid");
     }
 
     if (passwordRegex.test(password)) passwordValid = true;
     else {
-      if (!toast.isActive(id)) toast.show({id, description: "Password does not contain minimum eight characters, at least one letter and one number"})
-      console.log(
-        "input password is invalid"
-      );
+      if (!toast.isActive(id))
+        toast.show({
+          id,
+          description:
+            "Password does not contain minimum eight characters, at least one letter and one number",
+        });
+      console.log("input password is invalid");
     }
     if (passwordsMatch && emailValid && passwordValid) return true;
   }

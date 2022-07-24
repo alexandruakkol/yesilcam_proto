@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import React from "react";
 import { NativeBaseProvider, Center, HStack, View, VStack } from "native-base";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { navigate } from "@react-navigation/native";
 
 const Navbar = () => {
   return (
@@ -9,7 +10,7 @@ const Navbar = () => {
       <NativeBaseProvider>
         <HStack justifyContent="center">
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate("Community")}
+            onPress={() => navigation.navigate("EditProfile")}
           >
             <View style={styles.navButton} w="33%" rounded="md" shadow={3}>
               <VStack>
@@ -42,7 +43,9 @@ const Navbar = () => {
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate("Chat")}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("Community")}
+          >
             <View style={styles.navButton} w="33%" rounded="md" shadow={3}>
               <VStack>
                 <View h="3"></View>
