@@ -10,10 +10,9 @@ const profilePicSize = 250;
 const jsonData = require("../data/profiles.json");
 
 const Card = () => {
-
   let [fontsLoaded] = useFonts({
     LobsterTwo_700Bold_Italic,
-    Jost_600SemiBold
+    Jost_600SemiBold,
   });
 
   if (!fontsLoaded) {
@@ -23,65 +22,71 @@ const Card = () => {
       </View>
     );
   } else {
-  return (
-    <View>
-      <Swiper
-        cards={jsonData}
-        renderCard={(card) => {
-          return (
-            <NativeBaseProvider>
-              <View style={styles.card}>
-                <Image
-                  source={{
-                    uri: card.photo,
-                  }}
-                  style={styles.profilePic}
-                  alt="Profile picture"
-                ></Image>
+    return (
+      <View>
+        <Swiper
+          cards={jsonData}
+          marginBottom={20}
+          verticalSwipe={false}
+          renderCard={(card) => {
+            return (
+              <NativeBaseProvider>
+                <View style={styles.card}>
+                  <Image
+                    source={{
+                      uri: card.photo,
+                    }}
+                    style={styles.profilePic}
+                    alt="Profile picture"
+                  ></Image>
 
-                <Text style={styles.nameLabel}>
-                  {card.firstName} {card.lastName}
-                </Text>
+                  <Text style={styles.nameLabel}>
+                    {card.firstName} {card.lastName}
+                  </Text>
 
-                <Text style={styles.location}>
-                  <MaterialIcons name="location-pin" size={18} color="black" />
-                  {card.location}
-                </Text>
-                <VStack marginLeft="2" space={2}>
-                  <Text style={styles.label}>About</Text>
-                  <Text style={styles.profileText}>{card.about}</Text>
-                  <Text style={styles.label}>Offering</Text>
-                  <Text style={styles.profileText}>{card.offering}</Text>
-                  <Text style={styles.label}>Seeking</Text>
-                  <Text style={styles.profileText}>{card.seeking}</Text>
-                  <Text style={styles.label}>Profession</Text>
-                  <Text style={styles.profileText}>{card.profession}</Text>
-                  <Text style={styles.label}>Speaks</Text>
-                  <Text style={styles.profileText}>{card.languages}</Text>
-                </VStack>
-              </View>
-            </NativeBaseProvider>
-          );
-        }}
-        onSwiped={(cardIndex) => {
-          console.log(cardIndex);
-        }}
-        onSwipedAll={() => {
-          console.log("onSwipedAll");
-        }}
-        onSwipedLeft={() => {
-          console.log("No");
-        }}
-        onSwipedRight={() => {
-          console.log("Yes");
-        }}
-        cardIndex={0}
-        backgroundColor={"#4FD0E9"}
-        stackSize={3}
-      ></Swiper>
-    </View>
-  );
-};}
+                  <Text style={styles.location}>
+                    <MaterialIcons
+                      name="location-pin"
+                      size={16}
+                      color="black"
+                    />
+                    {card.location}
+                  </Text>
+                  <VStack marginLeft="2" space={2}>
+                    <Text style={styles.label}>About</Text>
+                    <Text style={styles.profileText}>{card.about}</Text>
+                    <Text style={styles.label}>Offering</Text>
+                    <Text style={styles.profileText}>{card.offering}</Text>
+                    <Text style={styles.label}>Seeking</Text>
+                    <Text style={styles.profileText}>{card.seeking}</Text>
+                    <Text style={styles.label}>Profession</Text>
+                    <Text style={styles.profileText}>{card.profession}</Text>
+                    <Text style={styles.speaks}>Speaks: {card.languages}</Text>
+                  </VStack>
+                </View>
+              </NativeBaseProvider>
+            );
+          }}
+          onSwiped={(cardIndex) => {
+            console.log(cardIndex);
+          }}
+          onSwipedAll={() => {
+            console.log("onSwipedAll");
+          }}
+          onSwipedLeft={() => {
+            console.log("No");
+          }}
+          onSwipedRight={() => {
+            console.log("Yes");
+          }}
+          cardIndex={0}
+          backgroundColor={"#4FD0E9"}
+          stackSize={3}
+        ></Swiper>
+      </View>
+    );
+  }
+};
 
 export default Card;
 
@@ -107,28 +112,21 @@ const styles = StyleSheet.create({
     borderRadius: profilePicSize / 3.5,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom:12,
+    marginBottom: 12,
   },
 
   location: {
-    fontSize: 17,
-    marginTop:5
-  },
-
-  text: {
-    textAlign: "center",
-    fontSize: 50,
-    backgroundColor: "transparent",
-    fontFamily: "Jost_600SemiBold",
+    fontSize: 15,
+    marginTop: 5,
   },
 
   nameLabel: {
-    fontSize: 25,
-    fontWeight: "bold",    
+    fontSize: 23,
+    fontWeight: "bold",
     fontFamily: "Jost_600SemiBold",
   },
 
-  label: { fontSize:18, fontWeight: "bold", width:150},
-
-  profileText: {fontSize:17},
+  label: { fontSize: 16, fontWeight: "bold", width: "100%" },
+  speaks: { fontSize: 16, width: "100%" },
+  profileText: { fontSize: 15 },
 });
