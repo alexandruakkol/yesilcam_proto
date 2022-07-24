@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,35 +21,29 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
-            options={{ headerShown: false }}
-            name="LoginScreen"
-            component={LoginScreen}
-          />
-        <Stack.Screen
+          <Stack.Screen
             options={{ headerShown: false }}
             name="Cards"
             component={Cards}
           />
-        
-        <Stack.Screen
+          <Stack.Screen
             options={{ headerShown: false }}
-            name="EditProfile"
-            component={EditProfile}
+            name="LoginScreen"
+            component={LoginScreen}
           />
-      
-        <Stack.Screen
+
+          <Stack.Screen
             options={{ headerShown: false }}
             name="Chat"
             component={Chat}
           />
-        
+
           <Stack.Screen
             options={{ headerShown: false }}
             name="CreateAccount"
             component={CreateAccount}
           />
-         <Stack.Screen
+          <Stack.Screen
             options={{ headerShown: false }}
             name="CreateAccount2"
             component={CreateAccount2}
@@ -59,12 +53,12 @@ export default function App() {
             name="ForgotPassword"
             component={ForgotPassword}
           />
-  <Stack.Screen
+          <Stack.Screen
             options={{ headerShown: false }}
             name="Community"
             component={Community}
           />
-         
+
           <Stack.Screen
             options={{ headerShown: false }}
             name="CreateAccount3"
