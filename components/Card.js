@@ -7,7 +7,7 @@ import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 
 const profilePicSize = 250;
-const jsonData = require("../data/profiles.json");
+const jsonData = require("../mock_data/profiles.json");
 
 const Card = () => {
   let [fontsLoaded] = useFonts({
@@ -26,7 +26,7 @@ const Card = () => {
       <View>
         <Swiper
           cards={jsonData}
-          marginBottom={20}
+          cardVerticalMargin={2}
           verticalSwipe={false}
           renderCard={(card) => {
             return (
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    flex: 1,
+    height: "84%",
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "#E8E8E8",

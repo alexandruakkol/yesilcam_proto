@@ -23,9 +23,15 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             options={{ headerShown: false }}
+            name="Community"
+            component={Community}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
             name="Cards"
             component={Cards}
           />
+
           <Stack.Screen
             options={{ headerShown: false }}
             name="LoginScreen"
@@ -52,11 +58,6 @@ export default function App() {
             options={{ headerShown: false }}
             name="ForgotPassword"
             component={ForgotPassword}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Community"
-            component={Community}
           />
 
           <Stack.Screen
