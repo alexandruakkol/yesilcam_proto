@@ -50,17 +50,29 @@ const ProfileSetup = ({ navigation }) => {
   let [tooltipVisib, setTooltipVisib] = useState(false);
 
   useEffect(() => {
-    retrieve("usrData_name").then((r) => {
-      setFirstName(r);
-    });
+    retrieve("usrData_name").then((r) => setFirstName(r));
     retrieve("usrData_surname").then((r) => setLastName(r));
-    retrieve("usrData_aboutme").then((r) => setAboutme(r));
-    retrieve("usrData_offer").then((r) => setOffer(r));
-    retrieve("usrData_seek").then((r) => setSeek(r));
-    retrieve("usrData_profession").then((r) => setProfession(r));
-    retrieve("usrData_experience").then((r) => setExperience(r));
-    retrieve("usrData_location").then((r) => setLocation(r));
-    retrieve("usrData_languages").then((r) => setLanguages(r));
+    retrieve("usrData_aboutme").then((r) => {
+      if (r != "null") setAboutme(r);
+    });
+    retrieve("usrData_offer").then((r) => {
+      if (r != "null") setOffer(r);
+    });
+    retrieve("usrData_seek").then((r) => {
+      if (r != "null") setSeek(r);
+    });
+    retrieve("usrData_profession").then((r) => {
+      if (r != "null") setProfession(r);
+    });
+    retrieve("usrData_experience").then((r) => {
+      if (r != "null") setExperience(r);
+    });
+    retrieve("usrData_location").then((r) => {
+      if (r != "null") setLocation(r);
+    });
+    retrieve("usrData_languages").then((r) => {
+      if (r != "null") setLanguages(r);
+    });
   }, []);
 
   const showImagePicker = async () => {
