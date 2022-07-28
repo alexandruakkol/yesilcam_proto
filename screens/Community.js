@@ -10,6 +10,7 @@ import {
   Input,
   Button,
 } from "native-base";
+import { useState } from "react";
 import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
@@ -20,10 +21,11 @@ import { writeToDB } from "../firebase";
 const bkgColor = "#ebecf0";
 
 const Community = ({ navigation }) => {
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [postData, setPostData] = useState();
 
   function handlePost() {
-    writeToDB();
+    writeToDB("posts", { a: "b" });
   }
   return (
     <NativeBaseProvider>
@@ -47,6 +49,7 @@ const Community = ({ navigation }) => {
                   mt="3"
                   multiline
                   placeholder="Share something"
+                  onChangeText={(postData) => setPostData(postData)}
                 />
               </FormControl>
             </Modal.Body>
