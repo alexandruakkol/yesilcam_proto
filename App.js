@@ -13,6 +13,7 @@ import CreateAccount3 from "./screens/CreateAccount3";
 import ForgotPassword from "./screens/ForgotPassword";
 import Chat from "./screens/Chat";
 import Community from "./screens/Community";
+import Navbar from "./components/Navbar";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,13 +29,25 @@ export default function App() {
           />
           <Stack.Screen
             options={{ headerShown: false }}
-            name="Cards"
-            component={Cards}
+            name="Community"
+            component={Community}
           />
           <Stack.Screen
             options={{ headerShown: false }}
-            name="Community"
-            component={Community}
+            name="EditProfile"
+            component={EditProfile}
+          />
+
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Cards"
+            component={Cards}
+          />
+
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Navbar"
+            component={Navbar}
           />
 
           <Stack.Screen

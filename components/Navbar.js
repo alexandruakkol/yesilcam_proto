@@ -2,9 +2,8 @@ import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import React from "react";
 import { NativeBaseProvider, Center, HStack, View, VStack } from "native-base";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { navigate } from "@react-navigation/native";
 
-const Navbar = () => {
+const Navbar = ({ navigation }) => {
   return (
     <View style={styles.navbar}>
       <NativeBaseProvider>

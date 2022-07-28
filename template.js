@@ -6,13 +6,13 @@ import Header from "../components/Header";
 
 const bkgColor = "#ebecf0";
 
-const Community = () => {
+const Community = ({ navigation }) => {
   return (
     <NativeBaseProvider>
       <View style={styles.pageContainer}>
         <Header />
       </View>
-      <Navbar></Navbar>
+      <Navbar navigation={navigation}></Navbar>
     </NativeBaseProvider>
   );
 };

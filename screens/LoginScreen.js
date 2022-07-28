@@ -1,5 +1,11 @@
-import {store, retrieve} from '../storage';
-import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator } from "react-native";
+import { store, retrieve } from "../storage";
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { NativeBaseProvider, Input, Button, Icon, Center } from "native-base";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
@@ -8,21 +14,19 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 //TODO scoate createUser
-import {auth, createUser, getUserDataByEmail } from "../firebase";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth, createUser, getUserDataByEmail } from "../firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const textColor = "#dae8d4c9";
 
 const LoginScreen = ({ navigation }) => {
-  
-//---------//TESTING AREA//-----------\\
+  //---------//TESTING AREA//-----------\\
 
-
-//------------------------------------//
+  //------------------------------------//
   //hooks
-  useEffect(()=>{
+  useEffect(() => {
     AsyncStorage.clear();
-  },[]);
+  }, []);
 
   let [show, setShow] = useState(true);
   let [email, setEmail] = useState();
@@ -41,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
       });
   };
 
-async function handleLogIn(){
+  async function handleLogIn() {
     await auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
@@ -49,24 +53,23 @@ async function handleLogIn(){
         console.log("logged in with", user.email);
 
         //store the user data for the rest of the app
-        getUserDataByEmail(email).then((res)=>{
-        console.log('data on server for ', email, ' ', res);
-        let obj = {};
-        async function convert(){
-          for(key of Object.keys(res)){
-            obj['usrData_'+String(key)]=res[key];
-            await store(obj);
+        getUserDataByEmail(email).then((res) => {
+          console.log("data on server for ", email, " ", res);
+          let obj = {};
+          async function convert() {
+            for (key of Object.keys(res)) {
+              obj["usrData_" + String(key)] = res[key];
+              await store(obj);
+            }
           }
-        }
-        convert().then(navigation.navigate("EditProfile"));
+          convert().then(navigation.navigate("EditProfile"));
         });
       })
       .catch((error) => {
         console.log("badLogin: ", error.message);
         alert("Invalid login");
       });
-      
-  };
+  }
 
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
@@ -77,7 +80,6 @@ async function handleLogIn(){
     return (
       <View style={styles.LoadingContainer}>
         <ActivityIndicator color="#0c5407" />
-
       </View>
     );
   } else {
@@ -91,8 +93,11 @@ async function handleLogIn(){
           style={styles.loginpage}
         >
           <Text style={styles.title}>Green Pine Connects</Text>
-          <Text style={styles.subtitle1}>A global application to increase resources for Film and TV professionals </Text>
-          <Text style={styles.subtitle2}>By the Green Pine Foundation</Text>        
+          <Text style={styles.subtitle1}>
+            A global application to increase resources for Film and TV
+            professionals{" "}
+          </Text>
+          <Text style={styles.subtitle2}>By the Green Pine Foundation</Text>
           <KeyboardAvoidingView behavior="padding">
             <View>
               <Text style={styles.loginText}>Log in</Text>
@@ -136,10 +141,12 @@ async function handleLogIn(){
                 }
                 placeholder="Password"
               ></Input>
-              <Text style={styles.forgotPass} 
-                onPress={()=>
-                  navigation.navigate('forgotPassword')
-                }>Forgot password?</Text>
+              <Text
+                style={styles.forgotPass}
+                onPress={() => navigation.navigate("ForgotPassword")}
+              >
+                Forgot password?
+              </Text>
             </View>
 
             <Center>
@@ -200,7 +207,11 @@ async function handleLogIn(){
                 h="10"
                 marginTop="3"
                 borderRadius="20"
-                onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
+                onPress={() =>
+                  onGoogleButtonPress().then(() =>
+                    console.log("Signed in with Google!")
+                  )
+                }
               >
                 <Text style={styles.loginWithGoogleText}>
                   Log in with Google
@@ -231,13 +242,12 @@ async function handleLogIn(){
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-
   LoadingContainer: {
     flex: 1,
     justifyContent: "center",
     flexDirection: "row",
     justifyContent: "space-around",
-    padding: 10
+    padding: 10,
   },
 
   loginpage: {
@@ -253,7 +263,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignContent: "center",
     fontSize: 39,
-    marginTop: 100,
+    marginTop: 75,
     color: textColor,
   },
   subtitle1: {
@@ -263,9 +273,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
     fontSize: 16,
     color: textColor,
-    marginHorizontal:5,
-    marginTop:35,
-    marginBottom:20
+    marginHorizontal: 5,
+    marginTop: 35,
+    marginBottom: 15,
   },
   subtitle2: {
     fontFamily: "Jost_600SemiBold",
@@ -274,8 +284,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     fontSize: 14,
     color: textColor,
-    marginHorizontal:5,
-    marginBottom:140
+    marginHorizontal: 5,
+    marginBottom: 100,
   },
 
   loginText: {

@@ -29,7 +29,6 @@ const profilePicSize = 200;
 const headerColor = "#ffffff";
 const bkgColor = "#ebecf0";
 const inputColor = "white";
-let userID = new String();
 
 const ProfileSetup = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
@@ -55,7 +54,6 @@ const ProfileSetup = ({ navigation }) => {
       setFirstName(r);
     });
     retrieve("usrData_surname").then((r) => setLastName(r));
-    retrieve("usrData_userID").then((r) => (userID = r));
     retrieve("usrData_aboutme").then((r) => setAboutme(r));
     retrieve("usrData_offer").then((r) => setOffer(r));
     retrieve("usrData_seek").then((r) => setSeek(r));
@@ -117,7 +115,7 @@ const ProfileSetup = ({ navigation }) => {
                   languages,
                 };
                 console.log("to send: ", toSend);
-                appendUserData(toSend, userID);
+                appendUserData(toSend);
                 //write to asyncstorage
                 navigation.navigate("Cards");
               }}

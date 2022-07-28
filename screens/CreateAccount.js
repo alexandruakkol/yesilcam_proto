@@ -214,6 +214,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   appView: {
-    height: "100%",
+    flex: 1,
   },
 });

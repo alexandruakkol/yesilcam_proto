@@ -14,7 +14,7 @@ const Cards = ({ navigation }) => {
         <Header></Header>
         <Deck></Deck>
       </View>
-      <Navbar></Navbar>
+      <Navbar navigation={navigation}></Navbar>
     </NativeBaseProvider>
   );
 };
