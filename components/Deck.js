@@ -9,6 +9,14 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 const profilePicSize = 250;
 const jsonData = require("../mock_data/profiles.json");
 
+//convert object of objects to array of objects (cards accept arrays only)
+const arrOfProfilesToShow = [];
+Object.keys(jsonData).forEach((key) => {
+  arrOfProfilesToShow.push({ [key]: jsonData[key] });
+});
+
+console.log(arrOfProfilesToShow);
+
 const Deck = (props) => {
   let [fontsLoaded] = useFonts({
     LobsterTwo_700Bold_Italic,
@@ -25,23 +33,24 @@ const Deck = (props) => {
     return (
       <View>
         <Swiper
-          cards={jsonData}
+          cards={arrOfProfilesToShow}
           cardVerticalMargin={2}
           verticalSwipe={false}
           renderCard={(card) => {
+            let prop = Object.values(card)[0];
             return (
               <NativeBaseProvider>
                 <View style={styles.card}>
                   <Image
                     source={{
-                      uri: card.photo,
+                      uri: prop.photo,
                     }}
                     style={styles.profilePic}
                     alt="Profile picture"
                   ></Image>
 
                   <Text style={styles.nameLabel}>
-                    {card.firstName} {card.lastName}
+                    {prop.firstName} {prop.lastName}
                   </Text>
 
                   <Text style={styles.location}>
@@ -50,18 +59,18 @@ const Deck = (props) => {
                       size={16}
                       color="black"
                     />
-                    {card.location}
+                    {prop.location}
                   </Text>
                   <VStack marginLeft="2" space={2}>
                     <Text style={styles.label}>About</Text>
-                    <Text style={styles.profileText}>{card.about}</Text>
+                    <Text style={styles.profileText}>{prop.about}</Text>
                     <Text style={styles.label}>Offering</Text>
-                    <Text style={styles.profileText}>{card.offering}</Text>
+                    <Text style={styles.profileText}>{prop.offering}</Text>
                     <Text style={styles.label}>Seeking</Text>
-                    <Text style={styles.profileText}>{card.seeking}</Text>
+                    <Text style={styles.profileText}>{prop.seeking}</Text>
                     <Text style={styles.label}>Profession</Text>
-                    <Text style={styles.profileText}>{card.profession}</Text>
-                    <Text style={styles.speaks}>Speaks: {card.languages}</Text>
+                    <Text style={styles.profileText}>{prop.profession}</Text>
+                    <Text style={styles.speaks}>Speaks: {prop.languages}</Text>
                   </VStack>
                 </View>
               </NativeBaseProvider>

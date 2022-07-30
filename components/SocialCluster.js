@@ -40,14 +40,14 @@ const SocialPost = (props) => {
 const SocialCluster = () => {
   return (
     <View>
-      {jsonData.map((post) => {
+      {Object.keys(jsonData).map((key) => {
         return (
           <SocialPost
-            key={post.picture}
-            picture={post.picture}
-            name={post.firstName + " " + post.lastName}
-            body={post.body}
-            time={post.time}
+            key={key}
+            picture={jsonData[key].picture}
+            name={jsonData[key].firstName + " " + jsonData[key].lastName}
+            body={jsonData[key].body}
+            time={jsonData[key].time}
           ></SocialPost>
         );
       })}
