@@ -15,7 +15,7 @@ Object.keys(jsonData).forEach((key) => {
   arrOfProfilesToShow.push({ [key]: jsonData[key] });
 });
 
-console.log(arrOfProfilesToShow);
+console.log("showing the following cards: ", arrOfProfilesToShow);
 
 const Deck = (props) => {
   let [fontsLoaded] = useFonts({
@@ -77,16 +77,16 @@ const Deck = (props) => {
             );
           }}
           onSwiped={(cardIndex) => {
-            console.log(cardIndex);
+            console.log(arr);
           }}
           onSwipedAll={() => {
             console.log("onSwipedAll");
           }}
-          onSwipedLeft={() => {
-            console.log("No");
+          onSwipedLeft={(cardIndex) => {
+            //console.log("Swiped NO on", arrOfProfilesToShow[cardIndex]);
           }}
-          onSwipedRight={() => {
-            console.log("Yes");
+          onSwipedRight={(cardIndex) => {
+            console.log("Swiped YES on", c);
           }}
           cardIndex={0}
           backgroundColor={"#4FD0E9"}

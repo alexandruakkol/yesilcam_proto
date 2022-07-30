@@ -14,7 +14,7 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 //TODO scoate createUser
-import { auth, createUser, getUserDataByEmail } from "../firebase";
+import { auth, createUser, getUserDataByEmail, writeToDB } from "../firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const textColor = "#dae8d4c9";

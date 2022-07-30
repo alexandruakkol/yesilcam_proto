@@ -4,6 +4,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import ConversationSlice from "../components/ConversationSlice";
+import { writeToDB, appendUserData, getUserDataByID } from "../firebase";
 const bkgColor = "#ebecf0";
 
 const Chat = ({ navigation }) => {
