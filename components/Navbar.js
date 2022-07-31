@@ -11,7 +11,7 @@ const Navbar = ({ navigation }) => {
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate("EditProfile")}
           >
-            <View style={styles.navButton} w="33%" rounded="md" shadow={3}>
+            <View style={styles.navButton} w="25%" rounded="md" shadow={3}>
               <VStack>
                 <View h="3"></View>
                 <Center style={styles.icon}>
@@ -27,7 +27,7 @@ const Navbar = ({ navigation }) => {
           </TouchableWithoutFeedback>
 
           <TouchableWithoutFeedback onPress={() => navigation.navigate("Chat")}>
-            <View style={styles.navButton} w="33%" rounded="md" shadow={3}>
+            <View style={styles.navButton} w="25%" rounded="md" shadow={3}>
               <VStack>
                 <View h="3"></View>
                 <Center style={styles.icon}>
@@ -45,13 +45,31 @@ const Navbar = ({ navigation }) => {
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate("Community")}
           >
-            <View style={styles.navButton} w="33%" rounded="md" shadow={3}>
+            <View style={styles.navButton} w="25%" rounded="md" shadow={3}>
               <VStack>
                 <View h="3"></View>
                 <Center style={styles.icon}>
                   <FontAwesome
                     style={styles.loginWithGoogleIcon}
                     name="users"
+                    size={19}
+                    color="grey"
+                  />
+                </Center>
+              </VStack>
+            </View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("Settings")}
+          >
+            <View style={styles.navButton} w="25%" rounded="md" shadow={3}>
+              <VStack>
+                <View h="3"></View>
+                <Center style={styles.icon}>
+                  <FontAwesome
+                    style={styles.loginWithGoogleIcon}
+                    name="gear"
                     size={19}
                     color="grey"
                   />

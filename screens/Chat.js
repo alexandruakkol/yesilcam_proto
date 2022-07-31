@@ -62,7 +62,12 @@ const Chat = ({ navigation }) => {
             let firstName = myData.chats[convoKey]["firstName"];
             let lastName = myData.chats[convoKey]["lastName"];
             return (
-              <TouchableWithoutFeedback key={from}>
+              <TouchableWithoutFeedback
+                key={from}
+                onPress={() =>
+                  navigation.navigate("Conversation", { convo: convoKey })
+                }
+              >
                 <HStack style={styles.slice} space={2}>
                   <Avatar
                     style={styles.chatteeImg}
