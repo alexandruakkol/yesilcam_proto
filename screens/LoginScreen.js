@@ -66,8 +66,10 @@ const LoginScreen = ({ navigation }) => {
     //cache user data for the rest of the app
     getUserDataByEmail(email ? email : auth.currentUser.email).then((res) => {
       getPictureOfUser(auth.currentUser.uid).then((profile_picture) => {
-        console.log(auth.currentUser.uid, "got: ", profile_picture);
-        console.log("data on server for ", email, " ", res);
+        console.log("data on server for ", email, " ", {
+          ...res,
+          profile_picture,
+        });
         let obj = {};
         async function convert() {
           for (key of Object.keys(res)) {

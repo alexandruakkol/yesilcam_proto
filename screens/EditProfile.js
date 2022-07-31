@@ -297,7 +297,7 @@ const ProfileSetup = ({ navigation }) => {
               </VStack>
             </View>
           </ScrollView>
-          <Navbar></Navbar>
+          <Navbar navigation={navigation}></Navbar>
         </View>
       </NativeBaseProvider>
     );
