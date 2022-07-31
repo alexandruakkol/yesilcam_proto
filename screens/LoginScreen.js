@@ -13,8 +13,15 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
+import { onAuthStateChanged } from "firebase/auth";
 //TODO scoate createUser
-import { auth, createUser, getUserDataByEmail, writeToDB } from "../firebase";
+import {
+  auth,
+  createUser,
+  getUserDataByEmail,
+  writeToDB,
+  checkAuth,
+} from "../firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const textColor = "#dae8d4c9";
@@ -32,6 +39,15 @@ const LoginScreen = ({ navigation }) => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
 
+  //auto-login with session
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      handleLogin();
+    } else {
+      console.log("user not signed in");
+    }
+  });
+
   const handleSignUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -45,25 +61,28 @@ const LoginScreen = ({ navigation }) => {
       });
   };
 
-  async function handleLogIn() {
+  function handleLogin() {
+    //store the user data for the rest of the app
+    getUserDataByEmail(email ? email : auth.currentUser.email).then((res) => {
+      console.log("data on server for ", email, " ", res);
+      let obj = {};
+      async function convert() {
+        for (key of Object.keys(res)) {
+          obj["usrData_" + String(key)] = res[key];
+          await store(obj);
+        }
+      }
+      convert().then(navigation.navigate("EditProfile"));
+    });
+  }
+
+  async function handleLogInWithEmailAndPassword() {
     await auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("logged in with", user.email);
-
-        //store the user data for the rest of the app
-        getUserDataByEmail(email).then((res) => {
-          console.log("data on server for ", email, " ", res);
-          let obj = {};
-          async function convert() {
-            for (key of Object.keys(res)) {
-              obj["usrData_" + String(key)] = res[key];
-              await store(obj);
-            }
-          }
-          convert().then(navigation.navigate("EditProfile"));
-        });
+        handleLogin();
       })
       .catch((error) => {
         console.log("badLogin: ", error.message);
@@ -157,7 +176,7 @@ const LoginScreen = ({ navigation }) => {
                 borderRadius="20"
                 onPress={() => {
                   if (email && password) {
-                    handleLogIn();
+                    handleLogInWithEmailAndPassword();
                   }
                 }}
               >
