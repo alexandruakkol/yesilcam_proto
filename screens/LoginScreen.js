@@ -21,6 +21,7 @@ import {
   getUserDataByEmail,
   writeToDB,
   checkAuth,
+  getPictureOfUser,
 } from "../firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -62,17 +63,22 @@ const LoginScreen = ({ navigation }) => {
   };
 
   function handleLogin() {
-    //store the user data for the rest of the app
+    //cache user data for the rest of the app
     getUserDataByEmail(email ? email : auth.currentUser.email).then((res) => {
-      console.log("data on server for ", email, " ", res);
-      let obj = {};
-      async function convert() {
-        for (key of Object.keys(res)) {
-          obj["usrData_" + String(key)] = res[key];
+      getPictureOfUser(auth.currentUser.uid).then((profile_picture) => {
+        console.log(auth.currentUser.uid, "got: ", profile_picture);
+        console.log("data on server for ", email, " ", res);
+        let obj = {};
+        async function convert() {
+          for (key of Object.keys(res)) {
+            if (key === "chats") continue;
+            obj["usrData_" + String(key)] = res[key];
+          }
+          obj["usrData_profilePicture"] = profile_picture;
           await store(obj);
         }
-      }
-      convert().then(navigation.navigate("Cards"));
+        convert().then(navigation.navigate("Cards"));
+      });
     });
   }
 

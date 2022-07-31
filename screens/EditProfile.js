@@ -23,7 +23,13 @@ import Tooltip from "react-native-walkthrough-tooltip";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import { store, retrieve } from "../storage";
-import { appendUserData, storePicture } from "../firebase";
+import {
+  appendUserData,
+  storePicture,
+  getPictureOfUser,
+  auth,
+} from "../firebase";
+import Navbar from "../components/Navbar";
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -73,6 +79,9 @@ const ProfileSetup = ({ navigation }) => {
     retrieve("usrData_languages").then((r) => {
       if (r != "null") setLanguages(r);
     });
+    retrieve("usrData_profilePicture").then((r) => {
+      if (r != "null") setImage(r);
+    });
   }, []);
 
   const showImagePicker = async () => {
@@ -85,9 +94,9 @@ const ProfileSetup = ({ navigation }) => {
     }
     const result = await ImagePicker.launchImageLibraryAsync();
     if (!result.cancelled) {
-      console.log(result.uri);
       setImage(result.uri);
-      storePicture(result.uri);
+      return;
+    } else {
       return;
     }
   };
@@ -126,13 +135,14 @@ const ProfileSetup = ({ navigation }) => {
                   location,
                   languages,
                 };
+                if (image) storePicture(image);
                 console.log("to send: ", toSend);
                 appendUserData(toSend);
                 //write to asyncstorage
                 navigation.navigate("Cards");
               }}
             >
-              <Text style={[styles.doneText, styles.headerElements]}>Done</Text>
+              <Text style={[styles.doneText, styles.headerElements]}>Save</Text>
             </Button>
           </HStack>
 
@@ -287,6 +297,7 @@ const ProfileSetup = ({ navigation }) => {
               </VStack>
             </View>
           </ScrollView>
+          <Navbar></Navbar>
         </View>
       </NativeBaseProvider>
     );
