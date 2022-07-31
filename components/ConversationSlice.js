@@ -1,5 +1,13 @@
-import { StyleSheet, Text } from "react-native";
-import { NativeBaseProvider, Center, View, Image, Avatar } from "native-base";
+import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import {
+  NativeBaseProvider,
+  Center,
+  View,
+  Image,
+  Avatar,
+  HStack,
+  VStack,
+} from "native-base";
 import React from "react";
 import { useRef, useState } from "react";
 import { getUserDataByID, auth } from "../firebase";
@@ -23,6 +31,8 @@ export default function ConversationSlice() {
             r.chats[convoKey] = {
               ...r.chats[convoKey],
               ...{ photo: q.photo },
+              ...{ firstName: q.firstName },
+              ...{ lastName: q.lastName },
             };
           })
           .finally(() => {
@@ -45,17 +55,28 @@ export default function ConversationSlice() {
           let from = myData.chats[convoKey][lastMessageKey].from;
           let lastMessage = myData.chats[convoKey][lastMessageKey].body;
           let chateePic = myData.chats[convoKey]["photo"];
+          let firstName = myData.chats[convoKey]["firstName"];
+          let lastName = myData.chats[convoKey]["lastName"];
           return (
-            <View style={styles.slice} key={from}>
-              <Text style={styles.from}>{from}</Text>
-              <Text style={styles.lastText}>{lastMessage}</Text>
-              <Avatar
-                style={styles.chatteeImg}
-                source={{
-                  uri: chateePic,
-                }}
-              ></Avatar>
-            </View>
+            <TouchableWithoutFeedback key={from}>
+              <HStack style={styles.slice} space={2}>
+                <Avatar
+                  style={styles.chatteeImg}
+                  size="lg"
+                  source={{
+                    uri: chateePic,
+                  }}
+                ></Avatar>
+                <View>
+                  <VStack space={2}>
+                    <Text style={styles.from}>
+                      {firstName} {lastName}
+                    </Text>
+                    <Text style={styles.lastText}>{lastMessage}</Text>
+                  </VStack>
+                </View>
+              </HStack>
+            </TouchableWithoutFeedback>
           );
         })}
       </NativeBaseProvider>
@@ -63,6 +84,12 @@ export default function ConversationSlice() {
 }
 
 const styles = StyleSheet.create({
-  slice: { borderBottomColor: "black" },
-  lastText: {},
+  slice: {
+    marginLeft: 5,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
+  },
+  from: { fontWeight: "bold", fontSize: 17 },
+  lastText: { fontSize: 14 },
 });

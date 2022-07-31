@@ -72,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
           await store(obj);
         }
       }
-      convert().then(navigation.navigate("EditProfile"));
+      convert().then(navigation.navigate("Cards"));
     });
   }
 
