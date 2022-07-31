@@ -65,7 +65,10 @@ const Chat = ({ navigation }) => {
               <TouchableWithoutFeedback
                 key={from}
                 onPress={() =>
-                  navigation.navigate("Conversation", { convo: convoKey })
+                  navigation.navigate("Conversation", {
+                    convo: convoKey,
+                    chateePic,
+                  })
                 }
               >
                 <HStack style={styles.slice} space={2}>
