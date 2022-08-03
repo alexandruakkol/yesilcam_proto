@@ -34,20 +34,20 @@ const LoginScreen = ({ navigation }) => {
   //hooks
   useEffect(() => {
     AsyncStorage.clear();
+
+    //auto-login with session
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        handleLogin();
+      } else {
+        console.log("user not signed in");
+      }
+    });
   }, []);
 
   let [show, setShow] = useState(true);
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
-
-  //auto-login with session
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      handleLogin();
-    } else {
-      console.log("user not signed in");
-    }
-  });
 
   const handleSignUp = () => {
     auth

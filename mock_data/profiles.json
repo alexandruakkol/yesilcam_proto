@@ -1,5 +1,6 @@
-{
-   "3099ea8a-7298-470d-9b89-378b3e65e7c6": {
+[
+   {
+    "id":"3099ea8a-7298-470d-9b89-378b3e65e7c6",
         "photo":"https://images.unsplash.com/photo-1535786536200-3dd2062ff878?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
         "firstName": "Chris",
         "lastName": "Scott",
@@ -11,8 +12,8 @@
         "languages":"English, Spanish",
         "email":"dummy_chris@test.com"
     },
-   "a37bf505-8b09-47c6-a894-ac3db23f6157":
-    {
+
+    {   "id":"a37bf505-8b09-47c6-a894-ac3db23f6157",
         "photo":"https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
         "firstName": "Amy",
         "lastName": "Lewis",
@@ -24,4 +25,4 @@
         "languages":"English",
         "email":"dummy_amy@test.com"
     }
-}
+]

@@ -1,29 +1,43 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
+import { useState, useEffect } from "react";
 import Swiper from "react-native-deck-swiper";
 import { NativeBaseProvider, Image, View, VStack } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
+import { getUserData } from "../firebase";
 
 const profilePicSize = 250;
-const jsonData = require("../mock_data/profiles.json");
-
-//convert object of objects to array of objects (cards accept arrays only)
 const arrOfProfilesToShow = [];
-Object.keys(jsonData).forEach((key) => {
-  arrOfProfilesToShow.push({ [key]: jsonData[key] });
-});
 
-console.log("showing the following cards: ", arrOfProfilesToShow);
-
+let jsonData;
 const Deck = (props) => {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    getUserData()
+      .then((r) => {
+        console.log("SERVERR:", r);
+        jsonData = r;
+      })
+      .finally(() => {
+        //convert object of objects to array of objects (cards accept arrays only)
+        Object.keys(jsonData).forEach((key) => {
+          arrOfProfilesToShow.push(jsonData[key]);
+        });
+        setData(arrOfProfilesToShow);
+      });
+  }, []);
+
+  console.log("showing the following cards: ", arrOfProfilesToShow);
+
   let [fontsLoaded] = useFonts({
     LobsterTwo_700Bold_Italic,
     Jost_600SemiBold,
   });
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || !data) {
     return (
       <View>
         <Text>Loading...</Text>
@@ -37,7 +51,8 @@ const Deck = (props) => {
           cardVerticalMargin={2}
           verticalSwipe={false}
           renderCard={(card) => {
-            let prop = Object.values(card)[0];
+            console.log(card);
+            let prop = card;
             return (
               <NativeBaseProvider>
                 <View style={styles.card}>
@@ -76,18 +91,14 @@ const Deck = (props) => {
               </NativeBaseProvider>
             );
           }}
-          onSwiped={(cardIndex) => {
-            console.log(arr);
-          }}
+          onSwiped={(cardIndex) => {}}
           onSwipedAll={() => {
             console.log("onSwipedAll");
           }}
           onSwipedLeft={(cardIndex) => {
-            //console.log("Swiped NO on", arrOfProfilesToShow[cardIndex]);
+            console.log("Swiped NO on", arrOfProfilesToShow[cardIndex]);
           }}
-          onSwipedRight={(cardIndex) => {
-            console.log("Swiped YES on", c);
-          }}
+          onSwipedRight={(cardIndex) => {}}
           cardIndex={0}
           backgroundColor={"#4FD0E9"}
           stackSize={3}

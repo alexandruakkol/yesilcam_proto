@@ -42,6 +42,7 @@ const Community = ({ navigation }) => {
           size="full"
         >
           <Modal.Content>
+            <Modal.Header>Post on Community</Modal.Header>
             <Modal.Body>
               <FormControl>
                 <Input
