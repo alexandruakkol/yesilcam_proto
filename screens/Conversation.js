@@ -1,18 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
-import { NativeBaseProvider, Center, Avatar } from "native-base";
+import { NativeBaseProvider, Center, Avatar, HStack, Input } from "native-base";
 import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import { getConversation } from "../firebase";
+import { auth, getConversation } from "../firebase";
+import { retrieve } from "../storage";
 
 const bkgColor = "#ebecf0";
 
 const Conversation = ({ navigation, route }) => {
   const convo = route.params.convo;
-  const chateePic = route.params.chateePic;
+  let chatteePic = route.params.chateePic;
   const [dataReady, setDataReady] = useState(false);
   const [myData, setMyData] = useState();
+  const [myPic, setMyPic] = useState();
 
   useEffect(() => {
     console.log("accessing conversation:", convo);
@@ -24,6 +26,10 @@ const Conversation = ({ navigation, route }) => {
       .finally(() => {
         setDataReady(true);
       });
+
+    retrieve("usrData_profilePicture").then((r) => {
+      if (r != "null") setMyPic(r);
+    });
   }, []);
 
   if (!dataReady) {
@@ -33,25 +39,37 @@ const Conversation = ({ navigation, route }) => {
       <NativeBaseProvider>
         <View style={styles.pageContainer}>
           <Header />
-          <Avatar
-            style={styles.chatteeImg}
-            size="lg"
-            source={{
-              uri: chateePic,
-            }}
-          ></Avatar>
+
           {Object.keys(myData).map((messageKey) => {
+            myData[messageKey].pic =
+              myData[messageKey].from === auth.currentUser.uid
+                ? myPic
+                : chatteePic;
+
             return (
               <View key={messageKey}>
-                <View style={styles.messageBox}>
-                  <Text style={styles.messageText}>
-                    {myData[messageKey].body}
-                  </Text>
-                </View>
+                <HStack space={2} style={styles.chatHStack}>
+                  <Avatar
+                    style={styles.chatteeImg}
+                    size="sm"
+                    source={{
+                      uri: myData[messageKey].pic,
+                    }}
+                  ></Avatar>
+                  <View style={styles.messageBox}>
+                    <Text style={styles.messageText}>
+                      {myData[messageKey].body}
+                    </Text>
+                  </View>
+                </HStack>
               </View>
             );
           })}
         </View>
+        <Center>
+          <Input style={styles.input} variant="rounded" w="85%"></Input>
+        </Center>
+
         <Navbar navigation={navigation}></Navbar>
       </NativeBaseProvider>
     );
@@ -64,8 +82,18 @@ const styles = StyleSheet.create({
     height: "94%",
     backgroundColor: bkgColor,
   },
-  chatteeImg: {},
-
-  messageBox: { backgroundColor: "purple", borderRadius: 30 },
-  messageText: {},
+  chatteeImg: {
+    marginVertical: 10,
+  },
+  chatHStack: {
+    marginHorizontal: 4,
+  },
+  messageBox: {
+    backgroundColor: "#a2c794",
+    borderRadius: 8,
+    height: 35,
+    marginTop: 8,
+  },
+  messageText: { marginHorizontal: 12, paddingVertical: 10 },
+  input: {},
 });

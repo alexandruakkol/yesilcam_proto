@@ -21,7 +21,6 @@ const Chat = ({ navigation }) => {
   const counter = useRef();
 
   useEffect(() => {
-    let start = true;
     //getting current user chats and then 'joining' data of chat user
     getUserDataByID(auth.currentUser.uid).then((r) => {
       counter.current = Object.keys(r.chats).length;
