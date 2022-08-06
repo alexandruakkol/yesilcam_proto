@@ -20,7 +20,7 @@ import GPC from "../global";
 import {
   auth,
   createUser,
-  getUserDataByEmail,
+  getAndGlobalizeUsrData,
   writeToDB,
   checkAuth,
   getPictureOfUser,
@@ -65,24 +65,8 @@ const LoginScreen = ({ navigation }) => {
   };
 
   function handleLogin() {
-    //cache user data for the rest of the app
-    getUserDataByEmail(email ? email : auth.currentUser.email).then((res) => {
-      getPictureOfUser(auth.currentUser.uid).then((profile_picture) => {
-        console.log("data on server for ", email, " ", {
-          ...res,
-          profile_picture,
-        });
-        let obj = {};
-        async function convert() {
-          for (key of Object.keys(res)) {
-            if (key === "chats") continue;
-            GPC["usrData_" + String(key)] = res[key];
-            console.log("stored in GPC ", "usrData_" + String(key));
-          }
-          GPC["usrData_profilePicture"] = profile_picture;
-        }
-        convert().then(navigation.navigate("Cards"));
-      });
+    getAndGlobalizeUsrData().then(() => {
+      navigation.navigate("Cards");
     });
   }
 

@@ -28,6 +28,7 @@ import {
   storePicture,
   getPictureOfUser,
   auth,
+  getAndGlobalizeUsrData,
 } from "../firebase";
 import Navbar from "../components/Navbar";
 import GPC from "../global";
@@ -77,7 +78,9 @@ const ProfileSetup = ({ navigation }) => {
 
   let [tooltipVisib, setTooltipVisib] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getAndGlobalizeUsrData();
+  }, []);
 
   const showImagePicker = async () => {
     // Ask the user for the permission to access the media library
