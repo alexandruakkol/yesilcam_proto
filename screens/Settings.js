@@ -18,6 +18,7 @@ const Settings = ({ navigation }) => {
               .signOut()
               .then(() => {
                 console.log("user successfuly signed out");
+                navigation.navigate("LoginScreen");
               })
               .catch(function (error) {
                 console.log("sign-out error", error);

@@ -47,7 +47,7 @@ const ProfileSetup = ({ navigation }) => {
     GPC["usrData_firstName"] ? GPC["usrData_firstName"] : ""
   );
   let [lastName, setLastName] = useState(
-    GPC["usrData_surname"] ? GPC["usrData_surname"] : null
+    GPC["usrData_lastName"] ? GPC["usrData_lastName"] : ""
   );
   let [aboutme, setAboutme] = useState(
     GPC["usrData_aboutme"] ? GPC["usrData_aboutme"] : null
