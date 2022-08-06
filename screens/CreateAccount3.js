@@ -44,7 +44,7 @@ const CreateAccount3 = ({ route, navigation }) => {
               placeholder="First name"
               value={firstName}
               onChangeText={(firstName) => {
-                setFirstName(name);
+                setFirstName(firstName);
               }}
             ></Input>
 
