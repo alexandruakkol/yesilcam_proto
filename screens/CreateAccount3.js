@@ -10,14 +10,14 @@ import { auth, createUser } from "../firebase";
 
 const textColor = "#dae8d4c9";
 const CreateAccount3 = ({ route, navigation }) => {
-  let [name, setName] = useState();
-  let [surname, setSurname] = useState();
+  let [firstName, setFirstName] = useState();
+  let [lastName, setLastName] = useState();
   let [submitAccountStatus, setSubmitAccountStatus] = useState();
 
   let userData = {
     email: route.params.email,
-    name,
-    surname,
+    firstName,
+    lastName,
     birthday: route.params.birthday,
   };
 
@@ -41,10 +41,10 @@ const CreateAccount3 = ({ route, navigation }) => {
               variant="underlined"
               size="2xl"
               mx="4"
-              placeholder="Name"
-              value={name}
-              onChangeText={(name) => {
-                setName(name);
+              placeholder="First name"
+              value={firstName}
+              onChangeText={(firstName) => {
+                setFirstName(name);
               }}
             ></Input>
 
@@ -53,10 +53,10 @@ const CreateAccount3 = ({ route, navigation }) => {
               variant="underlined"
               size="2xl"
               mx="4"
-              placeholder="Surname"
-              value={surname}
-              onChangeText={(surname) => {
-                setSurname(surname);
+              placeholder="Last name"
+              value={lastName}
+              onChangeText={(lastName) => {
+                setLastName(lastName);
               }}
             ></Input>
 
@@ -74,14 +74,15 @@ const CreateAccount3 = ({ route, navigation }) => {
                     route.params.password,
                     userData
                   ).then((r) => {
-                    if (!r){
+                    if (!r) {
                       setSubmitAccountStatus("Your account has been created.");
-                      setTimeout(()=>navigation.navigate('EditProfile'),750);
+                      setTimeout(() => navigation.navigate("EditProfile"), 750);
                     }
-                    if (r === "auth/email-already-in-use")
-                      {setSubmitAccountStatus(
+                    if (r === "auth/email-already-in-use") {
+                      setSubmitAccountStatus(
                         "The email address is already in use by another account"
-                      );}
+                      );
+                    }
                   });
                   //navigation.navigate("CreateAccount2");
                 }}
@@ -134,11 +135,11 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   submitStatus: {
-    marginTop:30,
+    marginTop: 30,
     fontFamily: "Jost_600SemiBold",
-    fontSize:20,
-    marginHorizontal:5,
-    textAlign:'center',
-    color:textColor
+    fontSize: 20,
+    marginHorizontal: 5,
+    textAlign: "center",
+    color: textColor,
   },
 });
