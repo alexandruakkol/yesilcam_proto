@@ -1,3 +1,3 @@
-GPC = {};
+let GPC = {};
 
 export default GPC;

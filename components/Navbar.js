@@ -105,11 +105,12 @@ export default Navbar;
 
 const styles = StyleSheet.create({
   navbar: {
-    height: "6%",
+    height: "7.5%",
     backgroundColor: "white",
   },
   navButton: {
-    height: "300%",
-    borderWidth: "1",
+    height: "600%",
+    borderWidth: "0.4",
+    borderColor:'lightgrey'
   },
 });

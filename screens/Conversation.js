@@ -65,7 +65,7 @@ const Conversation = ({ navigation, route }) => {
             );
           })}
         </View>
-        <Center>
+        <Center style={{marginVertical:10}}>
           <Input style={styles.input} variant="rounded" w="85%"></Input>
         </Center>
 
@@ -78,7 +78,7 @@ export default Conversation;
 
 const styles = StyleSheet.create({
   pageContainer: {
-    height: "94%",
+    height: "87%",
     backgroundColor: bkgColor,
   },
   chatteeImg: {
@@ -94,5 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   messageText: { marginHorizontal: 12, paddingVertical: 10 },
-  input: {},
+  input: {
+    
+  },
 });

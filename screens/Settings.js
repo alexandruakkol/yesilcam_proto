@@ -4,6 +4,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { auth } from "../firebase";
+import GPC from '../global';
 
 const bkgColor = "#ebecf0";
 
@@ -12,12 +13,16 @@ const Settings = ({ navigation }) => {
     <NativeBaseProvider>
       <View style={styles.pageContainer}>
         <Header />
-        <Button
+        <Center> <Button
+        style={styles.logoutBtn}
+        w='80%'
+        variant="outline"
           onPress={() => {
             auth
               .signOut()
               .then(() => {
                 console.log("user successfuly signed out");
+                GPC={};
                 navigation.navigate("LoginScreen");
               })
               .catch(function (error) {
@@ -26,7 +31,8 @@ const Settings = ({ navigation }) => {
           }}
         >
           Log out
-        </Button>
+        </Button></Center>
+       
       </View>
       <Navbar navigation={navigation}></Navbar>
     </NativeBaseProvider>
@@ -40,4 +46,7 @@ const styles = StyleSheet.create({
     height: "94%",
     backgroundColor: bkgColor,
   },
+  logout:{
+    
+  }
 });

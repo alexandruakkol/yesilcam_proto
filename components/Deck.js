@@ -52,7 +52,7 @@ const Deck = () => {
           cardVerticalMargin={2}
           verticalSwipe={false}
           renderCard={(card) => {
-            console.log(card);
+            console.log('card:',card);
             let prop = card;
             return (
               <NativeBaseProvider>
