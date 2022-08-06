@@ -14,6 +14,8 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 import { onAuthStateChanged } from "firebase/auth";
+import GPC from "../global";
+
 //TODO scoate createUser
 import {
   auth,
@@ -74,10 +76,10 @@ const LoginScreen = ({ navigation }) => {
         async function convert() {
           for (key of Object.keys(res)) {
             if (key === "chats") continue;
-            obj["usrData_" + String(key)] = res[key];
+            GPC["usrData_" + String(key)] = res[key];
+            console.log("stored in GPC ", "usrData_" + String(key));
           }
-          obj["usrData_profilePicture"] = profile_picture;
-          await store(obj);
+          GPC["usrData_profilePicture"] = profile_picture;
         }
         convert().then(navigation.navigate("Cards"));
       });

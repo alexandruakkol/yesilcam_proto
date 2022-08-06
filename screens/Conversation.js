@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { auth, getConversation } from "../firebase";
 import { retrieve } from "../storage";
+import GPC from "../global";
 
 const bkgColor = "#ebecf0";
 
@@ -27,9 +28,7 @@ const Conversation = ({ navigation, route }) => {
         setDataReady(true);
       });
 
-    retrieve("usrData_profilePicture").then((r) => {
-      if (r != "null") setMyPic(r);
-    });
+    if (GPC["usrData_profilePicture"]) setMyPic(GPC["usrData_profilePicture"]);
   }, []);
 
   if (!dataReady) {

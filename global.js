@@ -1,0 +1,3 @@
+GPC = {};
+
+export default GPC;

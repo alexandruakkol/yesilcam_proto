@@ -30,6 +30,7 @@ import {
   auth,
 } from "../firebase";
 import Navbar from "../components/Navbar";
+import GPC from "../global";
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -41,48 +42,42 @@ const ProfileSetup = ({ navigation }) => {
     Jost_600SemiBold,
   });
 
-  let [firstName, setFirstName] = useState();
-  let [lastName, setLastName] = useState();
-  let [aboutme, setAboutme] = useState();
-  let [offer, setOffer] = useState();
-  let [seek, setSeek] = useState();
-  let [profession, setProfession] = useState();
-  let [experience, setExperience] = useState();
-  let [location, setLocation] = useState();
-  let [languages, setLanguages] = useState();
-  let [image, setImage] = useState(
-    "https://cdn-icons-png.flaticon.com/512/875/875068.png"
+  let [firstName, setFirstName] = useState(
+    GPC["usrData_name"] ? GPC["usrData_name"] : ""
   );
+  let [lastName, setLastName] = useState(
+    GPC["usrData_surname"] ? GPC["usrData_surname"] : null
+  );
+  let [aboutme, setAboutme] = useState(
+    GPC["usrData_aboutme"] ? GPC["usrData_aboutme"] : null
+  );
+  let [offer, setOffer] = useState(
+    GPC["usrData_offer"] ? GPC["usrData_offer"] : null
+  );
+  let [seek, setSeek] = useState(
+    GPC["usrData_seek"] ? GPC["usrData_seek"] : null
+  );
+  let [profession, setProfession] = useState(
+    GPC["usrData_profession"] ? GPC["usrData_profession"] : null
+  );
+  let [experience, setExperience] = useState(
+    GPC["usrData_experience"] ? GPC["usrData_experience"] : null
+  );
+  let [location, setLocation] = useState(
+    GPC["usrData_location"] ? GPC["usrData_location"] : null
+  );
+  let [languages, setLanguages] = useState(
+    GPC["usrData_languages"] ? GPC["usrData_languages"] : null
+  );
+  let [image, setImage] = useState(
+    GPC["usrData_profilePicture"]
+      ? GPC["usrData_profilePicture"]
+      : "https://cdn-icons-png.flaticon.com/512/875/875068.png"
+  );
+
   let [tooltipVisib, setTooltipVisib] = useState(false);
 
-  useEffect(() => {
-    retrieve("usrData_name").then((r) => setFirstName(r));
-    retrieve("usrData_surname").then((r) => setLastName(r));
-    retrieve("usrData_aboutme").then((r) => {
-      if (r != "null") setAboutme(r);
-    });
-    retrieve("usrData_offer").then((r) => {
-      if (r != "null") setOffer(r);
-    });
-    retrieve("usrData_seek").then((r) => {
-      if (r != "null") setSeek(r);
-    });
-    retrieve("usrData_profession").then((r) => {
-      if (r != "null") setProfession(r);
-    });
-    retrieve("usrData_experience").then((r) => {
-      if (r != "null") setExperience(r);
-    });
-    retrieve("usrData_location").then((r) => {
-      if (r != "null") setLocation(r);
-    });
-    retrieve("usrData_languages").then((r) => {
-      if (r != "null") setLanguages(r);
-    });
-    retrieve("usrData_profilePicture").then((r) => {
-      if (r != "null") setImage(r);
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   const showImagePicker = async () => {
     // Ask the user for the permission to access the media library

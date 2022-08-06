@@ -6,13 +6,14 @@ import { NativeBaseProvider, Image, View, VStack } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
-import { getUserData } from "../firebase";
+import { getUserData, addSwipeData } from "../firebase";
+import a from "../global";
 
 const profilePicSize = 250;
 const arrOfProfilesToShow = [];
-
+console.log(a);
 let jsonData;
-const Deck = (props) => {
+const Deck = () => {
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -98,7 +99,10 @@ const Deck = (props) => {
           onSwipedLeft={(cardIndex) => {
             console.log("Swiped NO on", arrOfProfilesToShow[cardIndex]);
           }}
-          onSwipedRight={(cardIndex) => {}}
+          onSwipedRight={(cardIndex) => {
+            console.log("swiped right on", arrOfProfilesToShow[cardIndex].id);
+            addSwipeData({ swipedRightOn: arrOfProfilesToShow[cardIndex].id });
+          }}
           cardIndex={0}
           backgroundColor={"#4FD0E9"}
           stackSize={3}
