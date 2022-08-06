@@ -101,7 +101,7 @@ const Deck = () => {
           }}
           onSwipedRight={(cardIndex) => {
             console.log("swiped right on", arrOfProfilesToShow[cardIndex].id);
-            addSwipeData({ swipedRightOn: arrOfProfilesToShow[cardIndex].id });
+            addSwipeData(arrOfProfilesToShow[cardIndex].id);
           }}
           cardIndex={0}
           backgroundColor={"#4FD0E9"}
