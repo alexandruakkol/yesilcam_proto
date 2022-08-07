@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { auth, getConversation } from "../firebase";
 import { retrieve } from "../storage";
 import GPC from "../global";
+import { FontAwesome } from "@expo/vector-icons";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const bkgColor = "#ebecf0";
 
@@ -16,6 +18,9 @@ const Conversation = ({ navigation, route }) => {
   const [dataReady, setDataReady] = useState(false);
   const [myData, setMyData] = useState();
   const [myPic, setMyPic] = useState();
+  const [message, setMessage] = useState();
+
+  function sendMessage() {}
 
   useEffect(() => {
     console.log("accessing conversation:", convo);
@@ -40,17 +45,27 @@ const Conversation = ({ navigation, route }) => {
           <Header />
 
           {Object.keys(myData).map((messageKey) => {
-            myData[messageKey].pic =
-              myData[messageKey].from === auth.currentUser.uid
-                ? myPic
-                : chatteePic;
+            myData[messageKey].pic = chatteePic;
 
             return (
               <View key={messageKey}>
-                <HStack space={2} style={styles.chatHStack}>
+                <HStack
+                  space={2}
+                  style={[
+                    myData[messageKey].from === auth.currentUser.uid
+                      ? styles.myMsgStack
+                      : styles.otherMsgStack,
+                    styles.chatHStack,
+                  ]}
+                >
                   <Avatar
                     style={styles.chatteeImg}
                     size="sm"
+                    display={
+                      myData[messageKey].from === auth.currentUser.uid
+                        ? "none"
+                        : ""
+                    }
                     source={{
                       uri: myData[messageKey].pic,
                     }}
@@ -65,9 +80,34 @@ const Conversation = ({ navigation, route }) => {
             );
           })}
         </View>
-        <Center style={{marginVertical:10}}>
-          <Input style={styles.input} variant="rounded" w="85%"></Input>
-        </Center>
+        <HStack style={{ marginVertical: 10 }}>
+          <Input
+            style={styles.input}
+            variant="rounded"
+            backgroundColor={bkgColor}
+            w="85%"
+            marginLeft={3}
+            value={message}
+            onChangeText={(e) => {
+              setMessage(e);
+            }}
+          ></Input>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              sendMessage(message);
+            }}
+          >
+            <FontAwesome
+              name="send-o"
+              size={18}
+              color="gray"
+              style={{
+                paddingTop: 8,
+                paddingLeft: 10,
+              }}
+            />
+          </TouchableWithoutFeedback>
+        </HStack>
 
         <Navbar navigation={navigation}></Navbar>
       </NativeBaseProvider>
@@ -87,6 +127,8 @@ const styles = StyleSheet.create({
   chatHStack: {
     marginHorizontal: 4,
   },
+  myMsgStack: { justifyContent: "right", marginRight: 10 },
+  otherMsgStack: {},
   messageBox: {
     backgroundColor: "#a2c794",
     borderRadius: 8,
@@ -94,7 +136,5 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   messageText: { marginHorizontal: 12, paddingVertical: 10 },
-  input: {
-    
-  },
+  input: {},
 });

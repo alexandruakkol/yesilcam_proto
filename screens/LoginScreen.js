@@ -133,7 +133,7 @@ const LoginScreen = ({ navigation }) => {
                 marginTop="5"
                 marginBottom="4"
                 size="2xl"
-                value={password}
+                defaultValue={password}
                 onChangeText={(password) => {
                   setPassword(password);
                 }}
