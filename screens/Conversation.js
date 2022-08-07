@@ -9,8 +9,11 @@ import { retrieve } from "../storage";
 import GPC from "../global";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { newRealtimeMessage } from "../firebase";
 
 const bkgColor = "#ebecf0";
+
+
 
 const Conversation = ({ navigation, route }) => {
   const convo = route.params.convo;
@@ -20,10 +23,12 @@ const Conversation = ({ navigation, route }) => {
   const [myPic, setMyPic] = useState();
   const [message, setMessage] = useState();
 
-  function sendMessage() {}
+  function sendMessage(message) {
+    newRealtimeMessage({body:message}, convo);
+    console.log('message is sent');
+    }
 
   useEffect(() => {
-    console.log("accessing conversation:", convo);
     getConversation(convo)
       .then((r) => {
         setMyData(r);
@@ -127,14 +132,16 @@ const styles = StyleSheet.create({
   chatHStack: {
     marginHorizontal: 4,
   },
-  myMsgStack: { justifyContent: "right", marginRight: 10 },
+  myMsgStack: { justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+     marginRight: 10 },
   otherMsgStack: {},
   messageBox: {
     backgroundColor: "#a2c794",
     borderRadius: 8,
     height: 35,
     marginTop: 8,
-  },
+  }, 
   messageText: { marginHorizontal: 12, paddingVertical: 10 },
   input: {},
 });
