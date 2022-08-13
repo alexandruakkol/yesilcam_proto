@@ -8,7 +8,6 @@ import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import GPC from "../global";
 import { getUserData, swipeRight, getRightSwipes, auth } from "../firebase";
-import a from "../global";
 
 const profilePicSize = 250;
 const arrOfProfilesToShow = [];

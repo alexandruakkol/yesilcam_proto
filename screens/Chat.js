@@ -17,12 +17,16 @@ const bkgColor = "#ebecf0";
 
 const Chat = ({ navigation }) => {
   const [myData, setMyData] = useState();
-  const [dataReady, setDataReady] = useState(false);
+  const [pageStatus, setPageStatus] = useState("loading");
   const counter = useRef();
 
   useEffect(() => {
     //getting current user chats and then 'joining' data of chat user
     getUserDataByID(auth.currentUser.uid).then((r) => {
+      if (!r.chats) {
+        setPageStatus("noData");
+        return;
+      }
       counter.current = Object.keys(r.chats).length;
       Object.keys(r.chats).forEach((convoKey) => {
         let lastMessageKey = Object.keys(r["chats"][convoKey])[0];
@@ -39,15 +43,15 @@ const Chat = ({ navigation }) => {
           .finally(() => {
             counter.current = counter.current - 1;
             setMyData(r);
-            if (counter.current == 0) setDataReady(true);
+            if (counter.current == 0) setPageStatus("ready");
           });
       });
     });
   }, []);
 
-  if (!dataReady) {
-    return <Text>Loading...</Text>;
-  } else
+  if (pageStatus === "loading") return <Text>Loading...</Text>;
+  if (pageStatus === "noData") return <Text>No messages</Text>;
+  if (pageStatus === "ready")
     return (
       <NativeBaseProvider>
         <View style={styles.pageContainer}>
