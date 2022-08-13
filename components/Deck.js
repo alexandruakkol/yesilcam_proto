@@ -6,12 +6,12 @@ import { NativeBaseProvider, Image, View, VStack } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
-import { getUserData, addSwipeData } from "../firebase";
+import GPC from "../global";
+import { getUserData, swipeRight, getRightSwipes, auth } from "../firebase";
 import a from "../global";
 
 const profilePicSize = 250;
 const arrOfProfilesToShow = [];
-console.log(a);
 let jsonData;
 const Deck = () => {
   const [data, setData] = useState();
@@ -52,7 +52,7 @@ const Deck = () => {
           cardVerticalMargin={2}
           verticalSwipe={false}
           renderCard={(card) => {
-            console.log('card:',card);
+            console.log("card:", card);
             let prop = card;
             return (
               <NativeBaseProvider>
@@ -101,7 +101,7 @@ const Deck = () => {
           }}
           onSwipedRight={(cardIndex) => {
             console.log("swiped right on", arrOfProfilesToShow[cardIndex].id);
-            addSwipeData(arrOfProfilesToShow[cardIndex].id);
+            swipeRight(arrOfProfilesToShow[cardIndex].id);
           }}
           cardIndex={0}
           backgroundColor={"#4FD0E9"}
