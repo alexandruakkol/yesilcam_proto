@@ -21,8 +21,9 @@ const Conversation = ({ navigation, route }) => {
   const [message, setMessage] = useState();
 
   function sendMessage(message) {
+    if (!message.match("[^ ]")) return;
     newRealtimeMessage({ body: message }, convo);
-    console.log("message is sent");
+    setMessage("");
   }
 
   useEffect(() => {
