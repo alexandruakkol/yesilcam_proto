@@ -25,7 +25,8 @@ const Deck = () => {
       .finally(() => {
         //convert object of objects to array of objects (cards accept arrays only)
         Object.keys(jsonData).forEach((key) => {
-          arrOfProfilesToShow.push(jsonData[key]);
+          if (jsonData[key].id != auth.currentUser.uid)
+            arrOfProfilesToShow.push(jsonData[key]);
         });
         setData(arrOfProfilesToShow);
       });
