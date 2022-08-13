@@ -4,44 +4,33 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import { auth, getConversation } from "../firebase";
+import { auth } from "../firebase";
 import { retrieve } from "../storage";
 import GPC from "../global";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { newRealtimeMessage } from "../firebase";
+import { newRealtimeMessage, getRealtimeMessages } from "../firebase";
 
 const bkgColor = "#ebecf0";
-
-
 
 const Conversation = ({ navigation, route }) => {
   const convo = route.params.convo;
   let chatteePic = route.params.chateePic;
-  const [dataReady, setDataReady] = useState(false);
   const [myData, setMyData] = useState();
   const [myPic, setMyPic] = useState();
   const [message, setMessage] = useState();
 
   function sendMessage(message) {
-    newRealtimeMessage({body:message}, convo);
-    console.log('message is sent');
-    }
+    newRealtimeMessage({ body: message }, convo);
+    console.log("message is sent");
+  }
 
   useEffect(() => {
-    getConversation(convo)
-      .then((r) => {
-        setMyData(r);
-        console.log("data:", r);
-      })
-      .finally(() => {
-        setDataReady(true);
-      });
-
     if (GPC["usrData_profilePicture"]) setMyPic(GPC["usrData_profilePicture"]);
+    getRealtimeMessages(convo, setMyData);
   }, []);
 
-  if (!dataReady) {
+  if (!myData) {
     return <Text>Loading...</Text>;
   } else
     return (
@@ -132,16 +121,18 @@ const styles = StyleSheet.create({
   chatHStack: {
     marginHorizontal: 4,
   },
-  myMsgStack: { justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-     marginRight: 10 },
+  myMsgStack: {
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginRight: 10,
+  },
   otherMsgStack: {},
   messageBox: {
     backgroundColor: "#a2c794",
     borderRadius: 8,
     height: 35,
     marginTop: 8,
-  }, 
+  },
   messageText: { marginHorizontal: 12, paddingVertical: 10 },
   input: {},
 });
