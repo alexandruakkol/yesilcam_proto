@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from "@expo/vector-icons";
 import {
@@ -44,45 +44,47 @@ const ProfileSetup = ({ navigation }) => {
     Jost_600SemiBold,
   });
 
-  let [firstName, setFirstName] = useState(
-    GPC["usrData_firstName"] ? GPC["usrData_firstName"] : ""
-  );
-  let [lastName, setLastName] = useState(
-    GPC["usrData_lastName"] ? GPC["usrData_lastName"] : ""
-  );
-  let [aboutme, setAboutme] = useState(
-    GPC["usrData_aboutme"] ? GPC["usrData_aboutme"] : ""
-  );
-  let [offer, setOffer] = useState(
-    GPC["usrData_offer"] ? GPC["usrData_offer"] : null
-  );
-  let [seek, setSeek] = useState(
-    GPC["usrData_seek"] ? GPC["usrData_seek"] : null
-  );
-  let [profession, setProfession] = useState(
-    GPC["usrData_profession"] ? GPC["usrData_profession"] : null
-  );
-  let [experience, setExperience] = useState(
-    GPC["usrData_experience"] ? GPC["usrData_experience"] : null
-  );
-  let [location, setLocation] = useState(
-    GPC["usrData_location"] ? GPC["usrData_location"] : null
-  );
-  let [languages, setLanguages] = useState(
-    GPC["usrData_languages"] ? GPC["usrData_languages"] : null
-  );
-  let [image, setImage] = useState(
-    GPC["usrData_profilePicture"]
-      ? GPC["usrData_profilePicture"]
-      : "https://cdn-icons-png.flaticon.com/512/875/875068.png"
-  );
-  let [tooltipVisib, setTooltipVisib] = useState(false);
+  function reduce(state, action) {
+    if (action.type === "INIT") return action.value;
+    if (action.type === "ABOUTME") {
+      console.log({ ...state, aboutme: action.value });
+      return { ...state, aboutme: action.value };
+    }
+    return state;
+  }
+
+  const [state, dispatch] = useReducer(reduce, {});
 
   useEffect(() => {
     getAndGlobalizeUsrData().then(() => {
       console.log("GPC", GPC);
+      let defaultState = {
+        firstName: GPC["usrData_firstName"] ? GPC["usrData_firstName"] : "",
+        lastName: GPC["usrData_lastName"] ? GPC["usrData_lastName"] : "",
+        aboutme: GPC["usrData_aboutme"] ? GPC["usrData_aboutme"] : "",
+        offer: GPC["usrData_offer"] ? GPC["usrData_offer"] : null,
+        seek: GPC["usrData_seek"] ? GPC["usrData_seek"] : null,
+        profession: GPC["usrData_profession"]
+          ? GPC["usrData_profession"]
+          : null,
+        experience: GPC["usrData_experience"]
+          ? GPC["usrData_experience"]
+          : null,
+        location: GPC["usrData_location"] ? GPC["usrData_location"] : null,
+        languages: GPC["usrData_languages"] ? GPC["usrData_languages"] : null,
+        profilePicture: GPC["usrData_profilePicture"]
+          ? GPC["usrData_profilePicture"]
+          : "https://cdn-icons-png.flaticon.com/512/875/875068.png",
+      };
+      const action = {
+        type: "INIT",
+        value: defaultState,
+      };
+      dispatch(action);
     });
   }, []);
+
+  let [tooltipVisib, setTooltipVisib] = useState(false);
 
   const showImagePicker = async () => {
     // Ask the user for the permission to access the media library
@@ -94,7 +96,7 @@ const ProfileSetup = ({ navigation }) => {
     }
     const result = await ImagePicker.launchImageLibraryAsync();
     if (!result.cancelled) {
-      setImage(result.uri);
+      //setImage(result.uri);
       return;
     } else {
       return;
@@ -113,16 +115,16 @@ const ProfileSetup = ({ navigation }) => {
         <StatusBar></StatusBar>
         <Header
           page="editProfile"
-          data={{
-            aboutme,
-            offer,
-            seek,
-            profession,
-            experience,
-            location,
-            languages,
-            image,
-          }}
+          // data={{
+          //   aboutme,
+          //   offer,
+          //   seek,
+          //   profession,
+          //   experience,
+          //   location,
+          //   languages,
+          //   image,
+          // }}
           navigation={navigation}
         ></Header>
         <View style={styles.pageContainer}>
@@ -131,9 +133,7 @@ const ProfileSetup = ({ navigation }) => {
               <Text style={styles.profilePicLabel}>My Photo</Text>
               <TouchableWithoutFeedback onPress={() => showImagePicker()}>
                 <Image
-                  source={{
-                    uri: image,
-                  }}
+                  source={{ uri: state.profilePicture }}
                   style={styles.profilePic}
                   alt="Profile picture"
                 ></Image>
@@ -151,7 +151,7 @@ const ProfileSetup = ({ navigation }) => {
                     h="12"
                     placeholder="First name"
                     required
-                    defaultValue={firstName}
+                    defaultValue={state.firstName}
                     disabled
                   ></Input>
                   <Input
@@ -159,7 +159,7 @@ const ProfileSetup = ({ navigation }) => {
                     bg={inputColor}
                     w="50%"
                     placeholder="Last name"
-                    defaultValue={lastName}
+                    defaultValue={state.lastName}
                     required
                     disabled
                   ></Input>
@@ -177,9 +177,13 @@ const ProfileSetup = ({ navigation }) => {
                             • What are your passions, interests and aspirations?
                             • How do you go about achieveing your goals?"
                   required
-                  defaultValue={aboutme}
+                  defaultValue={state.aboutme}
                   onChangeText={(e) => {
-                    setAboutme(e);
+                    const action = {
+                      type: "ABOUTME",
+                      value: e,
+                    };
+                    dispatch(action);
                   }}
                 ></TextArea>
 
@@ -191,8 +195,8 @@ const ProfileSetup = ({ navigation }) => {
                   placeholder=" • What skills/experience do you want to share with others?
               • What resources, services, or materials are you able to offer?
                "
-                  defaultValue={offer}
-                  onChangeText={(e) => setOffer(e)}
+                  defaultValue={state.offer}
+                  // onChangeText={(e) => setOffer(e)}
                 ></TextArea>
 
                 <View style={{ flexDirection: "row" }}>
@@ -230,8 +234,8 @@ const ProfileSetup = ({ navigation }) => {
                   h="95"
                   placeholder=" • What do you seek by using this app?
               • What sort of project are you looking for help for?"
-                  defaultValue={seek}
-                  onChangeText={(e) => setSeek(e)}
+                  defaultValue={state.seek}
+                  //onChangeText={(e) => setSeek(e)}
                 ></TextArea>
 
                 <Text style={styles.label}>Profession</Text>
@@ -240,8 +244,8 @@ const ProfileSetup = ({ navigation }) => {
                   bg={inputColor}
                   h="12"
                   placeholder="Add profession"
-                  defaultValue={profession}
-                  onChangeText={(e) => setProfession(e)}
+                  defaultValue={state.profession}
+                  // onChangeText={(e) => setProfession(e)}
                 ></Input>
                 <Text style={styles.label}>Years of experience</Text>
                 <Input
@@ -250,8 +254,8 @@ const ProfileSetup = ({ navigation }) => {
                   h="12"
                   w="15%"
                   placeholder="ex.2"
-                  defaultValue={experience}
-                  onChangeText={(e) => setExperience(e)}
+                  defaultValue={state.experience}
+                  // onChangeText={(e) => setExperience(e)}
                 ></Input>
 
                 <Text style={styles.label}>Located in</Text>
@@ -260,8 +264,8 @@ const ProfileSetup = ({ navigation }) => {
                   bg={inputColor}
                   h="12"
                   placeholder="ex. San Diego, CA"
-                  defaultValue={location}
-                  onChangeText={(e) => setLocation(e)}
+                  defaultValue={state.location}
+                  // onChangeText={(e) => setLocation(e)}
                 ></Input>
 
                 <Text style={styles.label}>Languages I speak</Text>
@@ -270,8 +274,8 @@ const ProfileSetup = ({ navigation }) => {
                   bg={inputColor}
                   h="12"
                   placeholder="Add language"
-                  defaultValue={languages}
-                  onChangeText={(e) => setLanguages(e)}
+                  defaultValue={state.languages}
+                  // onChangeText={(e) => setLanguages(e)}
                 ></Input>
                 <View h="10"></View>
               </VStack>
