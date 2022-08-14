@@ -18,7 +18,6 @@ const Deck = () => {
   useEffect(() => {
     getUserData()
       .then((r) => {
-        console.log("SERVERR:", r);
         jsonData = r;
       })
       .finally(() => {

@@ -53,7 +53,6 @@ const ProfileSetup = ({ navigation }) => {
 
   useEffect(() => {
     getAndGlobalizeUsrData().then(() => {
-      console.log("GPC", GPC);
       let defaultState = {
         firstName: GPC["usrData_firstName"] ? GPC["usrData_firstName"] : "",
         lastName: GPC["usrData_lastName"] ? GPC["usrData_lastName"] : "",

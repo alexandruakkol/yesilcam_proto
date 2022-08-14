@@ -58,7 +58,6 @@ const Chat = ({ navigation }) => {
         <View style={styles.pageContainer}>
           <Header />
           {Object.keys(myData.chats).map((convoKey) => {
-            console.log(convoKey);
             let lastMessageKey = Object.keys(myData["chats"][convoKey])[0];
             let from = myData.chats[convoKey][lastMessageKey].from;
             let lastMessage = myData.chats[convoKey][lastMessageKey].body;

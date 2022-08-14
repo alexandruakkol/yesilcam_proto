@@ -22,7 +22,6 @@ const ConditionalDoneButton = (props) => {
       w="25%"
       onPress={() => {
         //write to db
-        console.log("to send: ", props.data);
         appendUserData(props.data).then(props.navigation.navigate("Cards"));
         Object.keys(props.data).forEach((key) => {
           GPC["usrData_" + key] = props.data[key]; //temp assignment to global until async server is complete
