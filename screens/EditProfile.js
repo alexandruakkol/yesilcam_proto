@@ -92,7 +92,12 @@ const ProfileSetup = ({ navigation }) => {
     }
     const result = await ImagePicker.launchImageLibraryAsync();
     if (!result.cancelled) {
-      //setImage(result.uri);
+      const action = {
+        type: "profilePicture",
+        value: result.uri,
+      };
+      dispatch(action);
+      storePicture(result.uri);
       return;
     } else {
       return;
