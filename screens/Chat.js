@@ -12,42 +12,39 @@ import React from "react";
 import { useRef, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import { auth, getUserDataByID, getConvos } from "../firebase";
+import { auth, getUserDataByID, getChatData } from "../firebase";
+import { set } from "firebase/database";
+import GPC from "../global";
 const bkgColor = "#ebecf0";
 
 const Chat = ({ navigation }) => {
-  const [myData, setMyData] = useState();
+  const [myData, setMyData] = useState([]);
   const [pageStatus, setPageStatus] = useState("loading");
   const counter = useRef();
 
   useEffect(() => {
-    //getting current user chats and then 'joining' data of chat user
     getUserDataByID(auth.currentUser.uid).then((r) => {
       if (!r.chats) {
         setPageStatus("noData");
         return;
       }
-      counter.current = Object.keys(r.chats).length;
+      counter.current = 0;
       Object.keys(r.chats).forEach((convoKey) => {
-        let lastMessageKey = Object.keys(r["chats"][convoKey])[0];
-        let from = r.chats[convoKey][lastMessageKey].from;
-        getUserDataByID(from)
-          .then((q) => {
-            r.chats[convoKey] = {
-              ...r.chats[convoKey],
-              ...{ photo: q.photo },
-              ...{ firstName: q.firstName },
-              ...{ lastName: q.lastName },
-            };
-          })
-          .finally(() => {
-            counter.current = counter.current - 1;
-            setMyData(r);
-            if (counter.current == 0) setPageStatus("ready");
+        console.log("CONVO", convoKey);
+        getChatData(convoKey).then((chatData) => {
+          chatData = chatData.val();
+          Object.keys(chatData.members).forEach((member) => {
+            if (member === GPC.usrData_id) return;
+            chatData.otherPerson = member;
           });
+          getUserDataByID(chatData.otherPerson).then((theirData) => {
+            // join user and chat dimensions
+            setMyData((myData) => [...myData, { ...chatData, ...theirData }]);
+          });
+        });
       });
+      setPageStatus("ready");
     });
-    getConvos();
   }, []);
 
   if (pageStatus === "loading") return <Text>Loading...</Text>;
@@ -57,16 +54,11 @@ const Chat = ({ navigation }) => {
       <NativeBaseProvider>
         <View style={styles.pageContainer}>
           <Header />
-          {Object.keys(myData.chats).map((convoKey) => {
-            let lastMessageKey = Object.keys(myData["chats"][convoKey])[0];
-            let from = myData.chats[convoKey][lastMessageKey].from;
-            let lastMessage = myData.chats[convoKey][lastMessageKey].body;
-            let chateePic = myData.chats[convoKey]["photo"];
-            let firstName = myData.chats[convoKey]["firstName"];
-            let lastName = myData.chats[convoKey]["lastName"];
+          {myData.map((convo) => {
+            console.log(myData);
             return (
               <TouchableWithoutFeedback
-                key={from}
+                key={convo.otherPerson}
                 onPress={() =>
                   navigation.navigate("Conversation", {
                     convo: convoKey,
@@ -79,15 +71,15 @@ const Chat = ({ navigation }) => {
                     style={styles.chatteeImg}
                     size="lg"
                     source={{
-                      uri: chateePic,
+                      uri: convo.photo,
                     }}
                   ></Avatar>
                   <View>
                     <VStack space={2}>
                       <Text style={styles.from}>
-                        {firstName} {lastName}
+                        {convo.firstName} {convo.lastName}
                       </Text>
-                      <Text style={styles.lastText}>{lastMessage}</Text>
+                      <Text style={styles.lastText}>{convo.lastMessage}</Text>
                     </VStack>
                   </View>
                 </HStack>
