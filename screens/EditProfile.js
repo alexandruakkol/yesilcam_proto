@@ -45,12 +45,8 @@ const ProfileSetup = ({ navigation }) => {
   });
 
   function reduce(state, action) {
-    if (action.type === "INIT") return action.value;
-    if (action.type === "ABOUTME") {
-      console.log({ ...state, aboutme: action.value });
-      return { ...state, aboutme: action.value };
-    }
-    return state;
+    if (action.type === "init") return action.value;
+    return { ...state, [action.type]: action.value };
   }
 
   const [state, dispatch] = useReducer(reduce, {});
@@ -77,7 +73,7 @@ const ProfileSetup = ({ navigation }) => {
           : "https://cdn-icons-png.flaticon.com/512/875/875068.png",
       };
       const action = {
-        type: "INIT",
+        type: "init",
         value: defaultState,
       };
       dispatch(action);
@@ -115,16 +111,7 @@ const ProfileSetup = ({ navigation }) => {
         <StatusBar></StatusBar>
         <Header
           page="editProfile"
-          // data={{
-          //   aboutme,
-          //   offer,
-          //   seek,
-          //   profession,
-          //   experience,
-          //   location,
-          //   languages,
-          //   image,
-          // }}
+          data={state}
           navigation={navigation}
         ></Header>
         <View style={styles.pageContainer}>
@@ -180,7 +167,7 @@ const ProfileSetup = ({ navigation }) => {
                   defaultValue={state.aboutme}
                   onChangeText={(e) => {
                     const action = {
-                      type: "ABOUTME",
+                      type: "aboutme",
                       value: e,
                     };
                     dispatch(action);
@@ -196,7 +183,13 @@ const ProfileSetup = ({ navigation }) => {
               • What resources, services, or materials are you able to offer?
                "
                   defaultValue={state.offer}
-                  // onChangeText={(e) => setOffer(e)}
+                  onChangeText={(e) => {
+                    const action = {
+                      type: "offer",
+                      value: e,
+                    };
+                    dispatch(action);
+                  }}
                 ></TextArea>
 
                 <View style={{ flexDirection: "row" }}>
@@ -235,7 +228,13 @@ const ProfileSetup = ({ navigation }) => {
                   placeholder=" • What do you seek by using this app?
               • What sort of project are you looking for help for?"
                   defaultValue={state.seek}
-                  //onChangeText={(e) => setSeek(e)}
+                  onChangeText={(e) => {
+                    const action = {
+                      type: "seek",
+                      value: e,
+                    };
+                    dispatch(action);
+                  }}
                 ></TextArea>
 
                 <Text style={styles.label}>Profession</Text>
@@ -245,7 +244,13 @@ const ProfileSetup = ({ navigation }) => {
                   h="12"
                   placeholder="Add profession"
                   defaultValue={state.profession}
-                  // onChangeText={(e) => setProfession(e)}
+                  onChangeText={(e) => {
+                    const action = {
+                      type: "profession",
+                      value: e,
+                    };
+                    dispatch(action);
+                  }}
                 ></Input>
                 <Text style={styles.label}>Years of experience</Text>
                 <Input
@@ -255,7 +260,13 @@ const ProfileSetup = ({ navigation }) => {
                   w="15%"
                   placeholder="ex.2"
                   defaultValue={state.experience}
-                  // onChangeText={(e) => setExperience(e)}
+                  onChangeText={(e) => {
+                    const action = {
+                      type: "experience",
+                      value: e,
+                    };
+                    dispatch(action);
+                  }}
                 ></Input>
 
                 <Text style={styles.label}>Located in</Text>
@@ -265,7 +276,13 @@ const ProfileSetup = ({ navigation }) => {
                   h="12"
                   placeholder="ex. San Diego, CA"
                   defaultValue={state.location}
-                  // onChangeText={(e) => setLocation(e)}
+                  onChangeText={(e) => {
+                    const action = {
+                      type: "location",
+                      value: e,
+                    };
+                    dispatch(action);
+                  }}
                 ></Input>
 
                 <Text style={styles.label}>Languages I speak</Text>
@@ -275,7 +292,13 @@ const ProfileSetup = ({ navigation }) => {
                   h="12"
                   placeholder="Add language"
                   defaultValue={state.languages}
-                  // onChangeText={(e) => setLanguages(e)}
+                  onChangeText={(e) => {
+                    const action = {
+                      type: "languages",
+                      value: e,
+                    };
+                    dispatch(action);
+                  }}
                 ></Input>
                 <View h="10"></View>
               </VStack>
