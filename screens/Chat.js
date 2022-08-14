@@ -12,7 +12,7 @@ import React from "react";
 import { useRef, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import { auth, getUserDataByID } from "../firebase";
+import { auth, getUserDataByID, getConvos } from "../firebase";
 const bkgColor = "#ebecf0";
 
 const Chat = ({ navigation }) => {
@@ -47,6 +47,7 @@ const Chat = ({ navigation }) => {
           });
       });
     });
+    getConvos();
   }, []);
 
   if (pageStatus === "loading") return <Text>Loading...</Text>;

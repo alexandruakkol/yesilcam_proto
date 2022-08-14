@@ -34,7 +34,8 @@ const LoginScreen = ({ navigation }) => {
 
   //------------------------------------//
   //hooks
-  useEffect(() => {
+  useEffect((GPC) => {
+    GPC = {};
     AsyncStorage.clear();
 
     //auto-login with session
