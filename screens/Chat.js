@@ -39,7 +39,10 @@ const Chat = ({ navigation }) => {
           });
           getUserDataByID(chatData.otherPerson).then((theirData) => {
             // join user and chat dimensions
-            setMyData((myData) => [...myData, { ...chatData, ...theirData }]);
+            setMyData((myData) => [
+              ...myData,
+              { ...chatData, ...theirData, convoKey },
+            ]);
           });
         });
       });
@@ -55,14 +58,13 @@ const Chat = ({ navigation }) => {
         <View style={styles.pageContainer}>
           <Header />
           {myData.map((convo) => {
-            console.log(myData);
             return (
               <TouchableWithoutFeedback
                 key={convo.otherPerson}
                 onPress={() =>
                   navigation.navigate("Conversation", {
-                    convo: convoKey,
-                    chateePic,
+                    convo: convo.convoKey,
+                    chatteeImg: convo.photo,
                   })
                 }
               >
