@@ -1,5 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
+import { useEffect, useState, useReducer } from "react";
 import {
   NativeBaseProvider,
   Image,
@@ -8,6 +9,7 @@ import {
   Center,
   HStack,
 } from "native-base";
+import { getCollection } from "../firebase";
 
 const jsonData = require("../mock_data/posts.json");
 const profilePicSize = 50;
@@ -38,21 +40,39 @@ const SocialPost = (props) => {
 };
 
 const SocialCluster = () => {
-  return (
-    <View>
-      {Object.keys(jsonData).map((key) => {
-        return (
-          <SocialPost
-            key={key}
-            picture={jsonData[key].picture}
-            name={jsonData[key].firstName + " " + jsonData[key].lastName}
-            body={jsonData[key].body}
-            time={jsonData[key].time}
-          ></SocialPost>
-        );
-      })}
-    </View>
-  );
+  const [data, setData] = useState({});
+  const [dataIsReady, setDataIsReady] = useState(false);
+  useEffect(() => {
+    getCollection("posts").then((r) => {
+      setData({ ...r });
+      setDataIsReady(true);
+    });
+  });
+  if (!dataIsReady) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View>
+        {Object.values(data).map((post) => {
+          return (
+            <SocialPost
+              key={post.id}
+              picture={post.picture}
+              name={post.firstName + " " + post.lastName}
+              body={post.body}
+              time={post.time
+                .toDate()
+                .toLocaleString("en-GB", { timeZone: "UTC" })}
+            ></SocialPost>
+          );
+        })}
+      </View>
+    );
+  }
 };
 
 export default SocialCluster;

@@ -16,7 +16,8 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import SocialCluster from "../components/SocialCluster";
 import { AntDesign } from "@expo/vector-icons";
-import { writeToDB } from "../firebase";
+import { newPost } from "../firebase";
+import GPC from "../global";
 
 const bkgColor = "#ebecf0";
 
@@ -25,7 +26,12 @@ const Community = ({ navigation }) => {
   const [postData, setPostData] = useState();
 
   function handlePost() {
-    writeToDB("posts", { a: "b" });
+    newPost({
+      body: postData,
+      picture: GPC.usrData_image,
+      firstName: GPC.usrData_firstName,
+      lastName: GPC.usrData_lastName,
+    });
   }
   return (
     <NativeBaseProvider>
