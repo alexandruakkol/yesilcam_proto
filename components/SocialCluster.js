@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   NativeBaseProvider,
   Image,
@@ -11,10 +11,11 @@ import {
   Actionsheet,
   ScrollView,
   Box,
+  Flex,
 } from "native-base";
 import { getCollection, getUserDataByID } from "../firebase";
 import { Entypo } from "@expo/vector-icons";
-import { connectStorageEmulator } from "firebase/storage";
+import moment from "moment";
 
 const profilePicSize = 50;
 
@@ -27,58 +28,155 @@ const SocialPost = (props) => {
     setActionSheetIsOpen(true);
   }
   return (
-    <View style={styles.postDiv}>
-      <HStack space={2}>
-        <Image
-          style={styles.profilePic}
-          source={{
-            uri: props.picture,
-          }}
-          alt="profile picture"
-        ></Image>
-        <VStack space={0.2} w="full">
-          <HStack space={5} w="full">
-            <Text style={styles.name}>{props.name}</Text>
-            <Text style={styles.time}>{props.time}</Text>
-            <TouchableWithoutFeedback onPress={onActionsheetOpen}>
-              <Entypo name="dots-three-horizontal" size={12} color="black" />
-            </TouchableWithoutFeedback>
-            <Actionsheet
-              isOpen={actionsheetIsOpen}
-              onClose={onActionsheetClose}
-            >
-              <Actionsheet.Content>
-                <Box w="100%" h={60} px={4} justifyContent="center"></Box>
-                {true && (
-                  <TouchableWithoutFeedback onPress={() => {}}>
-                    <Actionsheet.Item>Delete post</Actionsheet.Item>
-                  </TouchableWithoutFeedback>
-                )}
+    <View style={styles.postWrapper}>
+      {props.type == "socialPost" && (
+        <View style={styles.socialPost}>
+          <HStack space={2}>
+            <Image
+              style={styles.profilePic}
+              source={{
+                uri: props.picture,
+              }}
+              alt="profile picture"
+            ></Image>
+            <VStack space={0.2} w="full">
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.name}>{props.name}</Text>
 
-                <Actionsheet.Item>Cancel</Actionsheet.Item>
-              </Actionsheet.Content>
-            </Actionsheet>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginRight: "20%",
+                  }}
+                >
+                  <Text style={styles.time}>{props.time}</Text>
+                  <TouchableWithoutFeedback onPress={onActionsheetOpen}>
+                    <Entypo
+                      name="dots-three-horizontal"
+                      size={12}
+                      color="black"
+                      style={{ marginTop: 3 }}
+                    />
+                  </TouchableWithoutFeedback>
+                  <Actionsheet
+                    isOpen={actionsheetIsOpen}
+                    onClose={onActionsheetClose}
+                  >
+                    <Actionsheet.Content>
+                      <Box w="100%" h={60} px={4} justifyContent="center"></Box>
+                      {true && (
+                        <TouchableWithoutFeedback onPress={() => {}}>
+                          <Actionsheet.Item>Delete post</Actionsheet.Item>
+                        </TouchableWithoutFeedback>
+                      )}
+
+                      <Actionsheet.Item>Cancel</Actionsheet.Item>
+                    </Actionsheet.Content>
+                  </Actionsheet>
+                </View>
+              </View>
+              <View w="90%">
+                <Text style={styles.body}>{props.body}</Text>
+              </View>
+            </VStack>
           </HStack>
-          <View w="90%">
-            <Text style={styles.body}>{props.body}</Text>
-          </View>
-        </VStack>
-      </HStack>
+        </View>
+      )}
+
+      {props.type == "event" && (
+        <View style={styles.eventPost}>
+          <HStack space={2}>
+            <Image
+              style={styles.profilePic}
+              source={{
+                uri: props.picture,
+              }}
+              alt="profile picture"
+            ></Image>
+            <VStack space={0.2} w="full">
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.name}>{props.name}</Text>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginRight: "20%",
+                  }}
+                >
+                  <Text style={styles.time}>{props.time}</Text>
+                  <TouchableWithoutFeedback onPress={onActionsheetOpen}>
+                    <Entypo
+                      name="dots-three-horizontal"
+                      size={12}
+                      color="black"
+                      style={{ marginTop: 3 }}
+                    />
+                  </TouchableWithoutFeedback>
+                  <Actionsheet
+                    isOpen={actionsheetIsOpen}
+                    onClose={onActionsheetClose}
+                  >
+                    <Actionsheet.Content>
+                      <Box w="100%" h={60} px={4} justifyContent="center"></Box>
+                      {true && (
+                        <TouchableWithoutFeedback onPress={() => {}}>
+                          <Actionsheet.Item>Delete post</Actionsheet.Item>
+                        </TouchableWithoutFeedback>
+                      )}
+
+                      <Actionsheet.Item>Cancel</Actionsheet.Item>
+                    </Actionsheet.Content>
+                  </Actionsheet>
+                </View>
+              </View>
+              <VStack w="90%">
+                <View style={styles.eventDetails}>
+                  <Text style={[styles.eventTitle, styles.detailsText]}>
+                    {props.eventName}
+                  </Text>
+                </View>
+                <View style={styles.eventDetails}>
+                  <Text style={styles.setDetails}>Time</Text>
+                  <Text style={styles.detailsText}>{props.eventTime}</Text>
+                </View>
+                <View style={styles.eventDetails}>
+                  <Text style={styles.setDetails}>Location</Text>
+                  <Text style={styles.detailsText}>{props.location}</Text>
+                </View>
+                <View style={styles.eventDetails}>
+                  <Text style={styles.detailsText}>{props.details}</Text>
+                </View>
+              </VStack>
+            </VStack>
+          </HStack>
+        </View>
+      )}
     </View>
   );
 };
 
-const SocialCluster = () => {
-  const [data, setData] = useState({});
-  const [dataIsReady, setDataIsReady] = useState(false);
+const SocialCluster = (props) => {
+  const [data, setData] = useState([]);
+  const [dataReady, setDataReady] = useState(false);
   useEffect(() => {
+    setData([]);
+    setDataReady(false);
     getCollection("posts").then((colData) => {
       colData.forEach((post) => {
         getUserDataByID(post.user).then((usrData) => {
-          console.log(post, "post");
-          setData({
+          setData((data) => [
             ...data,
-            ...{
+            {
               [post.id]: {
                 ...post,
                 firstName: usrData.firstName,
@@ -86,13 +184,13 @@ const SocialCluster = () => {
                 picture: usrData.profilePicture,
               },
             },
-          });
-          setDataIsReady(true);
+          ]);
         });
       });
+      setDataReady(true);
     });
-  }, []);
-  if (!dataIsReady) {
+  }, [props.refresh]);
+  if (!dataReady) {
     return (
       <View>
         <Text>Loading...</Text>
@@ -102,15 +200,18 @@ const SocialCluster = () => {
     return (
       <ScrollView>
         {Object.values(data).map((post) => {
+          post = Object.values(post)[0];
           return (
             <SocialPost
               key={post.id}
               name={post.firstName + " " + post.lastName}
               picture={post.picture}
-              body={post.body}
-              time={post.time
-                .toDate()
-                .toLocaleString("en-GB", { timeZone: "UTC" })}
+              body={post.body ? post.body : post.details}
+              time={moment(post.time.toDate()).format("MMM Mo h:mma")}
+              type={post.type}
+              eventName={post.eventName}
+              eventTime={post.eventTime}
+              location={post.location}
             ></SocialPost>
           );
         })}
@@ -122,14 +223,17 @@ const SocialCluster = () => {
 export default SocialCluster;
 
 const styles = StyleSheet.create({
-  postDiv: {
-    flex: 1,
+  postWrapper: {
     borderBottomWidth: 1,
     borderBottomColor: "lightgrey",
-    paddingVertical: 12,
     marginLeft: 4,
+    paddingVertical: 10,
   },
-
+  eventPost: {},
+  socialPost: {},
+  setDetails: { fontWeight: "bold" },
+  detailsText: { marginBottom: 6 },
+  eventDetails: {},
   profilePic: {
     width: profilePicSize,
     height: profilePicSize,
@@ -137,6 +241,6 @@ const styles = StyleSheet.create({
     borderColor: "gray",
   },
   name: { fontWeight: "bold", fontSize: 15 },
-  body: {},
-  time: { textAlign: "right" },
+  eventTitle: { fontSize: 22 },
+  time: { textAlign: "right", marginRight: 5 },
 });

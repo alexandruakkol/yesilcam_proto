@@ -27,13 +27,13 @@ const Community = ({ navigation }) => {
   const defaultState = {
     eventName: "",
     location: "",
-    time: "",
+    eventTime: "",
     details: "",
   };
   const [showModal, setShowModal] = useState(false);
   const [postType, setPostType] = useState("socialPost");
   const [postData, setPostData] = useState();
-
+  const [refresh, setRefresh] = useState();
   const [state, dispatch] = useReducer(reducer, defaultState);
   function reducer(state, action) {
     state = {
@@ -52,11 +52,13 @@ const Community = ({ navigation }) => {
         user: GPC.usrData_id,
       });
       setPostData("");
+      setRefresh(!refresh);
       return;
     }
     //else, write event post
     newPost({
       type: "event",
+      user: GPC.usrData_id,
       ...state,
     });
     setPostData("");
@@ -66,8 +68,7 @@ const Community = ({ navigation }) => {
     <NativeBaseProvider>
       <View style={styles.pageContainer}>
         <Header style={styles.header}></Header>
-
-        <SocialCluster></SocialCluster>
+        <SocialCluster refresh={refresh}></SocialCluster>
         <Modal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
@@ -109,7 +110,10 @@ const Community = ({ navigation }) => {
                     multiline
                     placeholder="Share something"
                     value={postData}
-                    onChangeText={(postData) => setPostData(postData)}
+                    onChangeText={(postData) => {
+                      setPostData(postData);
+                      navigation.navigate("Community");
+                    }}
                   />
                 </FormControl>
               )}
@@ -138,8 +142,10 @@ const Community = ({ navigation }) => {
                     height="20%"
                     mt="1"
                     placeholder="Time"
-                    value={state.time}
-                    onChangeText={(time) => dispatch({ payload: { time } })}
+                    value={state.eventTime}
+                    onChangeText={(eventTime) =>
+                      dispatch({ payload: { eventTime } })
+                    }
                   />
                   <Input
                     height="248%"
@@ -200,7 +206,6 @@ const styles = StyleSheet.create({
     height: "94%",
     backgroundColor: bkgColor,
   },
-  fab: {},
   selectorText: {
     fontSize: "55",
   },

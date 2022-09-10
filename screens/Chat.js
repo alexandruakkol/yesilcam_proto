@@ -20,7 +20,6 @@ const bkgColor = "#ebecf0";
 const Chat = ({ navigation }) => {
   const [myData, setMyData] = useState([]);
   const [pageStatus, setPageStatus] = useState("loading");
-  const counter = useRef();
 
   useEffect(() => {
     getUserDataByID(auth.currentUser.uid).then((r) => {
@@ -28,7 +27,6 @@ const Chat = ({ navigation }) => {
         setPageStatus("noData");
         return;
       }
-      counter.current = 0;
       Object.keys(r.chats).forEach((convoKey) => {
         console.log("CONVO", convoKey);
         getChatData(convoKey).then((chatData) => {
