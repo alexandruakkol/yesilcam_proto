@@ -33,6 +33,7 @@ import {
 } from "../firebase";
 import Navbar from "../components/Navbar";
 import GPC from "../global";
+import * as ImageManipulator from "expo-image-manipulator";
 
 const profilePicSize = 200;
 const headerColor = "#ffffff";
@@ -90,13 +91,18 @@ const ProfileSetup = ({ navigation }) => {
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync();
+    const resizedPhoto = await ImageManipulator.manipulateAsync(
+      result.uri,
+      [{ resize: { width: 250 } }],
+      { compress: 0.9 }
+    );
     if (!result.cancelled) {
       const action = {
         type: "profilePicture",
-        value: result.uri,
+        value: resizedPhoto.uri,
       };
       dispatch(action);
-      storePicture(result.uri);
+      storePicture(resizedPhoto.uri);
       return;
     } else {
       return;
