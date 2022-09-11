@@ -10,10 +10,13 @@ import {
   Box,
   Modal,
   Divider,
+  Input,
 } from "native-base";
 import React, { useEffect, useState } from "react";
-import { getComments } from "../firebase";
+import { getComments, getUserDataByID } from "../firebase";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { clockRunning } from "react-native-reanimated";
+import GPC from "../global";
 
 const profilePicSize = 50;
 const ExpandedPost = (props) => {
@@ -131,6 +134,16 @@ const ExpandedPost = (props) => {
         <Modal.Footer style={styles.comments}>
           <Comments postProps={props.props}></Comments>
         </Modal.Footer>
+        <View>
+          <Image
+            style={styles.myCommPic}
+            source={{
+              uri: GPC.usrData_profilePicture,
+            }}
+            alt="profile picture"
+          ></Image>
+          <Input placeholder="Add a comment" w="md"></Input>
+        </View>
       </Modal.Content>
     </Modal>
   );
@@ -138,16 +151,48 @@ const ExpandedPost = (props) => {
 
 const Comments = (props) => {
   const [dataReady, setDataReady] = useState(false);
+  const [data, setData] = useState([]);
+  let comCount = 0;
+  let results = [];
   useEffect(() => {
-    console.log(props.postProps);
-    getComments(props.postProps.id).then((comments) => console.log(comments));
+    getComments(props.postProps.id).then((comments) => {
+      comCount = comments.length;
+      if (!comments) {
+        setDataReady(true);
+        return;
+      }
+      comments.forEach((comment) => {
+        //join user data on comment objects
+        getUserDataByID(comment.from).then((usrData) => {
+          results = data;
+          results.push({
+            photo: usrData.photo,
+            firstName: usrData.firstName,
+            lastName: usrData.lastName,
+            ...{ comment },
+          });
+          console.log(results);
+          setData(results);
+          if (data.length == comCount) setDataReady(true);
+        });
+      });
+    });
   }, []);
 
   if (!dataReady) return <Text>Loading...</Text>;
+  if (dataReady && !data) return <Text>No comments</Text>;
   return (
-    <View>
-      <Text>Comments</Text>
-    </View>
+    <VStack>
+      {console.log("data", data)}
+      {data.map((comment) => {
+        console.log("com", comment);
+        return (
+          <View key={comment.comment.id}>
+            <Text> {comment.comment.body}</Text>
+          </View>
+        );
+      })}
+    </VStack>
   );
 };
 
@@ -173,6 +218,12 @@ const styles = StyleSheet.create({
     width: profilePicSize,
     height: profilePicSize,
     borderRadius: profilePicSize / 2.5,
+    borderColor: "gray",
+  },
+  myCommPic: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2.5,
     borderColor: "gray",
   },
   name: { fontWeight: "bold", fontSize: 15 },
