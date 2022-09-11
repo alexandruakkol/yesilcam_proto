@@ -50,6 +50,8 @@ const Community = ({ navigation }) => {
         type: "socialPost",
         body: postData,
         user: GPC.usrData_id,
+        comments: {},
+        commentCount: 0,
       });
       setPostData("");
       setRefresh(!refresh);
@@ -59,6 +61,8 @@ const Community = ({ navigation }) => {
     newPost({
       type: "event",
       user: GPC.usrData_id,
+      comments: {},
+      commentCount: 0,
       ...state,
     });
     setPostData("");
