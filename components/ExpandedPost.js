@@ -123,18 +123,12 @@ const ExpandedPost = (props) => {
               </HStack>
             </View>
           )}
-
-          <Divider mb={2}></Divider>
-
-          <View ml={4}>
-            <FontAwesome5 name="comment" size={17} color="grey" />
-          </View>
         </Modal.Body>
 
         <Modal.Footer style={styles.comments}>
           <Comments postProps={props.props}></Comments>
         </Modal.Footer>
-        <View>
+        <View style={{ flexDirection: "row" }}>
           <Image
             style={styles.myCommPic}
             source={{
@@ -156,11 +150,11 @@ const Comments = (props) => {
   let results = [];
   useEffect(() => {
     getComments(props.postProps.id).then((comments) => {
-      comCount = comments.length;
       if (!comments) {
-        setDataReady(true);
+        setDataReady("noComments");
         return;
       }
+      comCount = comments.length;
       comments.forEach((comment) => {
         //join user data on comment objects
         getUserDataByID(comment.from).then((usrData) => {
@@ -180,20 +174,34 @@ const Comments = (props) => {
   }, []);
 
   if (!dataReady) return <Text>Loading...</Text>;
-  if (dataReady && !data) return <Text>No comments</Text>;
-  return (
-    <VStack>
-      {console.log("data", data)}
-      {data.map((comment) => {
-        console.log("com", comment);
-        return (
-          <View key={comment.comment.id}>
-            <Text> {comment.comment.body}</Text>
-          </View>
-        );
-      })}
-    </VStack>
-  );
+  if (dataReady == "noComments") return <Text>No comments</Text>;
+  if (dataReady && data)
+    return (
+      <VStack>
+        {console.log("data", data)}
+        {data.map((comment) => {
+          console.log("com", comment);
+          return (
+            <View key={comment.comment.id}>
+              <HStack>
+                <Image
+                  style={styles.profilePic}
+                  source={{
+                    uri: comment.photo,
+                  }}
+                  alt="profile picture"
+                ></Image>
+                <View>
+                  <Text>{comment.firstName + " " + comment.lastName}</Text>
+                  <Text> {comment.comment.body}</Text>
+                </View>
+              </HStack>
+              <Divider mb={2} w={"full"}></Divider>
+            </View>
+          );
+        })}
+      </VStack>
+    );
 };
 
 export default ExpandedPost;
