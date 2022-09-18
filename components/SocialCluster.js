@@ -20,8 +20,9 @@ import {
 } from "native-base";
 import { getCollection, getUserDataByID } from "../firebase";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
-import moment from "moment";
 import ExpandedPost from "./ExpandedPost";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 const profilePicSize = 50;
 
@@ -70,7 +71,9 @@ const SocialPost = (props) => {
                       marginRight: "20%",
                     }}
                   >
-                    <Text style={styles.time}>{props.time}</Text>
+                    <Text style={styles.time}>
+                      {dayjs(props.time).fromNow(true) + " ago"}
+                    </Text>
                     <TouchableWithoutFeedback onPress={onActionsheetOpen}>
                       <Entypo
                         name="dots-three-horizontal"
@@ -140,7 +143,9 @@ const SocialPost = (props) => {
                       marginRight: "20%",
                     }}
                   >
-                    <Text style={styles.time}>{props.time}</Text>
+                    <Text style={styles.time}>
+                      {dayjs(props.time).fromNow(true) + " ago"}
+                    </Text>
                     <TouchableWithoutFeedback onPress={onActionsheetOpen}>
                       <Entypo
                         name="dots-three-horizontal"
@@ -207,6 +212,7 @@ const SocialPost = (props) => {
 const SocialCluster = (props) => {
   const [data, setData] = useState([]);
   const [dataReady, setDataReady] = useState(false);
+  dayjs.extend(relativeTime);
   useEffect(() => {
     //clear states for the 'pseudo-refresh'
     setData([]);
@@ -250,7 +256,7 @@ const SocialCluster = (props) => {
               name={post.firstName + " " + post.lastName}
               picture={post.picture}
               body={post.body ? post.body : post.details}
-              time={moment(post.time.toDate()).format("MMM Mo h:mma")}
+              time={post.time.toDate()}
               type={post.type}
               eventName={post.eventName}
               eventTime={post.eventTime}

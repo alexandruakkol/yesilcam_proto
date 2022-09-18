@@ -1,13 +1,14 @@
-import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import {
   NativeBaseProvider,
   Image,
-  View,
   VStack,
   Center,
   HStack,
   ScrollView,
   Box,
+  View,
+  Text,
   Modal,
   Divider,
   Input,
@@ -17,9 +18,11 @@ import { getComments, getUserDataByID } from "../firebase";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { clockRunning } from "react-native-reanimated";
 import GPC from "../global";
+import dayjs from "dayjs";
 
 const profilePicSize = 50;
 const ExpandedPost = (props) => {
+  console.log(props);
   return (
     <Modal
       isOpen={props.showCommentModal}
@@ -35,7 +38,7 @@ const ExpandedPost = (props) => {
         </Modal.Header>
         <Modal.Body>
           {props.props.type == "socialPost" && (
-            <View style={styles.socialPost}>
+            <View>
               <HStack space={2}>
                 <Image
                   style={styles.profilePic}
@@ -59,7 +62,9 @@ const ExpandedPost = (props) => {
                         marginRight: "20%",
                       }}
                     >
-                      <Text style={styles.time}>{props.props.time}</Text>
+                      <Text style={styles.time}>
+                        {dayjs(props.props.time).format("D MMM YYYY H:mm")}
+                      </Text>
                     </View>
                   </View>
                   <View w="90%">
@@ -147,6 +152,7 @@ const Comments = (props) => {
   const [dataReady, setDataReady] = useState(false);
   const [data, setData] = useState([]);
   let comCount = 0;
+  let shortNo = Intl.NumberFormat("en", { notation: "compact" });
   let results = [];
   useEffect(() => {
     getComments(props.postProps.id).then((comments) => {
@@ -163,7 +169,7 @@ const Comments = (props) => {
             photo: usrData.photo,
             firstName: usrData.firstName,
             lastName: usrData.lastName,
-            ...{ comment },
+            ...comment,
           });
           console.log(results);
           setData(results);
@@ -177,13 +183,13 @@ const Comments = (props) => {
   if (dataReady == "noComments") return <Text>No comments</Text>;
   if (dataReady && data)
     return (
-      <VStack>
+      <VStack style={styles.comment}>
         {console.log("data", data)}
         {data.map((comment) => {
           console.log("com", comment);
           return (
-            <View key={comment.comment.id}>
-              <HStack>
+            <View key={comment.id}>
+              <HStack space={2}>
                 <Image
                   style={styles.profilePic}
                   source={{
@@ -191,12 +197,34 @@ const Comments = (props) => {
                   }}
                   alt="profile picture"
                 ></Image>
-                <View>
-                  <Text>{comment.firstName + " " + comment.lastName}</Text>
-                  <Text> {comment.comment.body}</Text>
-                </View>
+                <VStack space={0.2} w="full">
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text style={styles.name}>
+                      {comment.firstName + " " + comment.lastName}
+                    </Text>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginRight: "20%",
+                      }}
+                    >
+                      <Text style={styles.time}>
+                        {dayjs(comment.time.toDate()).fromNow(true) + " ago"}
+                      </Text>
+                    </View>
+                  </View>
+                  <View w="90%">
+                    <Text style={styles.body}>{comment.body}</Text>
+                  </View>
+                </VStack>
               </HStack>
-              <Divider mb={2} w={"full"}></Divider>
+              <Divider mb={2}></Divider>
             </View>
           );
         })}
@@ -220,6 +248,7 @@ const styles = StyleSheet.create({
   comments: {
     justifyContent: "left",
   },
+  comment: { marginLeft: -15, marginRight: -5, flex: 1, marginVertical: 0 },
   setDetails: { fontWeight: "bold" },
   detailsText: { marginBottom: 6 },
   profilePic: {
