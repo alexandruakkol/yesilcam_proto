@@ -19,7 +19,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { clockRunning } from "react-native-reanimated";
 import GPC from "../global";
 import dayjs from "dayjs";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 const profilePicSize = 50;
 const ExpandedPost = (props) => {
@@ -216,50 +216,58 @@ const Comments = (props) => {
   if (dataReady && data)
     return (
       <VStack style={styles.comment}>
-        {console.log("data", data)}
-        {data.map((comment) => {
-          console.log("com", comment);
-          return (
-            <View key={comment.id}>
-              <HStack space={2}>
-                <Image
-                  style={styles.profilePic}
-                  source={{
-                    uri: comment.photo,
-                  }}
-                  alt="profile picture"
-                ></Image>
-                <VStack space={0.2} w="full">
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+        <ScrollView>
+          {console.log("data", data)}
+          {data.map((comment) => {
+            console.log("com", comment);
+            return (
+              <View key={comment.id}>
+                <HStack space={2}>
+                  <Image
+                    style={styles.profilePic}
+                    source={{
+                      uri: comment.photo,
                     }}
-                  >
-                    <Text style={styles.name}>
-                      {comment.firstName + " " + comment.lastName}
-                    </Text>
-
+                    alt="profile picture"
+                  ></Image>
+                  <VStack space={0.2} w="full">
                     <View
                       style={{
                         flexDirection: "row",
-                        marginRight: "20%",
+                        justifyContent: "space-between",
                       }}
                     >
-                      <Text style={styles.time}>
-                        {dayjs(comment.time.toDate()).fromNow(true) + " ago"}
+                      <Text style={styles.name}>
+                        {comment.firstName + " " + comment.lastName}
                       </Text>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          marginRight: "20%",
+                        }}
+                      >
+                        <Text style={styles.time}>
+                          {dayjs(comment.time.toDate()).fromNow(true) + " ago"}
+                        </Text>
+                        <Entypo
+                          name="dots-three-horizontal"
+                          size={12}
+                          color="black"
+                          style={{ marginTop: 3 }}
+                        />
+                      </View>
                     </View>
-                  </View>
-                  <View w="90%">
-                    <Text style={styles.body}>{comment.body}</Text>
-                  </View>
-                </VStack>
-              </HStack>
-              <Divider mb={2}></Divider>
-            </View>
-          );
-        })}
+                    <View w="90%">
+                      <Text style={styles.body}>{comment.body}</Text>
+                    </View>
+                  </VStack>
+                </HStack>
+                <Divider mb={2}></Divider>
+              </View>
+            );
+          })}
+        </ScrollView>
       </VStack>
     );
 };
