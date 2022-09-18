@@ -73,7 +73,6 @@ const firebaseConfig = {
   appId: APP_ID,
   measurementId: MEASUREMENT_ID,
 };
-
 let app;
 if (firebase.apps.length === 0) {
   app = firebase.initializeApp(firebaseConfig);
@@ -82,7 +81,6 @@ if (firebase.apps.length === 0) {
 }
 
 const auth = firebase.auth();
-
 /////////////////////User creation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 async function createUser(email, password, userData) {
