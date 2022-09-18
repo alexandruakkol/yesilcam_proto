@@ -15,15 +15,12 @@ import {
 } from "native-base";
 import React, { useEffect, useState } from "react";
 import { createComment, getComments, getUserDataByID, auth } from "../firebase";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { clockRunning } from "react-native-reanimated";
 import GPC from "../global";
 import dayjs from "dayjs";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 const profilePicSize = 50;
 const ExpandedPost = (props) => {
-  console.log(auth.currentUser);
   const [newComment, setNewComment] = useState();
 
   function postComment(newComment) {
@@ -188,6 +185,8 @@ const Comments = (props) => {
   let results = [];
   useEffect(() => {
     getComments(props.postProps.id).then((comments) => {
+      console.log(comments);
+
       if (!comments) {
         setDataReady("noComments");
         return;
@@ -222,7 +221,7 @@ const Comments = (props) => {
             console.log("com", comment);
             return (
               <View key={comment.id}>
-                <HStack space={2}>
+                <HStack space={2} mb={2}>
                   <Image
                     style={styles.profilePic}
                     source={{

@@ -148,17 +148,21 @@ export async function createComment(postID, comment) {
   try {
     const commentRef = doc(firestoreDb, "comments", postID);
     let newId = uuidv4();
-    await updateDoc(commentRef, {
-      [newId]: {
-        body: comment,
-        from: auth.currentUser.uid,
-        id: newId,
-        time: firebase.firestore.Timestamp.fromDate(new Date()),
+    await setDoc(
+      commentRef,
+      {
+        [newId]: {
+          body: comment,
+          from: auth.currentUser.uid,
+          id: newId,
+          time: firebase.firestore.Timestamp.fromDate(new Date()),
+        },
       },
-    });
+      { merge: true }
+    );
     console.log("written new comment!");
   } catch (e) {
-    console.log("writeComment error", error);
+    console.log("writeComment error", e);
   }
 }
 

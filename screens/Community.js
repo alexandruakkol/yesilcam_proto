@@ -15,6 +15,7 @@ import {
 import { useState, useReducer } from "react";
 import React from "react";
 import Navbar from "../components/Navbar";
+import Page from "../components/Page";
 import Header from "../components/Header";
 import SocialCluster from "../components/SocialCluster";
 import { AntDesign } from "@expo/vector-icons";
@@ -70,7 +71,7 @@ const Community = ({ navigation }) => {
   }
   return (
     <NativeBaseProvider>
-      <View style={styles.pageContainer}>
+      <Page>
         <Header style={styles.header}></Header>
         <SocialCluster refresh={refresh}></SocialCluster>
         <Modal
@@ -116,7 +117,6 @@ const Community = ({ navigation }) => {
                     value={postData}
                     onChangeText={(postData) => {
                       setPostData(postData);
-                      navigation.navigate("Community");
                     }}
                   />
                 </FormControl>
@@ -196,8 +196,7 @@ const Community = ({ navigation }) => {
           bg="darkgreen"
           onPress={() => setShowModal(true)}
         />
-      </View>
-
+      </Page>
       <Navbar navigation={navigation} name="plus" as={AntDesign}></Navbar>
     </NativeBaseProvider>
   );
@@ -208,7 +207,6 @@ export default Community;
 const styles = StyleSheet.create({
   pageContainer: {
     height: "94%",
-    backgroundColor: bkgColor,
   },
   selectorText: {
     fontSize: "55",
