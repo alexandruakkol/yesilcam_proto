@@ -14,15 +14,24 @@ import {
   Input,
 } from "native-base";
 import React, { useEffect, useState } from "react";
-import { getComments, getUserDataByID } from "../firebase";
+import { createComment, getComments, getUserDataByID, auth } from "../firebase";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { clockRunning } from "react-native-reanimated";
 import GPC from "../global";
 import dayjs from "dayjs";
+import { FontAwesome } from "@expo/vector-icons";
 
 const profilePicSize = 50;
 const ExpandedPost = (props) => {
-  console.log(props);
+  console.log(auth.currentUser);
+  const [newComment, setNewComment] = useState();
+
+  function postComment(newComment) {
+    if (!newComment.match("[^ ]")) return;
+    createComment(props.props.id, newComment);
+    setNewComment("");
+  }
+
   return (
     <Modal
       isOpen={props.showCommentModal}
@@ -133,7 +142,7 @@ const ExpandedPost = (props) => {
         <Modal.Footer style={styles.comments}>
           <Comments postProps={props.props}></Comments>
         </Modal.Footer>
-        <View style={{ flexDirection: "row" }}>
+        <HStack space={1.5} ml={1}>
           <Image
             style={styles.myCommPic}
             source={{
@@ -141,8 +150,31 @@ const ExpandedPost = (props) => {
             }}
             alt="profile picture"
           ></Image>
-          <Input placeholder="Add a comment" w="md"></Input>
-        </View>
+          <Input
+            placeholder="Add a comment"
+            w="80%"
+            variant="rounded"
+            mb={1}
+            value={newComment}
+            onChangeText={(e) => {
+              setNewComment(e);
+            }}
+          ></Input>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              postComment(newComment);
+            }}
+          >
+            <FontAwesome
+              name="send-o"
+              size={18}
+              color="gray"
+              style={{
+                paddingTop: 8,
+              }}
+            />
+          </TouchableWithoutFeedback>
+        </HStack>
       </Modal.Content>
     </Modal>
   );
