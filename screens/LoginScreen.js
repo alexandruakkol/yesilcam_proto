@@ -1,3 +1,11 @@
+import {
+  auth,
+  createUser,
+  getAndGlobalizeUsrData,
+  writeToDB,
+  checkAuth,
+  getPictureOfUser,
+} from "../firebase";
 import { store, retrieve } from "../storage";
 import {
   StyleSheet,
@@ -15,16 +23,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 import { onAuthStateChanged } from "firebase/auth";
 import GPC from "../global";
-
-//TODO scoate createUser
-import {
-  auth,
-  createUser,
-  getAndGlobalizeUsrData,
-  writeToDB,
-  checkAuth,
-  getPictureOfUser,
-} from "../firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const textColor = "#dae8d4c9";
@@ -35,6 +33,7 @@ const LoginScreen = ({ navigation }) => {
   //------------------------------------//
   //hooks
   useEffect((GPC) => {
+    console.log("App starting");
     GPC = {};
     AsyncStorage.clear();
 
