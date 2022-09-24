@@ -110,7 +110,7 @@ const Community = ({ navigation }) => {
               {postType == "socialPost" && (
                 <FormControl>
                   <Input
-                    height="80"
+                    height={550}
                     mt="3"
                     multiline
                     placeholder="Share something"
@@ -124,7 +124,7 @@ const Community = ({ navigation }) => {
               {postType == "event" && (
                 <FormControl>
                   <Input
-                    height="40%"
+                    height={35}
                     mt="1"
                     multiline
                     placeholder="Name of the event"
@@ -134,7 +134,7 @@ const Community = ({ navigation }) => {
                     }
                   />
                   <Input
-                    height="20%"
+                    height={35}
                     mt="1"
                     placeholder="Location"
                     value={state.location}
@@ -143,7 +143,7 @@ const Community = ({ navigation }) => {
                     }
                   />
                   <Input
-                    height="20%"
+                    height={35}
                     mt="1"
                     placeholder="Time"
                     value={state.eventTime}
@@ -152,7 +152,7 @@ const Community = ({ navigation }) => {
                     }
                   />
                   <Input
-                    height="248%"
+                    height={450}
                     mt="1"
                     multiline
                     placeholder="Details"
@@ -209,6 +209,6 @@ const styles = StyleSheet.create({
     height: "94%",
   },
   selectorText: {
-    fontSize: "55",
+    fontSize: "22",
   },
 });

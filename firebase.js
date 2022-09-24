@@ -52,16 +52,16 @@ import { retrieve } from "./storage";
 import GPC from "./global";
 import "react-native-get-random-values";
 import { v4 as uuidv4, validate } from "uuid";
-import {
-  API_KEY,
-  AUTH_DOMAIN,
-  DATABASE_URL,
-  PROJECT_ID,
-  STORAGE_BUCKET,
-  MESSAGING_SENDER_ID,
-  APP_ID,
-  MEASUREMENT_ID,
-} from "@env";
+
+const   
+API_KEY= "AIzaSyAevCuPuEq2FB73plVhfxniRHeYyUnA-as",
+AUTH_DOMAIN= "greenpineconnects.firebaseapp.com",
+DATABASE_URL="https://greenpineconnects-default-rtdb.europe-west1.firebasedatabase.app",
+PROJECT_ID= "greenpineconnects",
+STORAGE_BUCKET= "greenpineconnects.appspot.com",
+MESSAGING_SENDER_ID= "756252962829",
+APP_ID= "1:756252962829:web:ef99e2785435332e83a544",
+MEASUREMENT_ID= "G-1S927LZVJL";
 
 const firebaseConfig = {
   apiKey: API_KEY,
@@ -108,7 +108,7 @@ const usersRef = collection(firestoreDb, "users");
 async function writeUserDataAtCreation(userData) {
   try {
     validate;
-    setDoc(usrRef, userData);
+    appendUserData(userData)
     storePicture(
       "https://firebasestorage.googleapis.com/v0/b/greenpineconnects.appspot.com/o/def.png?alt=media&token=dfefab79-7b79-4988-8967-616a63ccdfec"
     );
