@@ -32,7 +32,6 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
-
 import {
   getDatabase,
   set,
@@ -52,16 +51,16 @@ import { retrieve } from "./storage";
 import GPC from "./global";
 import "react-native-get-random-values";
 import { v4 as uuidv4, validate } from "uuid";
-
-const   
-API_KEY= "AIzaSyAevCuPuEq2FB73plVhfxniRHeYyUnA-as",
-AUTH_DOMAIN= "greenpineconnects.firebaseapp.com",
-DATABASE_URL="https://greenpineconnects-default-rtdb.europe-west1.firebasedatabase.app",
-PROJECT_ID= "greenpineconnects",
-STORAGE_BUCKET= "greenpineconnects.appspot.com",
-MESSAGING_SENDER_ID= "756252962829",
-APP_ID= "1:756252962829:web:ef99e2785435332e83a544",
-MEASUREMENT_ID= "G-1S927LZVJL";
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  DATABASE_URL,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID,
+  MEASUREMENT_ID,
+} from "@env";
 
 const firebaseConfig = {
   apiKey: API_KEY,
@@ -108,7 +107,7 @@ const usersRef = collection(firestoreDb, "users");
 async function writeUserDataAtCreation(userData) {
   try {
     validate;
-    appendUserData(userData)
+    appendUserData(userData);
     storePicture(
       "https://firebasestorage.googleapis.com/v0/b/greenpineconnects.appspot.com/o/def.png?alt=media&token=dfefab79-7b79-4988-8967-616a63ccdfec"
     );
@@ -144,6 +143,14 @@ export async function getUserDataByID(id) {
   }
 }
 
+async function commentCount(postID, func) {
+  const commentRef = doc(firestoreDb, "posts", postID);
+  const increment = func == "add" ? 1 : -1;
+  await updateDoc(commentRef, {
+    commentCount: firebase.firestore.FieldValue.increment(increment),
+  });
+}
+
 export async function createComment(postID, comment) {
   try {
     const commentRef = doc(firestoreDb, "comments", postID);
@@ -160,6 +167,7 @@ export async function createComment(postID, comment) {
       },
       { merge: true }
     );
+    commentCount(postID, "add");
     console.log("written new comment!");
   } catch (e) {
     console.log("writeComment error", e);
@@ -234,10 +242,12 @@ async function getAndGlobalizeUsrData() {
       for (key of Object.keys(response)) {
         if (key === "chats") continue;
         GPC["usrData_" + String(key)] = response[key];
-        console.log("stored in GPC ", "usrData_" + String(key), response[key]);
+        //console.log("stored in GPC ", "usrData_" + String(key), response[key]);
       }
+      console.log(GPC);
     })();
   });
+  GPC["usrData_id"] = auth.currentUser.uid;
   return response;
 }
 
@@ -255,6 +265,7 @@ async function appendUserData(userData) {
 }
 
 export async function newPost(data) {
+  console.log(data);
   try {
     const docRef = doc(firestoreDb, "posts", uuidv4());
     setDoc(
@@ -297,8 +308,13 @@ export async function getCollection(col) {
 export async function getComments(postID) {
   try {
     const commentsRef = collection(firestoreDb, "comments");
-    const postRef = doc(commentsRef, postID);
-    const snap = await getDoc(postRef);
+    const q = query(
+      commentsRef,
+      where(firebase.firestore.FieldPath.documentId(), "==", postID),
+      //orderBy("time", "desc"),
+      limit(20)
+    );
+    const snap = await getDoc(q);
     let response = [];
     if (!snap.data()) {
       console.log("no Comments");
