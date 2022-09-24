@@ -308,13 +308,8 @@ export async function getCollection(col) {
 export async function getComments(postID) {
   try {
     const commentsRef = collection(firestoreDb, "comments");
-    const q = query(
-      commentsRef,
-      where(firebase.firestore.FieldPath.documentId(), "==", postID),
-      //orderBy("time", "desc"),
-      limit(20)
-    );
-    const snap = await getDoc(q);
+    const postRef = doc(commentsRef, postID);
+    const snap = await getDoc(postRef);
     let response = [];
     if (!snap.data()) {
       console.log("no Comments");
