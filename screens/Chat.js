@@ -49,7 +49,16 @@ const Chat = ({ navigation }) => {
   }, []);
 
   if (pageStatus === "loading") return <Text>Loading...</Text>;
-  if (pageStatus === "noData") return <Text>No messages</Text>;
+  if (pageStatus === "noData")
+    return (
+      <>
+        <View style={styles.pageContainer}>
+          <Header />
+          <Text>No messages</Text>
+        </View>
+        <Navbar navigation={navigation}></Navbar>
+      </>
+    );
   if (pageStatus === "ready")
     return (
       <NativeBaseProvider>

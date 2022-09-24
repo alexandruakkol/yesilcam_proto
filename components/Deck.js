@@ -51,13 +51,14 @@ const Deck = () => {
           cardVerticalMargin={2}
           verticalSwipe={false}
           renderCard={(card) => {
+            console.log(card)
             let prop = card;
             return (
               <NativeBaseProvider>
                 <View style={styles.card}>
                   <Image
                     source={{
-                      uri: prop.photo,
+                      uri:prop.photo
                     }}
                     style={styles.profilePic}
                     alt="Profile picture"
