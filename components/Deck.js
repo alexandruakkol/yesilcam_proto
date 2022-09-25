@@ -10,11 +10,11 @@ import GPC from "../global";
 import { getUserData, swipeRight, getRightSwipes, auth } from "../firebase";
 
 const profilePicSize = 250;
+let arrOfProfilesToShow = [];
 let jsonData;
 const Deck = () => {
-  let arrOfProfilesToShow = [];
   const [data, setData] = useState();
-  
+  const myUID = auth.currentUser.uid;
   useEffect(() => {
     arrOfProfilesToShow = [];
     getUserData()
@@ -24,9 +24,10 @@ const Deck = () => {
       .finally(() => {
         //convert object of objects to array of objects (cards accept arrays only)
         Object.keys(jsonData).forEach((key) => {
-          if (jsonData[key].id != auth.currentUser.uid)
+          if (jsonData[key].id != myUID)
             arrOfProfilesToShow.push(jsonData[key]);
         });
+        console.log("profiles:", arrOfProfilesToShow);
         setData(arrOfProfilesToShow);
       });
   }, [auth]);

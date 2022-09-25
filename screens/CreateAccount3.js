@@ -7,7 +7,7 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { store, retrieve } from "../storage";
 import { auth, createUser } from "../firebase";
-import GPC from '../global';
+import GPC from "../global";
 
 const textColor = "#dae8d4c9";
 const CreateAccount3 = ({ route, navigation }) => {
@@ -20,6 +20,8 @@ const CreateAccount3 = ({ route, navigation }) => {
     firstName,
     lastName,
     birthday: route.params.birthday,
+    photo:
+      "https://firebasestorage.googleapis.com/v0/b/greenpineconnects.appspot.com/o/def.png?alt=media&token=dfefab79-7b79-4988-8967-616a63ccdfec",
   };
 
   return (
