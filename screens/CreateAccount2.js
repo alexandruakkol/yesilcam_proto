@@ -21,7 +21,7 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from "@react-native-community/datetimepicker";
 import { store, retrieve } from "../storage";
 
 const textColor = "#dae8d4c9";
@@ -35,7 +35,7 @@ const CreateAccount2 = ({ route, navigation }) => {
   var dateOptions = { year: "numeric", month: "long", day: "numeric" };
 
   function validateBirthday() {
-    if(!birthday)return;
+    if (!birthday) return;
     function getAge(date) {
       var today = new Date();
       var age = today.getFullYear() - date.getFullYear();
@@ -54,8 +54,8 @@ const CreateAccount2 = ({ route, navigation }) => {
           description:
             "You need to be at least 18 years old to make an account.",
         });
-        return false;
-    }else return true;
+      return false;
+    } else return true;
   }
   let [fontsLoaded] = useFonts({
     Jost_600SemiBold,
@@ -123,11 +123,15 @@ const CreateAccount2 = ({ route, navigation }) => {
                   h="10"
                   borderRadius="20"
                   onPress={() => {
-                    if(validateBirthday())
-                    navigation.navigate(
-                      "CreateAccount3"
-                      ,{email:(route.params.email),password:(route.params.password),birthday:birthday.toLocaleDateString("en-US", dateOptions)}
-                    );
+                    if (validateBirthday())
+                      navigation.navigate("CreateAccount3", {
+                        email: route.params.email,
+                        password: route.params.password,
+                        birthday: birthday.toLocaleDateString(
+                          "en-US",
+                          dateOptions
+                        ),
+                      });
                   }}
                 >
                   <Text style={styles.confirmTxt}>Confirm</Text>
