@@ -79,8 +79,15 @@ const Deck = () => {
                   <VStack marginLeft="2" space={2}>
                     <Text style={styles.label}>About</Text>
                     <Text style={styles.profileText}>{prop.aboutme}</Text>
-                    <Text style={styles.label}>Offering</Text>
-                    <Text style={styles.profileText}>{prop.offer}</Text>
+
+                    {prop.offer ? (
+                      <>
+                        <Text style={styles.label}>Offering</Text>
+                        <Text style={styles.profileText}>{prop.offer}</Text>
+                      </>
+                    ) : (
+                      <></>
+                    )}
 
                     {prop.seek ? (
                       <>
