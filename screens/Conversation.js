@@ -15,7 +15,7 @@ const bkgColor = "#ebecf0";
 
 const Conversation = ({ navigation, route }) => {
   const convo = route.params.convo;
-  let chatteePic = route.params.chateePic;
+  let chatteePic = route.params.chatteeImg;
   const [myData, setMyData] = useState();
   const [myPic, setMyPic] = useState();
   const [message, setMessage] = useState();
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
   messageBox: {
     backgroundColor: "#a2c794",
     borderRadius: 8,
-    height: 35,
+    flex: 0.75,
+    height: "auto",
     marginTop: 8,
   },
   messageText: { marginHorizontal: 12, paddingVertical: 10 },
