@@ -51,14 +51,14 @@ const Deck = () => {
           cardVerticalMargin={2}
           verticalSwipe={false}
           renderCard={(card) => {
-            console.log(card)
+            console.log(card);
             let prop = card;
             return (
               <NativeBaseProvider>
                 <View style={styles.card}>
                   <Image
                     source={{
-                      uri:prop.photo
+                      uri: prop.photo,
                     }}
                     style={styles.profilePic}
                     alt="Profile picture"
@@ -78,13 +78,22 @@ const Deck = () => {
                   </Text>
                   <VStack marginLeft="2" space={2}>
                     <Text style={styles.label}>About</Text>
-                    <Text style={styles.profileText}>{prop.about}</Text>
+                    <Text style={styles.profileText}>{prop.aboutme}</Text>
                     <Text style={styles.label}>Offering</Text>
-                    <Text style={styles.profileText}>{prop.offering}</Text>
-                    <Text style={styles.label}>Seeking</Text>
-                    <Text style={styles.profileText}>{prop.seeking}</Text>
+                    <Text style={styles.profileText}>{prop.offer}</Text>
+
+                    {prop.seek ? (
+                      <>
+                        <Text style={styles.label}>Seeking</Text>
+                        <Text style={styles.profileText}>{prop.seek}</Text>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     <Text style={styles.label}>Profession</Text>
-                    <Text style={styles.profileText}>{prop.profession}</Text>
+                    <Text style={styles.profileText}>
+                      {prop.profession}, {prop.experience} years
+                    </Text>
                     <Text style={styles.speaks}>Speaks: {prop.languages}</Text>
                   </VStack>
                 </View>
@@ -100,7 +109,7 @@ const Deck = () => {
           }}
           onSwipedRight={(cardIndex) => {
             console.log("swiped right on", arrOfProfilesToShow[cardIndex].id);
-            swipeRight(arrOfProfilesToShow[cardIndex].id);
+            //swipeRight(arrOfProfilesToShow[cardIndex].id);
           }}
           cardIndex={0}
           backgroundColor={"#4FD0E9"}

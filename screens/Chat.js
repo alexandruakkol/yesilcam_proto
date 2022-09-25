@@ -14,12 +14,19 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { auth, getUserDataByID, getChatData } from "../firebase";
 import { set } from "firebase/database";
+import {
+  useFonts,
+  LobsterTwo_700Bold_Italic,
+} from "@expo-google-fonts/lobster-two";
 import GPC from "../global";
 const bkgColor = "#ebecf0";
 
 const Chat = ({ navigation }) => {
   const [myData, setMyData] = useState([]);
   const [pageStatus, setPageStatus] = useState("loading");
+  let [fontsLoaded] = useFonts({
+    LobsterTwo_700Bold_Italic,
+  });
 
   useEffect(() => {
     getUserDataByID(auth.currentUser.uid).then((r) => {
@@ -49,16 +56,28 @@ const Chat = ({ navigation }) => {
   }, []);
 
   if (pageStatus === "loading") return <Text>Loading...</Text>;
-  if (pageStatus === "noData")
-    return (
-      <>
-        <View style={styles.pageContainer}>
-          <Header />
-          <Text>No messages</Text>
+  if (pageStatus === "noData") {
+    if (!fontsLoaded) {
+      return (
+        <View>
+          <Text>Loading...</Text>
         </View>
-        <Navbar navigation={navigation}></Navbar>
-      </>
-    );
+      );
+    } else
+      return (
+        <>
+          <View style={styles.pageContainer}>
+            <Header />
+            <View flex={1} justifyContent="center">
+              <Center>
+                <Text style={styles.noMessagesText}>No messages</Text>
+              </Center>
+            </View>
+          </View>
+          <Navbar navigation={navigation}></Navbar>
+        </>
+      );
+  }
   if (pageStatus === "ready")
     return (
       <NativeBaseProvider>
@@ -117,6 +136,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: "lightgrey",
+  },
+  noMessagesText: {
+    fontFamily: "LobsterTwo_700Bold_Italic",
+    fontSize: 28,
+    color: "darkgreen",
   },
   from: { fontWeight: "bold", fontSize: 17 },
   lastText: { fontSize: 14 },
