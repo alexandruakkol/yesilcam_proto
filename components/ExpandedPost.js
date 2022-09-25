@@ -136,7 +136,8 @@ const ExpandedPost = (props) => {
               </HStack>{" "}
             </View>
           )}{" "}
-          <Comments postProps={{ ...props.props, ...refresh }}></Comments>
+          <Divider mb={4} thickness="2"></Divider>
+          <Comments postProps={{ ...props.props, refresh }}></Comments>
         </Modal.Body>
 
         <Modal.Footer></Modal.Footer>
@@ -198,7 +199,8 @@ const styles = StyleSheet.create({
 
   setDetails: { fontWeight: "bold" },
   detailsText: { marginBottom: 6 },
-
+  name: { fontWeight: "bold", fontSize: 15 },
+  time: { textAlign: "right", marginRight: 5 },
   myCommPic: {
     width: 30,
     height: 30,
