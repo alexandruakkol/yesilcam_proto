@@ -1,4 +1,9 @@
-import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+} from "react-native";
 import {
   NativeBaseProvider,
   Center,
@@ -74,6 +79,7 @@ const Community = ({ navigation }) => {
       <Page>
         <Header style={styles.header}></Header>
         <SocialCluster refresh={refresh}></SocialCluster>
+
         <Modal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
@@ -87,22 +93,45 @@ const Community = ({ navigation }) => {
             <Modal.Header>
               <Center>
                 <HStack>
+                  <View ml='10%' mt={2}>
                   <TouchableWithoutFeedback
                     onPress={() => setPostType("socialPost")}
+                    
                   >
-                    <Text style={styles.selectorText}>Social Post</Text>
-                  </TouchableWithoutFeedback>
+                    <Text style={styles.selectorText} >Social Post</Text>
+                  </TouchableWithoutFeedback></View>
                   <Divider
                     bg="grey"
                     thickness="2"
                     mx="2"
                     orientation="vertical"
-                  />
+                  /><View mt={2} mr={-8}>
                   <TouchableWithoutFeedback
                     onPress={() => setPostType("event")}
                   >
                     <Text style={styles.selectorText}>Event</Text>
-                  </TouchableWithoutFeedback>
+                  </TouchableWithoutFeedback></View>
+                 
+                  <Button
+                    ml="30%"
+                    variant="ghost"
+                    colorScheme="blueGray"
+                    onPress={() => {
+                      setShowModal(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                  mr='10%'
+                    bg="darkgreen"
+                    onPress={() => {
+                      handlePost();
+                      setShowModal(false);
+                    }}
+                  >
+                    Post
+                  </Button>
                 </HStack>
               </Center>
             </Modal.Header>
@@ -164,30 +193,13 @@ const Community = ({ navigation }) => {
                 </FormControl>
               )}
             </Modal.Body>
-            <Modal.Footer>
-              <Button.Group space={2}>
-                <Button
-                  variant="ghost"
-                  colorScheme="blueGray"
-                  onPress={() => {
-                    setShowModal(false);
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  bg="darkgreen"
-                  onPress={() => {
-                    handlePost();
-                    setShowModal(false);
-                  }}
-                >
-                  Post
-                </Button>
-              </Button.Group>
-            </Modal.Footer>
+           
+       
+              <Modal.Footer></Modal.Footer>
+           
           </Modal.Content>
         </Modal>
+
         <Fab
           renderInPortal={false}
           shadow={2}
@@ -209,6 +221,6 @@ const styles = StyleSheet.create({
     height: "94%",
   },
   selectorText: {
-    fontSize: "22",
+    fontSize: "21",
   },
 });

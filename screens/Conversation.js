@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
 import { NativeBaseProvider, Center, Avatar, HStack, Input } from "native-base";
 import React from "react";
 import Navbar from "../components/Navbar";
@@ -36,6 +36,7 @@ const Conversation = ({ navigation, route }) => {
   } else
     return (
       <NativeBaseProvider>
+        <KeyboardAvoidingView behavior="padding">
         <View style={styles.pageContainer}>
           <Header />
 
@@ -105,6 +106,7 @@ const Conversation = ({ navigation, route }) => {
         </HStack>
 
         <Navbar navigation={navigation}></Navbar>
+        </KeyboardAvoidingView>
       </NativeBaseProvider>
     );
 };
