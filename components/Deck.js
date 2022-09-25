@@ -10,12 +10,13 @@ import GPC from "../global";
 import { getUserData, swipeRight, getRightSwipes, auth } from "../firebase";
 
 const profilePicSize = 250;
-const arrOfProfilesToShow = [];
 let jsonData;
 const Deck = () => {
+  let arrOfProfilesToShow = [];
   const [data, setData] = useState();
-
+  
   useEffect(() => {
+    arrOfProfilesToShow = [];
     getUserData()
       .then((r) => {
         jsonData = r;
@@ -28,7 +29,7 @@ const Deck = () => {
         });
         setData(arrOfProfilesToShow);
       });
-  }, []);
+  }, [auth]);
 
   console.log("showing the following cards: ", arrOfProfilesToShow);
 

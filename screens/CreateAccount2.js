@@ -115,6 +115,7 @@ const CreateAccount2 = ({ route, navigation }) => {
                 onCancel={() => {
                   setDatePickerVisibility(false);
                 }}
+                isDarkModeEnabled={true}
               />
               <Center>
                 <Button

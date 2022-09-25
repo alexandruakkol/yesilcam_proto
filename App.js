@@ -16,8 +16,10 @@ import Community from "./screens/Community";
 import Navbar from "./components/Navbar";
 import Conversation from "./screens/Conversation";
 import Settings from "./screens/Settings";
+import {LogBox} from 'react-native';
 
 const Stack = createNativeStackNavigator();
+LogBox.ignoreAllLogs();
 
 export default function App() {
   return (

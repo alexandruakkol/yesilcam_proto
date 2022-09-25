@@ -127,7 +127,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginRight: 10,
   },
-  otherMsgStack: {},
+  otherMsgStack: {justifyContent: "flex",
+  alignItems: "flex",
+  marginLeft: 10,},
   messageBox: {
     backgroundColor: "#a2c794",
     borderRadius: 8,
