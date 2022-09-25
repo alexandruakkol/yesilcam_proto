@@ -21,7 +21,7 @@ import { LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { useFonts, Jost_600SemiBold } from "@expo-google-fonts/jost";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import DateTimePickerModal from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { store, retrieve } from "../storage";
 
 const textColor = "#dae8d4c9";
