@@ -2,7 +2,7 @@
 import { Platform } from "react-native";
 import {
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
+  
 } from "firebase/auth";
 import {
   getFirestore,
@@ -48,7 +48,7 @@ import "firebase/compat/firestore";
 import "@firebase/auth";
 import "@firebase/firestore";
 import { retrieve } from "./storage";
-import GPC from "./global";
+import {GPC, setGPC} from "./global";
 import "react-native-get-random-values";
 import { v4 as uuidv4, validate } from "uuid";
 import {
@@ -231,23 +231,19 @@ async function getAndGlobalizeUsrData() {
     where("email", "==", auth.currentUser.email)
   );
   const snap = await getDocs(q);
-  let response = new Object();
+  let response = new Object(), newGPC={};
   snap.forEach((doc) => {
     response = doc.data();
   });
-
-  getPictureOfUser(auth.currentUser.uid).then((profile_picture) => {
-    //function side-effect: caches user data
     (function writeToGPC() {
       for (key of Object.keys(response)) {
         if (key === "chats") continue;
-        GPC["usrData_" + String(key)] = response[key];
-        //console.log("stored in GPC ", "usrData_" + String(key), response[key]);
+        newGPC['usrData_'+String(key)] = response[key];
+        console.log("stored in GPC ", "usrData_" + String(key), response[key]);
       }
-      console.log(GPC);
     })();
-  });
-  GPC["usrData_id"] = auth.currentUser.uid;
+  newGPC["usrData_id"] = auth.currentUser.uid;
+  setGPC(newGPC);
   return response;
 }
 

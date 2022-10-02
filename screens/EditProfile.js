@@ -32,7 +32,7 @@ import {
   getAndGlobalizeUsrData,
 } from "../firebase";
 import Navbar from "../components/Navbar";
-import GPC from "../global";
+import {getGPC} from "../global";
 import * as ImageManipulator from "expo-image-manipulator";
 
 const profilePicSize = 200;
@@ -54,6 +54,7 @@ const ProfileSetup = ({ navigation }) => {
 
   useEffect(() => {
     getAndGlobalizeUsrData().then(() => {
+      GPC=getGPC();
       let defaultState = {
         firstName: GPC["usrData_firstName"] ? GPC["usrData_firstName"] : "",
         lastName: GPC["usrData_lastName"] ? GPC["usrData_lastName"] : "",

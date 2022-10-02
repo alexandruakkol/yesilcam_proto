@@ -25,7 +25,7 @@ import Header from "../components/Header";
 import SocialCluster from "../components/SocialCluster";
 import { AntDesign } from "@expo/vector-icons";
 import { newPost } from "../firebase";
-import GPC from "../global";
+import {getGPC} from "../global";
 
 const bkgColor = "#ebecf0";
 
@@ -50,6 +50,7 @@ const Community = ({ navigation }) => {
   }
 
   function handlePost() {
+    GPC=getGPC();
     //write socialPost
     if (postType == "socialPost") {
       newPost({

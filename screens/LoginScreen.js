@@ -22,7 +22,7 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 import { onAuthStateChanged } from "firebase/auth";
-import GPC from "../global";
+import GPC, { clearGPC } from "../global";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const textColor = "#dae8d4c9";

@@ -34,7 +34,8 @@ const Comments = (props) => {
     setData([]);
     let results = [];
     getComments(props.postProps.id).then((comments) => {
-      if (!comments) {
+      console.log(comments)
+      if (!comments || comments.length==0) {
         setDataReady("noComments");
         return;
       }
