@@ -7,7 +7,7 @@ import {
 } from "@expo-google-fonts/lobster-two";
 import { useRoute } from "@react-navigation/native";
 import { appendUserData, storePicture } from "../firebase";
-import GPC from "../global";
+import { appendGPC } from "../global";
 const headerColor = "white";
 
 //for EditProfile submit
@@ -24,7 +24,7 @@ const ConditionalDoneButton = (props) => {
         //write to db
         appendUserData(props.data).then(props.navigation.navigate("Cards"));
         Object.keys(props.data).forEach((key) => {
-          GPC["usrData_" + key] = props.data[key]; //temp assignment to global until async server is complete
+          appendGPC({ ["usrData_" + key]: props.data[key] });
         });
         if (props.data.image) storePicture(props.data.image);
       }}

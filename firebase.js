@@ -1,9 +1,6 @@
 //expo bundleID: 'host.exp.Exponent'
 import { Platform } from "react-native";
-import {
-  createUserWithEmailAndPassword,
-  
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   getFirestore,
   collection,
@@ -48,7 +45,7 @@ import "firebase/compat/firestore";
 import "@firebase/auth";
 import "@firebase/firestore";
 import { retrieve } from "./storage";
-import {GPC, setGPC} from "./global";
+import { appendGPC, setGPC, getGPC } from "./global";
 import "react-native-get-random-values";
 import { v4 as uuidv4, validate } from "uuid";
 import {
@@ -95,7 +92,7 @@ async function createUser(email, password, userData) {
       return error.code;
     });
   Object.keys(userData).forEach((key) => {
-    GPC["usrData_" + key] = userData[key]; //temp assignment to global until async server is complete
+    appendGPC({ ["usrData_" + key]: userData[key] }); //temp assignment to global until async server is complete
   });
   return response;
 }
@@ -195,7 +192,7 @@ export async function storePicture(uri) {
     const storageRef = ref(blobDb, auth.currentUser.uid);
     uploadString(storageRef, uri, "data_url").then((snapshot) => {
       console.log("Profile picture stored!");
-      GPC.usrData_image = uri;
+      appendGPC({ usrData_image: uri });
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         changeProfilePic(downloadURL);
       });
@@ -231,17 +228,18 @@ async function getAndGlobalizeUsrData() {
     where("email", "==", auth.currentUser.email)
   );
   const snap = await getDocs(q);
-  let response = new Object(), newGPC={};
+  let response = new Object(),
+    newGPC = {};
   snap.forEach((doc) => {
     response = doc.data();
   });
-    (function writeToGPC() {
-      for (key of Object.keys(response)) {
-        if (key === "chats") continue;
-        newGPC['usrData_'+String(key)] = response[key];
-        console.log("stored in GPC ", "usrData_" + String(key), response[key]);
-      }
-    })();
+  (function writeToGPC() {
+    for (key of Object.keys(response)) {
+      if (key === "chats") continue;
+      newGPC["usrData_" + String(key)] = response[key];
+      console.log("stored in GPC ", "usrData_" + String(key), response[key]);
+    }
+  })();
   newGPC["usrData_id"] = auth.currentUser.uid;
   setGPC(newGPC);
   return response;
@@ -382,7 +380,7 @@ export function getRealtimeMessages(convoID, setMyData) {
 export function swipeRight(swipedRightOn) {
   getRightSwipes(auth.currentUser.uid).then((mySwipes) => {
     mySwipes = mySwipes.val();
-    GPC["usrData_" + "swipedRightOn"] = Object.keys(mySwipes);
+    appendGPC({ ["usrData_" + "swipedRightOn"]: Object.keys(mySwipes) });
     console.log("my swipes", mySwipes);
     console.log("adding right swipe data on: ", swipedRightOn);
     let obj = {};

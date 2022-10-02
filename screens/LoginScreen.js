@@ -22,7 +22,6 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 import { onAuthStateChanged } from "firebase/auth";
-import GPC, { clearGPC } from "../global";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const textColor = "#dae8d4c9";
@@ -32,11 +31,9 @@ const LoginScreen = ({ navigation }) => {
 
   //------------------------------------//
   //hooks
-  useEffect((GPC) => {
+  useEffect(() => {
     console.log("App starting");
-    GPC = {};
     AsyncStorage.clear();
-
     //auto-login with session
     onAuthStateChanged(auth, (user) => {
       if (user) {
