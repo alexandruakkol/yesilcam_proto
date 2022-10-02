@@ -18,17 +18,19 @@ import {
   useFonts,
   LobsterTwo_700Bold_Italic,
 } from "@expo-google-fonts/lobster-two";
-import GPC from "../global";
+import { getGPC } from "../global";
 const bkgColor = "#ebecf0";
 
 const Chat = ({ navigation }) => {
   const [myData, setMyData] = useState([]);
   const [pageStatus, setPageStatus] = useState("loading");
+  const [GPCl, setGPCl] = useState({});
   let [fontsLoaded] = useFonts({
     LobsterTwo_700Bold_Italic,
   });
 
   useEffect(() => {
+    setGPCl(getGPC());
     getUserDataByID(auth.currentUser.uid).then((r) => {
       if (!r.chats) {
         setPageStatus("noData");
@@ -39,7 +41,7 @@ const Chat = ({ navigation }) => {
         getChatData(convoKey).then((chatData) => {
           chatData = chatData.val();
           Object.keys(chatData.members).forEach((member) => {
-            if (member === GPC.usrData_id) return;
+            if (member === GPCl.usrData_id) return;
             chatData.otherPerson = member;
           });
           getUserDataByID(chatData.otherPerson).then((theirData) => {

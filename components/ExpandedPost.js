@@ -16,7 +16,7 @@ import {
 } from "native-base";
 import React, { useEffect, useState } from "react";
 import { createComment, getComments, getUserDataByID, auth } from "../firebase";
-import GPC from "../global";
+import { getGPC } from "../global";
 import dayjs from "dayjs";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import Comments from "../components/Comments";
@@ -24,6 +24,10 @@ const profilePicSize = 50;
 const ExpandedPost = (props) => {
   const [newComment, setNewComment] = useState();
   const [refresh, setRefresh] = useState(false);
+  const [GPCl, setGPCl] = useState({});
+  useEffect(() => {
+    setGPCl(getGPC());
+  }, []);
   function postComment(newComment) {
     if (!newComment.match("[^ ]")) return;
     createComment(props.props.id, newComment);
@@ -146,7 +150,7 @@ const ExpandedPost = (props) => {
           <Image
             style={styles.myCommPic}
             source={{
-              uri: GPC.usrData_profilePicture,
+              uri: GPCl.usrData_profilePicture,
             }}
             alt="profile picture"
           ></Image>

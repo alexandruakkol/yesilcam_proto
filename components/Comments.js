@@ -15,7 +15,6 @@ import {
 } from "native-base";
 import React, { useEffect, useState } from "react";
 import { createComment, getComments, getUserDataByID, auth } from "../firebase";
-import GPC from "../global";
 import dayjs from "dayjs";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 
@@ -34,8 +33,8 @@ const Comments = (props) => {
     setData([]);
     let results = [];
     getComments(props.postProps.id).then((comments) => {
-      console.log(comments)
-      if (!comments || comments.length==0) {
+      console.log(comments);
+      if (!comments || comments.length == 0) {
         setDataReady("noComments");
         return;
       }

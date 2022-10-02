@@ -32,7 +32,7 @@ import {
   getAndGlobalizeUsrData,
 } from "../firebase";
 import Navbar from "../components/Navbar";
-import {getGPC} from "../global";
+import { getGPC } from "../global";
 import * as ImageManipulator from "expo-image-manipulator";
 
 const profilePicSize = 200;
@@ -54,23 +54,23 @@ const ProfileSetup = ({ navigation }) => {
 
   useEffect(() => {
     getAndGlobalizeUsrData().then(() => {
-      GPC=getGPC();
+      GPCl = getGPC();
       let defaultState = {
-        firstName: GPC["usrData_firstName"] ? GPC["usrData_firstName"] : "",
-        lastName: GPC["usrData_lastName"] ? GPC["usrData_lastName"] : "",
-        aboutme: GPC["usrData_aboutme"] ? GPC["usrData_aboutme"] : "",
-        offer: GPC["usrData_offer"] ? GPC["usrData_offer"] : null,
-        seek: GPC["usrData_seek"] ? GPC["usrData_seek"] : null,
-        profession: GPC["usrData_profession"]
-          ? GPC["usrData_profession"]
+        firstName: GPCl["usrData_firstName"] ? GPCl["usrData_firstName"] : "",
+        lastName: GPCl["usrData_lastName"] ? GPCl["usrData_lastName"] : "",
+        aboutme: GPCl["usrData_aboutme"] ? GPCl["usrData_aboutme"] : "",
+        offer: GPCl["usrData_offer"] ? GPCl["usrData_offer"] : null,
+        seek: GPCl["usrData_seek"] ? GPCl["usrData_seek"] : null,
+        profession: GPCl["usrData_profession"]
+          ? GPCl["usrData_profession"]
           : null,
-        experience: GPC["usrData_experience"]
-          ? GPC["usrData_experience"]
+        experience: GPCl["usrData_experience"]
+          ? GPCl["usrData_experience"]
           : null,
-        location: GPC["usrData_location"] ? GPC["usrData_location"] : null,
-        languages: GPC["usrData_languages"] ? GPC["usrData_languages"] : null,
-        profilePicture: GPC["usrData_profilePicture"]
-          ? GPC["usrData_profilePicture"]
+        location: GPCl["usrData_location"] ? GPCl["usrData_location"] : null,
+        languages: GPCl["usrData_languages"] ? GPCl["usrData_languages"] : null,
+        profilePicture: GPCl["usrData_profilePicture"]
+          ? GPCl["usrData_profilePicture"]
           : "https://cdn-icons-png.flaticon.com/512/875/875068.png",
       };
       const action = {

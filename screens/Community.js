@@ -25,7 +25,7 @@ import Header from "../components/Header";
 import SocialCluster from "../components/SocialCluster";
 import { AntDesign } from "@expo/vector-icons";
 import { newPost } from "../firebase";
-import {getGPC} from "../global";
+import { getGPC } from "../global";
 
 const bkgColor = "#ebecf0";
 
@@ -50,13 +50,13 @@ const Community = ({ navigation }) => {
   }
 
   function handlePost() {
-    GPC=getGPC();
+    GPCl = getGPC();
     //write socialPost
     if (postType == "socialPost") {
       newPost({
         type: "socialPost",
         body: postData,
-        user: GPC.usrData_id,
+        user: GPCl.usrData_id,
         comments: {},
         commentCount: 0,
       });
@@ -67,7 +67,7 @@ const Community = ({ navigation }) => {
     //else, write event post
     newPost({
       type: "event",
-      user: GPC.usrData_id,
+      user: GPCl.usrData_id,
       comments: {},
       commentCount: 0,
       ...state,
@@ -94,25 +94,27 @@ const Community = ({ navigation }) => {
             <Modal.Header>
               <Center>
                 <HStack>
-                  <View ml='10%' mt={2}>
-                  <TouchableWithoutFeedback
-                    onPress={() => setPostType("socialPost")}
-                    
-                  >
-                    <Text style={styles.selectorText} >Social Post</Text>
-                  </TouchableWithoutFeedback></View>
+                  <View ml="10%" mt={2}>
+                    <TouchableWithoutFeedback
+                      onPress={() => setPostType("socialPost")}
+                    >
+                      <Text style={styles.selectorText}>Social Post</Text>
+                    </TouchableWithoutFeedback>
+                  </View>
                   <Divider
                     bg="grey"
                     thickness="2"
                     mx="2"
                     orientation="vertical"
-                  /><View mt={2} mr={-8}>
-                  <TouchableWithoutFeedback
-                    onPress={() => setPostType("event")}
-                  >
-                    <Text style={styles.selectorText}>Event</Text>
-                  </TouchableWithoutFeedback></View>
-                 
+                  />
+                  <View mt={2} mr={-8}>
+                    <TouchableWithoutFeedback
+                      onPress={() => setPostType("event")}
+                    >
+                      <Text style={styles.selectorText}>Event</Text>
+                    </TouchableWithoutFeedback>
+                  </View>
+
                   <Button
                     ml="30%"
                     variant="ghost"
@@ -124,7 +126,7 @@ const Community = ({ navigation }) => {
                     Cancel
                   </Button>
                   <Button
-                  mr='10%'
+                    mr="10%"
                     bg="darkgreen"
                     onPress={() => {
                       handlePost();
@@ -194,10 +196,8 @@ const Community = ({ navigation }) => {
                 </FormControl>
               )}
             </Modal.Body>
-           
-       
-              <Modal.Footer></Modal.Footer>
-           
+
+            <Modal.Footer></Modal.Footer>
           </Modal.Content>
         </Modal>
 

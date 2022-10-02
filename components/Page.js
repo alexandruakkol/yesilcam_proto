@@ -4,7 +4,6 @@ import { DarkModeContext, DarkModeProvider } from "../context/darkModeContext";
 
 const Page = ({ children }) => {
   const darkMode = useContext(DarkModeContext);
-  console.log(darkMode);
   return (
     <View style={styles.page}>
       <DarkModeProvider>{children}</DarkModeProvider>

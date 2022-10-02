@@ -7,7 +7,6 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { store, retrieve } from "../storage";
 import { auth, createUser } from "../firebase";
-import GPC from "../global";
 
 const textColor = "#dae8d4c9";
 const CreateAccount3 = ({ route, navigation }) => {

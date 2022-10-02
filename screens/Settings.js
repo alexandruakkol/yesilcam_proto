@@ -4,7 +4,6 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { auth } from "../firebase";
-import GPC from "../global";
 
 const bkgColor = "#ebecf0";
 
@@ -19,12 +18,11 @@ const Settings = ({ navigation }) => {
             style={styles.logoutBtn}
             w="80%"
             variant="outline"
-            onPress={(GPC) => {
+            onPress={() => {
               auth
                 .signOut()
                 .then(() => {
                   console.log("user successfuly signed out");
-                  GPC = {};
                   navigation.navigate("LoginScreen");
                 })
                 .catch(function (error) {
