@@ -44,7 +44,6 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "@firebase/auth";
 import "@firebase/firestore";
-import { retrieve } from "./storage";
 import { appendGPC, setGPC, getGPC } from "./global";
 import "react-native-get-random-values";
 import { v4 as uuidv4, validate } from "uuid";
@@ -57,6 +56,7 @@ import {
   MESSAGING_SENDER_ID,
   APP_ID,
   MEASUREMENT_ID,
+  BUNDLE_ID
 } from "@env";
 
 const firebaseConfig = {
@@ -68,7 +68,9 @@ const firebaseConfig = {
   messagingSenderId: MESSAGING_SENDER_ID,
   appId: APP_ID,
   measurementId: MEASUREMENT_ID,
+  bundleId:BUNDLE_ID
 };
+
 let app;
 if (firebase.apps.length === 0) {
   app = firebase.initializeApp(firebaseConfig);
