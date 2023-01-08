@@ -1,11 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  Touchable,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { StyleSheet, Text, TouchableWithoutFeedback} from "react-native";
 import React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   NativeBaseProvider,
   Image,
@@ -23,82 +18,44 @@ import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import ExpandedPost from "./ExpandedPost";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import {getGPC} from "../global";
 
 const profilePicSize = 50;
 
 const SocialPost = (props) => {
   const [actionsheetIsOpen, setActionSheetIsOpen] = useState(false);
-  function onActionsheetClose() {
-    setActionSheetIsOpen(false);
-  }
-  function onActionsheetOpen() {
-    setActionSheetIsOpen(true);
-  }
+  function onActionsheetClose() {setActionSheetIsOpen(false)}
+  function onActionsheetOpen() {setActionSheetIsOpen(true)}
   const [showCommentModal, setShowCommentModal] = useState(false);
+  let GPCl = getGPC();
   return (
     <TouchableWithoutFeedback onPress={() => setShowCommentModal(true)}>
       <View style={styles.postWrapper}>
         {showCommentModal && (
-          <ExpandedPost
-            props={props}
-            showCommentModal={showCommentModal}
-            setShowCommentModal={setShowCommentModal}
-          ></ExpandedPost>
+          <ExpandedPost props={props} showCommentModal={showCommentModal} setShowCommentModal={setShowCommentModal}></ExpandedPost>
         )}
-
         {props.type == "socialPost" && (
           <View style={styles.socialPost}>
             <HStack space={2}>
-              <Image
-                style={styles.profilePic}
-                source={{
-                  uri: props.picture,
-                }}
-                alt="profile picture"
-              ></Image>
+              <Image style={styles.profilePic} source={{uri: props.picture}} alt="profile picture" ></Image>
               <VStack space={0.2} w="full">
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
+                <View style={{ flexDirection: "row", justifyContent: "space-between"}}>
                   <Text style={styles.name}>{props.name}</Text>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginRight: "20%",
-                    }}
-                  >
+                  <View style={{ flexDirection: "row", marginRight: "20%"}}>
                     <Text style={styles.time}>
                       {dayjs(props.time).fromNow(true) + " ago"}
                     </Text>
                     <TouchableWithoutFeedback onPress={onActionsheetOpen}>
-                      <Entypo
-                        name="dots-three-horizontal"
-                        size={12}
-                        color="black"
-                        style={{ marginTop: 3 }}
-                      />
+                      <Entypo name="dots-three-horizontal" size={12} color="black" style={{ marginTop: 3 }}/>
                     </TouchableWithoutFeedback>
-                    <Actionsheet
-                      isOpen={actionsheetIsOpen}
-                      onClose={onActionsheetClose}
-                    >
+                    <Actionsheet isOpen={actionsheetIsOpen} onClose={onActionsheetClose}>
                       <Actionsheet.Content>
-                        <Box
-                          w="100%"
-                          h={60}
-                          px={4}
-                          justifyContent="center"
-                        ></Box>
-                        {true && (
+                        <Box w="100%" h={60} px={4} justifyContent="center"></Box>
+                        {GPCl.usrData_id == props.user && (
                           <TouchableWithoutFeedback onPress={() => {}}>
                             <Actionsheet.Item>Delete post</Actionsheet.Item>
                           </TouchableWithoutFeedback>
                         )}
-
                         <Actionsheet.Item>Cancel</Actionsheet.Item>
                       </Actionsheet.Content>
                     </Actionsheet>
@@ -121,56 +78,25 @@ const SocialPost = (props) => {
         {props.type == "event" && (
           <View style={styles.eventPost}>
             <HStack space={2}>
-              <Image
-                style={styles.profilePic}
-                source={{
-                  uri: props.picture,
-                }}
-                alt="profile picture"
-              ></Image>
+              <Image style={styles.profilePic} source={{ uri: props.picture }} alt="profile picture"></Image>
               <VStack space={0.2} w="full">
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }} >
                   <Text style={styles.name}>{props.name}</Text>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginRight: "20%",
-                    }}
-                  >
+                  <View style={{ flexDirection: "row", marginRight: "20%" }}>
                     <Text style={styles.time}>
                       {dayjs(props.time).fromNow(true) + " ago"}
                     </Text>
                     <TouchableWithoutFeedback onPress={onActionsheetOpen}>
-                      <Entypo
-                        name="dots-three-horizontal"
-                        size={12}
-                        color="black"
-                        style={{ marginTop: 3 }}
-                      />
+                      <Entypo name="dots-three-horizontal" size={12} color="black" style={{ marginTop: 3 }}/>
                     </TouchableWithoutFeedback>
-                    <Actionsheet
-                      isOpen={actionsheetIsOpen}
-                      onClose={onActionsheetClose}
-                    >
+                    <Actionsheet isOpen={actionsheetIsOpen} onClose={onActionsheetClose}>
                       <Actionsheet.Content>
-                        <Box
-                          w="100%"
-                          h={60}
-                          px={4}
-                          justifyContent="center"
-                        ></Box>
-                        {true && (
+                        <Box w="100%" h={60} px={4} justifyContent="center" ></Box>
+                        {GPCl.usrData_id == props.user && (
                           <TouchableWithoutFeedback onPress={() => {}}>
                             <Actionsheet.Item>Delete post</Actionsheet.Item>
                           </TouchableWithoutFeedback>
                         )}
-
                         <Actionsheet.Item>Cancel</Actionsheet.Item>
                       </Actionsheet.Content>
                     </Actionsheet>
@@ -220,7 +146,7 @@ const SocialCluster = (props) => {
     //join posts with user data
     getCollection("posts").then((colData) => {
       colData.forEach((post) => {
-        getUserDataByID(post.user).then((usrData) => {
+      getUserDataByID(post.user).then((usrData) => {
           setData((data) => [
             ...data,
             {
@@ -262,6 +188,7 @@ const SocialCluster = (props) => {
               eventTime={post.eventTime}
               location={post.location}
               commentCount={post.commentCount}
+              user={post.user}
             ></SocialPost>
           );
         })}

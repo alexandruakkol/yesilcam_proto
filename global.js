@@ -6,8 +6,6 @@ export function setGPC(newgpc) {
 export function getGPC() {
   return GPC;
 }
-
 export function appendGPC(data) {
   GPC = { ...GPC, ...data };
 }
-export default GPC;

@@ -1,50 +1,20 @@
-//expo bundleID: 'host.exp.Exponent'
 import { Platform } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  doc,
-  setDoc,
-  orderBy,
-  where,
-  FieldPath,
-  query,
-  updateDoc,
-  Timestamp,
-  getDoc,
-  collectionGroup,
-  limit,
+  getFirestore, collection, getDocs, doc, setDoc, orderBy, where, query, updateDoc, getDoc, limit,
 } from "firebase/firestore";
-import {
-  //blob storage
-  putString,
-  uploadString,
-  getStorage,
-  putFile,
-  ref,
-  storage,
-  uploadBytes,
-  getDownloadURL,
+import {//blob storage
+  uploadString, getStorage, ref, getDownloadURL,
 } from "firebase/storage";
 import {
-  getDatabase,
-  set,
-  ref as storageRef,
-  update as updateRealtime,
-  onValue,
-  orderByChild,
-  get as realtimeGet,
-  query as realtimeQuery,
+  getDatabase, set, ref as storageRef, update as updateRealtime, onValue, get as realtimeGet, query as realtimeQuery,
 } from "firebase/database"; //realtimeDB
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "@firebase/auth";
 import "@firebase/firestore";
-import { appendGPC, setGPC, getGPC } from "./global";
+import { appendGPC, setGPC } from "./global";
 import "react-native-get-random-values";
 import { v4 as uuidv4, validate } from "uuid";
 import {
@@ -72,11 +42,8 @@ const firebaseConfig = {
 };
 
 let app;
-if (firebase.apps.length === 0) {
-  app = firebase.initializeApp(firebaseConfig);
-} else {
-  app = firebase.app();
-}
+if (firebase.apps.length === 0) app = firebase.initializeApp(firebaseConfig);
+else app = firebase.app();
 
 const auth = firebase.auth();
 /////////////////////User creation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -110,17 +77,13 @@ async function writeUserDataAtCreation(userData) {
     storePicture(
       "https://firebasestorage.googleapis.com/v0/b/greenpineconnects.appspot.com/o/def.png?alt=media&token=dfefab79-7b79-4988-8967-616a63ccdfec"
     );
-  } catch (error) {
-    console.log("DB write error", error);
-  }
+  } catch (error) {console.log("DB write error", error);}
 }
 
 export async function getUserData() {
   let data = [];
   const querySnapshot = await getDocs(usersRef);
-  querySnapshot.forEach((doc) => {
-    data.push({ ...doc.data(), ...{ id: doc.id } });
-  });
+  querySnapshot.forEach((doc) => {data.push({ ...doc.data(), ...{ id: doc.id } });});
   return data;
 }
 
@@ -129,25 +92,18 @@ export async function getUserDataByID(id) {
   try {
     const docRef = doc(firestoreDb, "users", id);
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      console.log(
-        `The document matching the requested ID of ${id} was not found.`
-      );
+    if (docSnap.exists()) return docSnap.data();
+    else {
+      console.log(`The document matching the requested ID of ${id} was not found.`);
       return 0;
     }
-  } catch (error) {
-    console.log("GetUserDataByID error", error);
-  }
+  } catch (error) {console.log("GetUserDataByID error", error);}
 }
 
 async function commentCount(postID, func) {
   const commentRef = doc(firestoreDb, "posts", postID);
   const increment = func == "add" ? 1 : -1;
-  await updateDoc(commentRef, {
-    commentCount: firebase.firestore.FieldValue.increment(increment),
-  });
+  await updateDoc(commentRef, {commentCount: firebase.firestore.FieldValue.increment(increment)});
 }
 
 export async function createComment(postID, comment) {
@@ -156,32 +112,23 @@ export async function createComment(postID, comment) {
     let newId = uuidv4();
     await setDoc(
       commentRef,
-      {
-        [newId]: {
+      {[newId]: {
           body: comment,
           from: auth.currentUser.uid,
           id: newId,
-          time: firebase.firestore.Timestamp.fromDate(new Date()),
-        },
-      },
-      { merge: true }
+          time: firebase.firestore.Timestamp.fromDate(new Date())},
+      },{ merge: true }
     );
     commentCount(postID, "add");
     console.log("written new comment!");
-  } catch (e) {
-    console.log("writeComment error", e);
-  }
+  } catch (e) {console.log("writeComment error", e);}
 }
 
 async function changeProfilePic(newURL) {
   try {
     const ppicRef = doc(firestoreDb, "users", auth.currentUser.uid);
-    await updateDoc(ppicRef, {
-      photo: newURL,
-    });
-  } catch (e) {
-    console.log("changeProfilePic error", error);
-  }
+    await updateDoc(ppicRef, {photo: newURL});
+  } catch (e) {console.log("changeProfilePic error", error);}
 }
 
 //////////////////////Profile picture storage\\\\\\\\\\\\\\\\\\\\\\\\
@@ -195,13 +142,9 @@ export async function storePicture(uri) {
     uploadString(storageRef, uri, "data_url").then((snapshot) => {
       console.log("Profile picture stored!");
       appendGPC({ usrData_image: uri });
-      getDownloadURL(snapshot.ref).then((downloadURL) => {
-        changeProfilePic(downloadURL);
-      });
+      getDownloadURL(snapshot.ref).then((downloadURL) => {changeProfilePic(downloadURL);});
     });
-  } catch (error) {
-    console.log("error storePicture ", error);
-  }
+  } catch (error) {console.log("error storePicture ", error);}
 }
 
 export async function getPictureOfUser(uid) {
@@ -209,14 +152,9 @@ export async function getPictureOfUser(uid) {
   blobDb = getStorage();
   const rf = ref(blobDb, uid);
   const res = await getDownloadURL(rf)
-    .then((pic) => {
-      return pic;
-    })
+    .then((pic) => {return pic})
     .catch((error) => {
-      console.log(
-        "getPictureOfUser, getDownloadURL error: (codes on internet)",
-        error
-      );
+      console.log("getPictureOfUser, getDownloadURL error: (codes on internet)",error);
       return;
     });
   return res;
@@ -231,10 +169,8 @@ async function getAndGlobalizeUsrData() {
   );
   const snap = await getDocs(q);
   let response = new Object(),
-    newGPC = {};
-  snap.forEach((doc) => {
-    response = doc.data();
-  });
+  newGPC = {};
+  snap.forEach((doc) => {response = doc.data();});
   (function writeToGPC() {
     for (key of Object.keys(response)) {
       if (key === "chats") continue;
@@ -249,15 +185,11 @@ async function getAndGlobalizeUsrData() {
 
 async function appendUserData(userData) {
   //deletes null values from object
-  Object.keys(userData).forEach(
-    (k) => userData[k] == null && delete userData[k]
-  );
+  Object.keys(userData).forEach((k) => userData[k] == null && delete userData[k]);
   try {
     const ref = doc(firestoreDb, "users", auth.currentUser.uid);
     setDoc(ref, userData, { merge: true });
-  } catch (error) {
-    console.log("DB write error", error);
-  }
+  } catch (error) {console.log("DB write error", error)}
 }
 
 export async function newPost(data) {
@@ -270,9 +202,7 @@ export async function newPost(data) {
       { merge: true }
     );
     console.log("new post written");
-  } catch (error) {
-    console.log("newPost error", error);
-  }
+  } catch (error) {console.log("newPost error", error);}
 }
 
 export async function writeToDB(collection, data) {
@@ -280,9 +210,7 @@ export async function writeToDB(collection, data) {
   try {
     const docRef = doc(firestoreDb, collection, auth.currentUser.uid);
     updateDoc(docRef, data);
-  } catch (error) {
-    console.log("writeToDB error", error);
-  }
+  } catch (error) {console.log("writeToDB error", error);}
 }
 
 export async function getCollection(col) {
@@ -292,13 +220,9 @@ export async function getCollection(col) {
     const snap = await getDocs(q);
     let response = [];
     snap.forEach((el) => response.push({ ...el.data(), id: el.id }));
-    response = response.sort((a, b) =>
-      a.time.seconds < b.time.seconds ? 1 : -1
-    );
+    response = response.sort((a, b) =>a.time.seconds < b.time.seconds ? 1 : -1);
     return response;
-  } catch (error) {
-    console.log("getAllCollection error", error);
-  }
+  } catch (error) {console.log("getAllCollection error", error);}
 }
 
 export async function getComments(postID) {
@@ -311,16 +235,10 @@ export async function getComments(postID) {
       console.log("no Comments");
       return;
     }
-    Object.values(snap.data()).forEach((el) =>
-      response.push({ ...el, id: el.id })
-    );
-    response = response.sort((a, b) =>
-      a.time.seconds < b.time.seconds ? 1 : -1
-    );
+    Object.values(snap.data()).forEach((el) =>response.push({ ...el, id: el.id }));
+    response = response.sort((a, b) =>a.time.seconds < b.time.seconds ? 1 : -1);
     return response;
-  } catch (error) {
-    console.log("getComments error", error);
-  }
+  } catch (error) {console.log("getComments error", error)}
 }
 ///////////////////Firebase realtime\\\\\\\\\\\\\\\
 
@@ -331,9 +249,7 @@ export function createNewConvo(withPerson) {}
 export async function getChatData(convoID) {
   const chatsRef = storageRef(realtimeDb, "chats/" + convoID);
   const q = realtimeQuery(chatsRef);
-  return await realtimeGet(q, (snapshot) => {
-    return snapshot;
-  });
+  return await realtimeGet(q, (snapshot) => {return snapshot});
 }
 
 export function newRealtimeMessage(data, convoID) {
@@ -345,22 +261,16 @@ export function newRealtimeMessage(data, convoID) {
         ...data,
         ...{ time: firebase.firestore.Timestamp.fromDate(new Date()) },
         ...{ from: auth.currentUser.uid },
-      }
-    );
+      });
     updateLastMessage(data.body, convoID);
-  } catch (error) {
-    console.log("realtimeWrite error", error);
-  }
+  } catch (error) { console.log("realtimeWrite error", error);}
 }
 
 export function updateLastMessage(message, convoID) {
   let updates = {};
   updates["/chats/" + convoID + "/lastMessage"] = message;
-  try {
-    updateRealtime(storageRef(realtimeDb), updates);
-  } catch (error) {
-    console.log("updateLastMessage error", error);
-  }
+  try { updateRealtime(storageRef(realtimeDb), updates);
+  } catch (error) {console.log("updateLastMessage error", error);}
 }
 
 export function getRealtimeMessages(convoID, setMyData) {
@@ -369,9 +279,7 @@ export function getRealtimeMessages(convoID, setMyData) {
   const q = realtimeQuery(messagesRef);
   onValue(q, (snapshot) => {
     let data = [];
-    snapshot.forEach((child) => {
-      data.push(child.val());
-    });
+    snapshot.forEach((child) => {data.push(child.val());});
     //incoming realtime messages handled here
     console.log("existing messages:", data);
     data = data.sort((a, b) => (a.time.seconds > b.time.seconds ? 1 : -1));
@@ -389,38 +297,23 @@ export function swipeRight(swipedRightOn) {
     obj[swipedRightOn] = "true";
     try {
       set(
-        storageRef(
-          realtimeDb,
-          "swipes/" + auth.currentUser.uid + "/swipedRightOn"
-        ),
-        {
-          ...mySwipes,
-          ...obj,
-        }
+        storageRef(realtimeDb,"swipes/" + auth.currentUser.uid + "/swipedRightOn"),{...mySwipes,...obj,}
       );
-    } catch (error) {
-      console.log("swipeRight DB error", error);
-    }
+    } catch (error) { console.log("swipeRight DB error", error)}
   });
   matchCheck(swipedRightOn);
 }
 
 export async function getRightSwipes(ofPerson) {
-  const rightSwipesRef = storageRef(
-    realtimeDb,
-    "swipes/" + ofPerson + "/swipedRightOn"
-  );
+  const rightSwipesRef = storageRef(realtimeDb, "swipes/" + ofPerson + "/swipedRightOn");
   return await realtimeGet(rightSwipesRef);
 }
 
 export function matchCheck(withPerson) {
   getRightSwipes(withPerson).then((theirSwipes) => {
     if (!theirSwipes.val()) return;
-    if (Object.keys(theirSwipes.val()).includes(auth.currentUser.uid)) {
-      console.log("match");
-    } else {
-      console.log("no match");
-    }
+    if (Object.keys(theirSwipes.val()).includes(auth.currentUser.uid)) console.log("match")
+    else console.log("no match");
   });
 }
 //////////////////////////\\\\\\\\\\\\\\\\\\\\\\\
