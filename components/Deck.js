@@ -16,16 +16,10 @@ const Deck = () => {
   const myUID = auth.currentUser.uid;
   useEffect(() => {
     arrOfProfilesToShow = [];
-    getUserData()
-      .then((r) => {
-        jsonData = r;
-      })
+    getUserData().then((r) => jsonData = r)
       .finally(() => {
         //convert object of objects to array of objects (cards accept arrays only)
-        Object.keys(jsonData).forEach((key) => {
-          if (jsonData[key].id != myUID)
-            arrOfProfilesToShow.push(jsonData[key]);
-        });
+        Object.keys(jsonData).forEach((key) => { if (jsonData[key].id != myUID) arrOfProfilesToShow.push(jsonData[key]) });
         console.log("profiles:", arrOfProfilesToShow);
         setData(arrOfProfilesToShow);
       });
@@ -33,10 +27,7 @@ const Deck = () => {
 
   console.log("showing the following cards: ", arrOfProfilesToShow);
 
-  let [fontsLoaded] = useFonts({
-    LobsterTwo_700Bold_Italic,
-    Jost_600SemiBold,
-  });
+  let [fontsLoaded] = useFonts({ LobsterTwo_700Bold_Italic, Jost_600SemiBold });
 
   if (!fontsLoaded || !data) {
     return (
@@ -57,47 +48,29 @@ const Deck = () => {
             return (
               <NativeBaseProvider>
                 <View style={styles.card}>
-                  <Image
-                    source={{
-                      uri: prop.photo,
-                    }}
-                    style={styles.profilePic}
-                    alt="Profile picture"
-                  ></Image>
-
+                  <Image source={{ uri: prop.photo }} style={styles.profilePic} alt="Profile picture" ></Image>
                   <Text style={styles.nameLabel}>
                     {prop.firstName} {prop.lastName}
                   </Text>
-
                   <Text style={styles.location}>
-                    <MaterialIcons
-                      name="location-pin"
-                      size={16}
-                      color="black"
-                    />
+                    <MaterialIcons name="location-pin" size={16} color="black"/>
                     {prop.location}
                   </Text>
                   <VStack marginLeft="2" space={2}>
                     <Text style={styles.label}>About</Text>
                     <Text style={styles.profileText}>{prop.aboutme}</Text>
-
-                    {prop.offer ? (
+                    {prop.offer ?( 
                       <>
                         <Text style={styles.label}>Offering</Text>
                         <Text style={styles.profileText}>{prop.offer}</Text>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-
+                      </>) : (<></>)
+                    }
                     {prop.seek ? (
                       <>
                         <Text style={styles.label}>Seeking</Text>
                         <Text style={styles.profileText}>{prop.seek}</Text>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                      </>) : (<></>)
+                    }
                     <Text style={styles.label}>Profession</Text>
                     <Text style={styles.profileText}>
                       {prop.profession}, {prop.experience} years

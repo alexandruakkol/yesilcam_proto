@@ -1,10 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { NativeBaseProvider, Center, HStack, View, Button } from "native-base";
-import {
-  useFonts,
-  LobsterTwo_700Bold_Italic,
-} from "@expo-google-fonts/lobster-two";
+import { Center, HStack, View, Button } from "native-base";
+import { useFonts, LobsterTwo_700Bold_Italic } from "@expo-google-fonts/lobster-two";
 import { useRoute } from "@react-navigation/native";
 import { appendUserData, storePicture } from "../firebase";
 import { appendGPC } from "../global";
@@ -15,20 +12,13 @@ const ConditionalDoneButton = (props) => {
   if (props.page != "editProfile") return <View></View>;
   return (
     <Button
-      style={styles.button}
-      variant="link"
-      bg={headerColor}
-      h="10"
-      w="25%"
+      style={styles.button} variant="link" bg={headerColor} h="10" w="25%"
       onPress={() => {
         //write to db
         appendUserData(props.data).then(props.navigation.navigate("Cards"));
-        Object.keys(props.data).forEach((key) => {
-          appendGPC({ ["usrData_" + key]: props.data[key] });
-        });
+        Object.keys(props.data).forEach((key) => appendGPC({ ["usrData_" + key]: props.data[key] }));
         if (props.data.image) storePicture(props.data.image);
-      }}
-    >
+      }}>
       <Text style={[styles.doneText, styles.headerElements]}>Save</Text>
     </Button>
   );
@@ -36,10 +26,7 @@ const ConditionalDoneButton = (props) => {
 
 const Header = (props) => {
   const route = useRoute();
-  let [fontsLoaded] = useFonts({
-    LobsterTwo_700Bold_Italic,
-  });
-
+  let [fontsLoaded] = useFonts({LobsterTwo_700Bold_Italic});
   if (!fontsLoaded) {
     return (
       <View>
@@ -57,9 +44,7 @@ const Header = (props) => {
             {route.name === "Cards" ? "" : route.name}
           </Text>
           <ConditionalDoneButton
-            page={props.page}
-            data={props.data}
-            navigation={props.navigation}
+            page={props.page} data={props.data} navigation={props.navigation}
           ></ConditionalDoneButton>
         </Center>
       </HStack>

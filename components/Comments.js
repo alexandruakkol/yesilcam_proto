@@ -1,22 +1,9 @@
-import { StyleSheet, TouchableWithoutFeedback, FlatList } from "react-native";
-import {
-  NativeBaseProvider,
-  Image,
-  VStack,
-  Center,
-  HStack,
-  Box,
-  ScrollView,
-  View,
-  Text,
-  Modal,
-  Divider,
-  Input,
-} from "native-base";
+import { StyleSheet, FlatList } from "react-native";
+import { Image, VStack, HStack, View, Text, Divider } from "native-base";
 import React, { useEffect, useState } from "react";
-import { createComment, getComments, getUserDataByID, auth } from "../firebase";
+import { getComments, getUserDataByID } from "../firebase";
 import dayjs from "dayjs";
-import { FontAwesome, Entypo } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 const profilePicSize = 50;
 
@@ -34,10 +21,7 @@ const Comments = (props) => {
     let results = [];
     getComments(props.postProps.id).then((comments) => {
       console.log(comments);
-      if (!comments || comments.length == 0) {
-        setDataReady("noComments");
-        return;
-      }
+      if (!comments || comments.length == 0) { setDataReady("noComments"); return; }
       comCount = comments.length;
 
       comments.forEach((comment) => {
@@ -65,34 +49,24 @@ const Comments = (props) => {
   if (dataReady == "noComments") return <Text>No comments</Text>;
   if (dataReady && data)
     return (
-      <FlatList
-        data={data}
+      <FlatList data={data}
         renderItem={(comment) => (
           <View>
             <HStack space={2} mb={2}>
               <Image
                 style={styles.profilePic}
-                source={{
-                  uri: comment.item.photo,
-                }}
+                source={{ uri: comment.item.photo }}
                 alt="profile picture"
               ></Image>
               <VStack space={0.2} w="full">
                 <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
+                  style={{ flexDirection: "row", justifyContent: "space-between", }}
                 >
                   <Text style={styles.name}>
                     {comment.item.firstName + " " + comment.item.lastName}
                   </Text>
-
                   <View
-                    style={{
-                      flexDirection: "row",
-                      marginRight: "20%",
-                    }}
+                    style={{ flexDirection: "row", marginRight: "20%" }}
                   >
                     <Text style={styles.time}>
                       {dayjs(comment.item.time.toDate()).fromNow(true) + " ago"}
