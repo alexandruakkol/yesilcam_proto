@@ -1,24 +1,13 @@
-import { StyleSheet, Text, TouchableWithoutFeedback} from "react-native";
+import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
-import {
-  NativeBaseProvider,
-  Image,
-  View,
-  VStack,
-  Center,
-  HStack,
-  Actionsheet,
-  ScrollView,
-  Box,
-  Modal,
-} from "native-base";
+import { Image, View, VStack, HStack, Actionsheet, ScrollView, Box } from "native-base";
 import { getCollection, getUserDataByID } from "../firebase";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import ExpandedPost from "./ExpandedPost";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import {getGPC} from "../global";
+import { getGPC } from "../global";
 
 const profilePicSize = 50;
 
@@ -140,26 +129,23 @@ const SocialCluster = (props) => {
   const [dataReady, setDataReady] = useState(false);
   dayjs.extend(relativeTime);
   useEffect(() => {
+    
     //clear states for the 'pseudo-refresh'
     setData([]);
     setDataReady(false);
+
     //join posts with user data
     getCollection("posts").then((colData) => {
-      colData.forEach((post) => {
-      getUserDataByID(post.user).then((usrData) => {
-          setData((data) => [
-            ...data,
-            {
-              [post.id]: {
-                ...post,
-                firstName: usrData.firstName,
-                lastName: usrData.lastName,
-                picture: usrData.profilePicture,
-                id: post.id,
-              },
-            },
-          ]);
-        });
+      colData.forEach(async (post) => {
+        const usrData = await getUserDataByID(post.user);
+        setData((data) => [...data,
+          {[post.id]: {...post,
+              firstName: usrData.firstName,
+              lastName: usrData.lastName,
+              picture: usrData.profilePicture,
+              id: post.id,
+          }},
+        ]);
       });
       setDataReady(true);
     });
