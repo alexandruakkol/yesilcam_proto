@@ -1,5 +1,5 @@
 (Fullstack) networking social media mobile app
-<br>React Native + Firebase 
+<br>Built with React Native and Firebase 
 <br>Architectural diagram: https://miro.com/app/board/uXjVPT3Trlo=/?share_link_id=998095091723
 <br><br><b>Networking Deck</b><br>
 ![Networking Deck](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGxmZ2w0MWdnb3E3NDhhNW9uMXhpN2hrMHRydGY2N2ZudmdxNXdqNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HALuwxjUYJ0IzDquFc/giphy.gif)
