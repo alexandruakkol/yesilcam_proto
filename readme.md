@@ -1,8 +1,24 @@
-<b>Yesilcam<b> is an upcoming nonprofit organization that seeks to connect people from around the world that work, or aspire to work, full-time or part-time, in the film industry.
-<br>The project remains in a prototype stage until the legal structure of the nonprofit is completed.
+<br>
+<center style="font-size: xx-large"><b>Yesilcam</b></center>
+<br>
+<br>
 
-(Fullstack) networking social media mobile app
-<br>Built with React Native and Firebase 
+<b><span style="font-size: large;">Yesilcam</span></b> is an upcoming nonprofit organization that seeks to connect people from around the world that work, or aspire to work in the film industry.
+<br><br>The project remains in a prototype stage until the legal structure of the nonprofit is completed.
+
+<br>Built with <b>React Native</b> and <b>Google Firebase</b>.
+<br>Firebase (BaaS) was used for:
+<ul>
+    <li>Authentication</li>
+    <li>Databases:</li>
+        <ul>
+            <li>Document store for messaging (Firestore)</li>
+            <li>Realtime database for messaging</li>
+        </ul>
+    <li>Blob storage for images (profile pictures)</li>
+    <li>Analytics and monitoring</li>
+</ul>
+
 <br>Web deployment: https://alexandruakkol.github.io/yesilcam_proto
 <br>Architectural diagram: https://miro.com/app/board/uXjVPT3Trlo=/?share_link_id=998095091723
 <br><br><b>Networking Deck</b><br>
