@@ -1,3 +1,6 @@
+<b>Yesilcam<b> is an upcoming nonprofit organization that seeks to connect people from around the world that work, or aspire to work, full-time or part-time, in the film industry.
+<br>The project remains in a prototype stage until the legal structure of the nonprofit is completed.
+
 (Fullstack) networking social media mobile app
 <br>Built with React Native and Firebase 
 <br>Web deployment: https://alexandruakkol.github.io/yesilcam_proto
