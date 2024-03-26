@@ -7,7 +7,7 @@
 <br><br>The project remains in a prototype stage until the legal structure of the nonprofit is completed.
 
 <br>Built with <b>React Native</b> and <b>Google Firebase</b>.
-<br>Firebase (BaaS) was used for:
+<br>Firebase (as Backend-as-a-Service) was used for:
 <ul>
     <li>Authentication</li>
     <li>Databases:</li>
