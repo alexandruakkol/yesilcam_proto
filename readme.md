@@ -1,5 +1,5 @@
 <br>
-<p style="text-align: center; font-size: xx-large"><b>Text with basic formatting applied</b></p>
+<span style="font-size: large"><b>Yesilcam</b></span>
 <br>
 <br>
 
