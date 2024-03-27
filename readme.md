@@ -15,7 +15,7 @@ The project remains in a prototype stage until the legal structure of the nonpro
     - Blob storage for images (profile pictures)
   - Analytics and monitoring
 
-## Links
+## Links 
 
 - **Web deployment:** [Yesilcam Prototype](https://alexandruakkol.github.io/yesilcam_proto)
 - **Architectural diagram:** [Miro Board](https://miro.com/app/board/uXjVPT3Trlo=/?share_link_id=998095091723)
