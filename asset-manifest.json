@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/yesilcam_proto/static/js/app.adaa5317.chunk.js",
-    "app.js.map": "/yesilcam_proto/static/js/app.adaa5317.chunk.js.map",
+    "app.js": "/yesilcam_proto/static/js/app.2b82ab73.chunk.js",
+    "app.js.map": "/yesilcam_proto/static/js/app.2b82ab73.chunk.js.map",
     "runtime~app.js": "/yesilcam_proto/static/js/runtime~app.d4ce6ce4.js",
     "runtime~app.js.map": "/yesilcam_proto/static/js/runtime~app.d4ce6ce4.js.map",
-    "static/js/2.663f579d.chunk.js": "/yesilcam_proto/static/js/2.663f579d.chunk.js",
-    "static/js/2.663f579d.chunk.js.map": "/yesilcam_proto/static/js/2.663f579d.chunk.js.map",
+    "static/js/2.7d6c5c6d.chunk.js": "/yesilcam_proto/static/js/2.7d6c5c6d.chunk.js",
+    "static/js/2.7d6c5c6d.chunk.js.map": "/yesilcam_proto/static/js/2.7d6c5c6d.chunk.js.map",
     "fonts/AntDesign.ttf": "/yesilcam_proto/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/yesilcam_proto/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/yesilcam_proto/./fonts/Feather.ttf",
@@ -46,11 +46,11 @@
     "index.html": "/yesilcam_proto/index.html",
     "manifest.json": "/yesilcam_proto/manifest.json",
     "serve.json": "/yesilcam_proto/serve.json",
-    "static/js/2.663f579d.chunk.js.LICENSE.txt": "/yesilcam_proto/static/js/2.663f579d.chunk.js.LICENSE.txt"
+    "static/js/2.7d6c5c6d.chunk.js.LICENSE.txt": "/yesilcam_proto/static/js/2.7d6c5c6d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.d4ce6ce4.js",
-    "static/js/2.663f579d.chunk.js",
-    "static/js/app.adaa5317.chunk.js"
+    "static/js/2.7d6c5c6d.chunk.js",
+    "static/js/app.2b82ab73.chunk.js"
   ]
 }
