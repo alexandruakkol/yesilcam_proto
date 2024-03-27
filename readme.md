@@ -2,7 +2,7 @@
 
 Yesilcam is an upcoming nonprofit organization that seeks to connect people from around the world who work, or aspire to work, in the film industry.
 
-The project remains in a prototype stage until the legal structure of the nonprofit is completed.
+The project is a social media networking mobile app. It is currently in a prototype stage, awaiting the finalization of the nonprofit's legal framework.
 
 ## Technologies Used
 
