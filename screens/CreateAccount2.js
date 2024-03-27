@@ -76,7 +76,7 @@ const CreateAccount2 = ({ route, navigation }) => {
           colors={["#c4791c", "#0c5407"]}
           start={{ x: 1.75, y: 0.75 }}
           end={{ x: 0.5, y: 0.98 }}
-          style={styles.loginpage}
+          style={{height:'100%'}}
         >
           <View style={styles.appView}>
             <Text style={styles.title}>Green Pine Connects</Text>
@@ -90,19 +90,22 @@ const CreateAccount2 = ({ route, navigation }) => {
                   setDatePickerVisibility(true);
                 }}
               >
-                <View
-                  alignSelf="center"
-                  bg="primary.500"
-                  style={styles.bdayBox}
-                >
-                  <Center>
-                    <Text style={styles.bdayText}>
-                      {birthday
-                        ? birthday.toLocaleDateString("en-US", dateOptions)
-                        : "Choose your birthday"}
-                    </Text>
-                  </Center>
-                </View>
+                <Center> 
+                  <View
+                    alignSelf="center"
+                    bg="primary.500"
+                    style={styles.bdayBox}
+                    >
+                      <Center>
+                        <Text style={styles.bdayText}>
+                          {birthday
+                            ? birthday.toLocaleDateString("en-US", dateOptions)
+                            : "Choose your birthday"}
+                        </Text>
+                      </Center>
+                  </View>
+                </Center>
+
               </TouchableWithoutFeedback>
 
               <DateTimePickerModal
@@ -176,6 +179,7 @@ const styles = StyleSheet.create({
     marginBottom: 80,
   },
   bdayText: {
+
     fontSize: 35,
   },
   confirmTxt: {

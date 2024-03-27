@@ -17,7 +17,7 @@ const ForgotPassword = ({ navigation }) => {
         colors={["#c4791c", "#0c5407"]}
         start={{ x: 1.75, y: 0.75 }}
         end={{ x: 0.5, y: 0.98 }}
-        style={styles.loginpage}
+        style={{height:'100%'}}
       >
         <View style={styles.appView}>
           <Text style={styles.title}>Green Pine Connects</Text>

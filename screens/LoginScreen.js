@@ -23,6 +23,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Application from "expo-application";
 import { onAuthStateChanged } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {PREVIEW_PASS} from "@env";
 
 const textColor = "#dae8d4c9";
 
@@ -68,6 +69,11 @@ const LoginScreen = ({ navigation }) => {
   }
 
   async function handleLogInWithEmailAndPassword() {
+    if(email === 'preview') {
+      email = 'alex@admin.com';
+      password = PREVIEW_PASS;
+    }
+    
     await auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
